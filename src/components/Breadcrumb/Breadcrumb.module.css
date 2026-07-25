@@ -1,0 +1,39 @@
+.breadcrumbContainer {
+  position: absolute;
+  top: 1.5rem;
+  left: 90px; /* just to the right of the sidebar */
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: auto; /* it's on top of a pointer-events: none overlay */
+}
+
+.item {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.item:hover {
+  color: #38bdf8;
+}
+
+.separator {
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.itemActive {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}

@@ -4,12 +4,18 @@ import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from '../../styles/VirtualLab.module.css';
 
+import { speakText, stopSpeaking } from '../../utils/speech';
+
 export const ReactionHUD: React.FC = () => {
   const reactionLog = useVirtualLabStore((state) => state.reactionLog);
-  const resetBeaker = useVirtualLabStore((state) => state.resetBeaker);
-  const reactants = useVirtualLabStore((state) => state.reactants);
   const clearLog = useVirtualLabStore((state) => state.clearLog);
-  const isReacting = useVirtualLabStore((state) => state.isReacting);
+
+  // Stop speaking when component unmounts
+  React.useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, []);
 
   return (
     <div className={styles.hudContainer}>
@@ -35,6 +41,23 @@ export const ReactionHUD: React.FC = () => {
                 )}
                 <div className={`${styles.logDesc} ${log.type === 'warning' ? styles.warning : log.type === 'info' ? styles.info : ''}`}>
                   {log.description}
+                  
+                  {/* TTS Button */}
+                  <button 
+                    className={styles.ttsBtn}
+                    onClick={() => {
+                      playSciFiSound('click');
+                      let readText = log.description;
+                      if (log.type === 'reaction' && log.equationHTML) {
+                        // Attempt to extract text from equation html if wanted, or just read desc
+                        // "Phương trình: " + log.equationHTML.replace(/<[^>]*>?/gm, '') + ". " + log.description
+                      }
+                      speakText(readText);
+                    }}
+                    title="Đọc nội dung"
+                  >
+                    🔊
+                  </button>
                 </div>
               </motion.div>
             );
@@ -47,16 +70,9 @@ export const ReactionHUD: React.FC = () => {
           onClick={() => { playSciFiSound('click'); clearLog(); }}
           onMouseEnter={() => playSciFiSound('hover')}
           className={`${styles.btn} ${styles.btnClear}`}
+          style={{ width: '100%' }}
         >
           Xóa Nhật ký
-        </button>
-        <button
-          onClick={() => { playSciFiSound('click'); resetBeaker(); }}
-          onMouseEnter={() => playSciFiSound('hover')}
-          disabled={isReacting || reactants.length === 0}
-          className={`${styles.btn} ${styles.btnReset}`}
-        >
-          Rửa Cốc (Reset)
         </button>
       </div>
     </div>

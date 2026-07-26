@@ -1,4 +1,5 @@
 let audioCtx: AudioContext | null = null;
+import { useVirtualLabStore } from '../../VirtualLab/store/useVirtualLabStore';
 
 const initAudio = () => {
   if (!audioCtx) {
@@ -24,7 +25,8 @@ if (typeof window !== 'undefined') {
 }
 
 export const playSciFiSound = (type: 'hover' | 'click' | 'splash' | 'error' | 'success', soundEnabled: boolean = true) => {
-  if (!soundEnabled || !audioCtx) return;
+  const isMuted = useVirtualLabStore.getState().isMuted;
+  if (!soundEnabled || !audioCtx || isMuted) return;
   
   if (audioCtx.state === 'suspended') {
     if (type === 'hover') return;

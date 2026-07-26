@@ -19,10 +19,18 @@ interface VirtualLabState {
   pouringChemical: Chemical | null;
   reactionLog: LogEntry[];
   theme: 'scifi' | 'classic' | 'realistic';
-  addReactant: (chemical: Chemical) => void;
+  isMuted: boolean;
+  ttsSpeed: number;
+  ttsVoiceURI: string | null;
+  isAutoPlayVoice: boolean;
+  addReactant: (chemical: Chemical) => Promise<void>;
   resetBeaker: () => void;
   clearLog: () => void;
   setTheme: (theme: 'scifi' | 'classic' | 'realistic') => void;
+  setIsMuted: (isMuted: boolean) => void;
+  setTtsSpeed: (speed: number) => void;
+  setTtsVoiceURI: (uri: string | null) => void;
+  setIsAutoPlayVoice: (isAutoPlay: boolean) => void;
   runExample: (chem1: Chemical, chem2: Chemical) => Promise<void>;
 }
 
@@ -34,8 +42,12 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
   pouringChemical: null,
   reactionLog: [],
   theme: 'scifi',
+  isMuted: false,
+  ttsSpeed: 1.0,
+  ttsVoiceURI: null,
+  isAutoPlayVoice: true, // Default to true as the user wants auto play
 
-  addReactant: (chemical) => {
+  addReactant: async (chemical) => {
     const { reactants, isReacting, isPouring } = get();
     
     if (reactants.length >= 2 || isReacting || isPouring) return;
@@ -46,61 +58,89 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     set({ isPouring: true, pouringChemical: chemical });
     
     // Log intent
+    const pouringDesc = `Đang đổ ${chemical.name} vào cốc...`;
     set((state) => ({ 
       reactionLog: [
-        { id: Date.now(), description: `Đang đổ ${chemical.name} vào cốc...`, type: 'info' },
+        { id: Date.now(), description: pouringDesc, type: 'info' },
         ...state.reactionLog
       ] 
     }));
 
-    // Wait for pouring animation to finish (3.2 seconds)
-    setTimeout(() => {
-      // If beaker was reset during animation, cancel logic
-      if (get().reactants.length === 0 && get().pouringChemical?.id !== chemical.id && !get().isPouring) return;
+    // Start voice if auto play is enabled
+    const speechPromise = get().isAutoPlayVoice 
+      ? import('../utils/speech').then(m => m.speakText(pouringDesc)) 
+      : Promise.resolve();
 
-      const currentReactants = get().reactants;
-      if (currentReactants.some(r => r.id === chemical.id)) return;
+    // Wait for both animation (3.2s) and speech to finish
+    await Promise.all([
+      new Promise(resolve => setTimeout(resolve, 3200)),
+      speechPromise
+    ]);
 
-      const newReactants = [...currentReactants, chemical];
-      set({ reactants: newReactants, isPouring: false, pouringChemical: null });
-      
-      playSciFiSound('splash');
+    // If beaker was reset during animation, cancel logic
+    if (get().reactants.length === 0 && get().pouringChemical?.id !== chemical.id && !get().isPouring) return;
 
-      if (newReactants.length === 2) {
-        const reaction = ChemEngine.predictReaction(newReactants);
-        if (reaction) {
-          set({ currentReaction: reaction, isReacting: true });
-          playSciFiSound('success');
-          
-          set((state) => ({ 
-            reactionLog: [
-              { id: Date.now(), equationHTML: reaction.equationHTML, description: reaction.description, type: 'reaction' },
-              ...state.reactionLog
-            ] 
-          }));
-          
-          // Stop the visual effects after 5 seconds
-          setTimeout(() => {
-            set({ isReacting: false });
-          }, 5000);
-        } else {
-          playSciFiSound('error');
-          set((state) => ({ 
-            reactionLog: [
-              { id: Date.now(), description: `Không có phản ứng xảy ra giữa ${newReactants[0].name} và ${newReactants[1].name}`, type: 'warning' },
-              ...state.reactionLog
-            ] 
-          }));
-        }
-      } else {
+    const currentReactants = get().reactants;
+    if (currentReactants.some(r => r.id === chemical.id)) return;
+
+    const newReactants = [...currentReactants, chemical];
+    set({ reactants: newReactants, isPouring: false, pouringChemical: null });
+    
+    playSciFiSound('splash');
+
+    if (newReactants.length === 2) {
+      const reaction = ChemEngine.predictReaction(newReactants);
+      if (reaction) {
+        set({ currentReaction: reaction, isReacting: true });
+        playSciFiSound('success');
+        
         set((state) => ({ 
           reactionLog: [
-            { id: Date.now(), description: `Đã hoàn tất thêm ${chemical.name}. Hãy chọn thêm một chất nữa.`, type: 'info' },
+            { id: Date.now(), equationHTML: reaction.equationHTML, description: reaction.description, type: 'reaction' },
             ...state.reactionLog
           ] 
         }));
+        
+        const reactionSpeechPromise = get().isAutoPlayVoice 
+          ? import('../utils/speech').then(m => m.speakText(reaction.description)) 
+          : Promise.resolve();
+
+        // Stop the visual effects after 5 seconds OR when speech finishes
+        await Promise.all([
+          new Promise(resolve => setTimeout(resolve, 5000)),
+          reactionSpeechPromise
+        ]);
+        
+        set({ isReacting: false });
+      } else {
+        playSciFiSound('error');
+        const errorDesc = `Không có phản ứng xảy ra giữa ${newReactants[0].name} và ${newReactants[1].name}`;
+        set((state) => ({ 
+          reactionLog: [
+            { id: Date.now(), description: errorDesc, type: 'warning' },
+            ...state.reactionLog
+          ] 
+        }));
+        
+        if (get().isAutoPlayVoice) {
+          const m = await import('../utils/speech');
+          await m.speakText(errorDesc);
+        }
       }
-    }, 3200); // 3.2s for pouring animation
+    } else {
+      const successDesc = `Đã hoàn tất thêm ${chemical.name}. Hãy chọn thêm một chất nữa.`;
+      set((state) => ({ 
+        reactionLog: [
+          { id: Date.now(), description: successDesc, type: 'info' },
+          ...state.reactionLog
+        ] 
+      }));
+      
+      if (get().isAutoPlayVoice) {
+        const m = await import('../utils/speech');
+        await m.speakText(successDesc);
+      }
+    }
   },
 
   resetBeaker: () => {
@@ -115,6 +155,22 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     set({ theme });
   },
 
+  setIsMuted: (isMuted) => {
+    set({ isMuted });
+  },
+
+  setTtsSpeed: (ttsSpeed) => {
+    set({ ttsSpeed });
+  },
+
+  setTtsVoiceURI: (ttsVoiceURI) => {
+    set({ ttsVoiceURI });
+  },
+
+  setIsAutoPlayVoice: (isAutoPlayVoice) => {
+    set({ isAutoPlayVoice });
+  },
+
   runExample: async (chem1: Chemical, chem2: Chemical) => {
     const state = get();
     // 1. Reset beaker first
@@ -122,10 +178,11 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     
     // 2. Add first chemical after a small delay
     await new Promise(res => setTimeout(res, 500));
-    get().addReactant(chem1);
+    await get().addReactant(chem1);
     
-    // 3. Add second chemical after the first pouring finishes (3.2s + 0.3s padding)
-    await new Promise(res => setTimeout(res, 3500));
-    get().addReactant(chem2);
+    // 3. Add second chemical (addReactant already waits for pouring and voice to finish)
+    // Add a tiny padding to let the beaker settle
+    await new Promise(res => setTimeout(res, 300));
+    await get().addReactant(chem2);
   }
 }));

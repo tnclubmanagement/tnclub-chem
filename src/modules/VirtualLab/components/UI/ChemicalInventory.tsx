@@ -4,6 +4,7 @@ import { useVirtualLabStore } from '../../store/useVirtualLabStore';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { FlaskIcon } from './FlaskIcon';
 import styles from '../../styles/VirtualLab.module.css';
+import { speakText, stopSpeaking } from '../../utils/speech';
 
 export const ChemicalInventory: React.FC = () => {
   const addReactant = useVirtualLabStore((state) => state.addReactant);
@@ -14,6 +15,7 @@ export const ChemicalInventory: React.FC = () => {
 
   const [activeFilter, setActiveFilter] = useState<ChemicalGroup | 'all'>('all');
   const [selectedInfo, setSelectedInfo] = useState<Chemical | null>(null);
+  const [activeMainTab, setActiveMainTab] = useState<'chemicals' | 'examples'>('chemicals');
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, chemId: string) => {
     e.dataTransfer.setData('text/plain', chemId);
@@ -23,131 +25,179 @@ export const ChemicalInventory: React.FC = () => {
 
   const filteredChemicals = AVAILABLE_CHEMICALS.filter(c => activeFilter === 'all' || c.group === activeFilter);
 
+  const examples = [
+    // 1-10
+    { label: '🔥 Na + H2O', r1: CHEMICALS.na, r2: CHEMICALS.h2o },
+    { label: '🟦 Cu(OH)2', r1: CHEMICALS.cuso4, r2: CHEMICALS.naoh },
+    { label: '⬜ BaSO4', r1: CHEMICALS.bacl2, r2: CHEMICALS.h2so4 },
+    { label: '🫧 Mg + HCl', r1: CHEMICALS.mg, r2: CHEMICALS.hcl },
+    { label: '⚪ AgCl', r1: CHEMICALS.agno3, r2: CHEMICALS.nacl },
+    { label: '💧 Trung hòa', r1: CHEMICALS.hcl, r2: CHEMICALS.naoh },
+    { label: '🫧 Fe + HCl', r1: CHEMICALS.fe, r2: CHEMICALS.hcl },
+    { label: '⬜ Ba(OH)2 + K2SO4', r1: CHEMICALS.k2so4, r2: CHEMICALS.ba_oh_2 },
+    { label: '🫧 Na + HCl', r1: CHEMICALS.na, r2: CHEMICALS.hcl },
+    { label: '🟣 KMnO4 (tan)', r1: CHEMICALS.kmno4, r2: CHEMICALS.h2o },
+    
+    // 11-20
+    { label: '💧 H2SO4 + NaOH', r1: CHEMICALS.h2so4, r2: CHEMICALS.naoh },
+    { label: '⚪ AgNO3 + HCl', r1: CHEMICALS.agno3, r2: CHEMICALS.hcl },
+    { label: '⬜ BaCl2 + Na2SO4', r1: CHEMICALS.bacl2, r2: CHEMICALS.na2so4 },
+    { label: '🫧 Mg + H2SO4', r1: CHEMICALS.mg, r2: CHEMICALS.h2so4 },
+    { label: '🫧 Fe + H2SO4', r1: CHEMICALS.fe, r2: CHEMICALS.h2so4 },
+    { label: '🔥 Na + H2SO4', r1: CHEMICALS.na, r2: CHEMICALS.h2so4 },
+    { label: '🧊 CuSO4 + Ba(OH)2', r1: CHEMICALS.cuso4, r2: CHEMICALS.ba_oh_2 },
+    { label: '🧂 NaCl + H2O', r1: CHEMICALS.nacl, r2: CHEMICALS.h2o },
+    { label: '🟦 CuSO4 + H2O', r1: CHEMICALS.cuso4, r2: CHEMICALS.h2o },
+    { label: '💧 NaOH + H2O', r1: CHEMICALS.naoh, r2: CHEMICALS.h2o },
+
+    // 21-30
+    { label: '⬜ H2SO4 + Ba(OH)2', r1: CHEMICALS.h2so4, r2: CHEMICALS.ba_oh_2 },
+    { label: '⚪ AgNO3 + BaCl2', r1: CHEMICALS.agno3, r2: CHEMICALS.bacl2 },
+    { label: '💧 AgNO3 + H2O', r1: CHEMICALS.agno3, r2: CHEMICALS.h2o },
+    { label: '💧 BaCl2 + H2O', r1: CHEMICALS.bacl2, r2: CHEMICALS.h2o },
+    { label: '💧 K2SO4 + H2O', r1: CHEMICALS.k2so4, r2: CHEMICALS.h2o },
+    { label: '💧 Na2SO4 + H2O', r1: CHEMICALS.na2so4, r2: CHEMICALS.h2o },
+    { label: '💧 HCl + Ba(OH)2', r1: CHEMICALS.hcl, r2: CHEMICALS.ba_oh_2 },
+    { label: '🧱 Fe + H2O (No rxn)', r1: CHEMICALS.fe, r2: CHEMICALS.h2o },
+    { label: '⬜ K2SO4 + BaCl2', r1: CHEMICALS.k2so4, r2: CHEMICALS.bacl2 },
+    { label: '⬜ Ba(OH)2 + Na2SO4', r1: CHEMICALS.ba_oh_2, r2: CHEMICALS.na2so4 }
+  ];
+
   return (
     <>
       <div className={styles.inventoryContainer}>
-        <h2 className={styles.glassTitle}>Kho Hóa chất</h2>
         
-        {/* Filters */}
-        <div className={styles.toolbar}>
-          <div className={styles.filterBar}>
-            {['all', 'acid', 'base', 'salt', 'metal', 'oxide'].map((filter) => (
-              <button 
-                key={filter}
-                className={`${styles.filterBtn} ${activeFilter === filter ? styles.active : ''}`}
-                onClick={() => { playSciFiSound('click'); setActiveFilter(filter as any); }}
-              >
-                {filter === 'all' ? 'Tất cả' : filter.charAt(0).toUpperCase() + filter.slice(1)}
-              </button>
-            ))}
-          </div>
-          
-          {/* Examples */}
-          <div className={styles.examplesBar}>
-            <button 
-              className={styles.exampleBtn} 
-              onClick={() => { playSciFiSound('click'); runExample(CHEMICALS.na, CHEMICALS.h2o); }}
-              disabled={isReacting || isPouring}
-            >
-              🔥 Na + H2O
-            </button>
-            <button 
-              className={styles.exampleBtn} 
-              onClick={() => { playSciFiSound('click'); runExample(CHEMICALS.cuso4, CHEMICALS.naoh); }}
-              disabled={isReacting || isPouring}
-            >
-              🟦 Cu(OH)2
-            </button>
-            <button 
-              className={styles.exampleBtn} 
-              onClick={() => { playSciFiSound('click'); runExample(CHEMICALS.bacl2, CHEMICALS.h2so4); }}
-              disabled={isReacting || isPouring}
-            >
-              ⬜ BaSO4
-            </button>
-            <button 
-              className={styles.exampleBtn} 
-              onClick={() => { playSciFiSound('click'); runExample(CHEMICALS.mg, CHEMICALS.hcl); }}
-              disabled={isReacting || isPouring}
-            >
-              🫧 Mg + HCl
-            </button>
-            <button 
-              className={styles.exampleBtn} 
-              onClick={() => { playSciFiSound('click'); runExample(CHEMICALS.agno3, CHEMICALS.nacl); }}
-              disabled={isReacting || isPouring}
-            >
-              ⚪ AgCl
-            </button>
-          </div>
+        <div className={styles.mainTabs}>
+          <button 
+            className={`${styles.mainTabBtn} ${activeMainTab === 'chemicals' ? styles.active : ''}`}
+            onClick={() => { playSciFiSound('click'); setActiveMainTab('chemicals'); }}
+          >
+            Kho Hóa chất
+          </button>
+          <button 
+            className={`${styles.mainTabBtn} ${activeMainTab === 'examples' ? styles.active : ''}`}
+            onClick={() => { playSciFiSound('click'); setActiveMainTab('examples'); }}
+          >
+            Phản ứng mẫu
+          </button>
         </div>
 
-        <div className={styles.scrollArea}>
-          {filteredChemicals.map((chem) => {
-            const isSelected = reactants.some((r) => r.id === chem.id);
-            const isDisabled = isReacting || isPouring || reactants.length >= 2 || isSelected;
-
-            return (
-              <div
-                key={chem.id}
-                onClick={() => {
-                  if (!isDisabled) {
-                    playSciFiSound('click');
-                    addReactant(chem);
-                  }
-                }}
-                onMouseEnter={() => {
-                  if (!isDisabled) playSciFiSound('hover');
-                }}
-                className={`${styles.chemCard} ${isSelected ? styles.selected : ''} ${isDisabled && !isSelected ? styles.disabled : ''}`}
-                title="Click hoặc Kéo thả vào Cốc"
-              >
-                <div className={styles.cardContent}>
-                  <div 
-                    className={styles.iconWrapper}
-                    draggable={!isDisabled}
-                    onDragStart={(e) => {
-                      e.stopPropagation();
-                      handleDragStart(e, chem.id);
-                    }}
-                    style={{ cursor: isDisabled ? 'not-allowed' : 'grab' }}
+        {activeMainTab === 'chemicals' && (
+          <>
+            {/* Filters */}
+            <div className={styles.toolbar}>
+              <div className={styles.filterBar}>
+                {['all', 'acid', 'base', 'salt', 'metal', 'oxide'].map((filter) => (
+                  <button 
+                    key={filter}
+                    className={`${styles.filterBtn} ${activeFilter === filter ? styles.active : ''}`}
+                    onClick={() => { playSciFiSound('click'); setActiveFilter(filter as any); }}
                   >
-                    <FlaskIcon chemical={chem} size={48} />
-                  </div>
-                  <div className={styles.chemDetails}>
-                    <div className={styles.chemName}>{chem.name} <span style={{ color: 'var(--neon-border)', fontSize: '0.9rem' }}>{chem.formula}</span></div>
-                    <div className={styles.chemState}>
-                      {chem.state === 'solid' ? 'Rắn' : chem.state === 'aqueous' ? 'Dung dịch' : chem.state === 'liquid' ? 'Lỏng' : 'Khí'}
+                    {filter === 'all' ? 'Tất cả' : filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.scrollArea}>
+              {filteredChemicals.map((chem) => {
+                const isSelected = reactants.some((r) => r.id === chem.id);
+                const isDisabled = isReacting || isPouring || reactants.length >= 2 || isSelected;
+
+                return (
+                  <div
+                    key={chem.id}
+                    onClick={() => {
+                      if (!isDisabled) {
+                        playSciFiSound('click');
+                        addReactant(chem);
+                      }
+                    }}
+                    onMouseEnter={() => {
+                      if (!isDisabled) playSciFiSound('hover');
+                    }}
+                    className={`${styles.chemCard} ${isSelected ? styles.selected : ''} ${isDisabled && !isSelected ? styles.disabled : ''}`}
+                    title="Click hoặc Kéo thả vào Cốc"
+                  >
+                    <div className={styles.cardContent}>
+                      <div 
+                        className={styles.iconWrapper}
+                        draggable={!isDisabled}
+                        onDragStart={(e) => {
+                          e.stopPropagation();
+                          handleDragStart(e, chem.id);
+                        }}
+                        style={{ cursor: isDisabled ? 'not-allowed' : 'grab' }}
+                      >
+                        <FlaskIcon chemical={chem} size={48} />
+                      </div>
+                      <div className={styles.chemDetails}>
+                        <div className={styles.chemName}>{chem.name} <span style={{ color: 'var(--neon-border)', fontSize: '0.9rem' }}>{chem.formula}</span></div>
+                        <div className={styles.chemState}>
+                          {chem.state === 'solid' ? 'Rắn' : chem.state === 'aqueous' ? 'Dung dịch' : chem.state === 'liquid' ? 'Lỏng' : 'Khí'}
+                        </div>
+                      </div>
+                      
+                      {/* Info Button */}
+                      <button 
+                        className={styles.infoBtn}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playSciFiSound('click');
+                          setSelectedInfo(chem);
+                        }}
+                      >
+                        i
+                      </button>
                     </div>
                   </div>
-                  
-                  {/* Info Button */}
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {activeMainTab === 'examples' && (
+          <div className={styles.scrollArea}>
+             <div className={styles.examplesGrid}>
+                {examples.map((ex, idx) => (
                   <button 
-                    className={styles.infoBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      playSciFiSound('click');
-                      setSelectedInfo(chem);
-                    }}
+                    key={idx}
+                    className={styles.exampleCardBtn} 
+                    onClick={() => { playSciFiSound('click'); runExample(ex.r1, ex.r2); }}
+                    disabled={isReacting || isPouring}
                   >
-                    i
+                    {ex.label}
                   </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                ))}
+             </div>
+          </div>
+        )}
       </div>
 
       {/* Info Modal */}
       {selectedInfo && (
-        <div className={styles.modalOverlay} onClick={() => setSelectedInfo(null)}>
+        <div className={styles.modalOverlay} onClick={() => { setSelectedInfo(null); stopSpeaking(); }}>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-            <button className={styles.closeBtn} onClick={() => setSelectedInfo(null)}>×</button>
+            <button className={styles.closeBtn} onClick={() => { setSelectedInfo(null); stopSpeaking(); }}>×</button>
             <div className={styles.modalHeader}>
               <FlaskIcon chemical={selectedInfo} size={64} />
               <div>
-                <h2>{selectedInfo.name} ({selectedInfo.formula})</h2>
+                <h2>
+                  {selectedInfo.name} ({selectedInfo.formula})
+                  <button 
+                    className={styles.ttsBtn}
+                    style={{ marginLeft: '12px', fontSize: '1.2rem', padding: '4px 8px' }}
+                    onClick={() => {
+                      playSciFiSound('click');
+                      const textToRead = `${selectedInfo.name}. Công thức: ${selectedInfo.formula}. Ứng dụng thực tiễn: ${selectedInfo.application}`;
+                      speakText(textToRead);
+                    }}
+                    title="Đọc thông tin"
+                  >
+                    🔊
+                  </button>
+                </h2>
                 <p style={{ color: 'var(--text-sub)' }}>Nhóm: {selectedInfo.group.toUpperCase()}</p>
               </div>
             </div>

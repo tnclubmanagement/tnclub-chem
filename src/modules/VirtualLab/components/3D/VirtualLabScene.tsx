@@ -8,7 +8,7 @@ import styles from '../../styles/VirtualLab.module.css';
 export const VirtualLabScene = () => {
   return (
     <div className={styles.sceneContainer}>
-      <Canvas camera={{ position: [0, 1, 6], fov: 45 }}>
+      <Canvas camera={{ position: [0, 1.5, 9], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         
@@ -33,8 +33,8 @@ export const VirtualLabScene = () => {
           enablePan={false}
           minPolarAngle={Math.PI / 4}
           maxPolarAngle={Math.PI / 2}
-          minDistance={3}
-          maxDistance={8}
+          minDistance={4}
+          maxDistance={12}
         />
       </Canvas>
     </div>

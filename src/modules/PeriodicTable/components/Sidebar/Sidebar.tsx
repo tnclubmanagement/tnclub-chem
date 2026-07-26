@@ -53,6 +53,15 @@ export const Sidebar: React.FC = () => {
             </nav>
           </div>
         </div>
+
+        {/* Category 3: 3D Lab Explorer */}
+        <div 
+          className={`${styles.navItem} ${activeView === 'explorer' ? styles.active : ''}`}
+          onClick={() => setActiveView('explorer')}
+        >
+          <span className={styles.navIcon}>🧪</span>
+          <div className={styles.tooltip}>Phòng Thí Nghiệm 3D</div>
+        </div>
       </div>
     </aside>
   );

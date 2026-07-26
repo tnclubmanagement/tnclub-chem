@@ -17,6 +17,8 @@ export const useUrlSync = () => {
 
       if (view === 'lesson' && lessonId) {
         store.setActiveLessonId(lessonId);
+      } else if (view === 'explorer') {
+        store.setActiveView('explorer');
       } else if (view === 'periodic-table') {
         store.setActiveView('periodic-table');
         if (elSymbol) {
@@ -52,6 +54,10 @@ export const useUrlSync = () => {
       if (state.activeView === 'lesson' && state.activeLessonId) {
         if (url.searchParams.get('view') !== 'lesson') { url.searchParams.set('view', 'lesson'); changed = true; }
         if (url.searchParams.get('id') !== state.activeLessonId) { url.searchParams.set('id', state.activeLessonId); changed = true; }
+        if (url.searchParams.has('el')) { url.searchParams.delete('el'); changed = true; }
+      } else if (state.activeView === 'explorer') {
+        if (url.searchParams.get('view') !== 'explorer') { url.searchParams.set('view', 'explorer'); changed = true; }
+        if (url.searchParams.has('id')) { url.searchParams.delete('id'); changed = true; }
         if (url.searchParams.has('el')) { url.searchParams.delete('el'); changed = true; }
       } else {
         if (url.searchParams.get('view') !== 'periodic-table') { url.searchParams.set('view', 'periodic-table'); changed = true; }

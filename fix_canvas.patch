@@ -1,0 +1,17 @@
+--- src/modules/MolecularExplorer/components/3D/MoleculeCanvas.tsx
++++ src/modules/MolecularExplorer/components/3D/MoleculeCanvas.tsx
+@@ -7,2 +7,3 @@
+ import { useMemo } from 'react';
++import { Suspense } from 'react';
+ 
+@@ -56,3 +57,4 @@
+       <directionalLight position={[10, 10, 5]} intensity={1.5} castShadow />
+-      <Environment preset="studio" />
++      <Suspense fallback={null}>
++        <Environment preset="studio" />
+       
+@@ -88,3 +90,4 @@
+         </group>
+       )}
++      </Suspense>
+ 

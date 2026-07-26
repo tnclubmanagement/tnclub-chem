@@ -28,6 +28,8 @@ export const useUrlSync = () => {
         } else {
           store.closePanel();
         }
+      } else if (view === 'virtual-lab') {
+        store.setActiveView('virtual-lab');
       } else {
         // Default
         store.setActiveView('periodic-table');
@@ -48,33 +50,23 @@ export const useUrlSync = () => {
     return useChemStore.subscribe((state) => {
       if (isInitializing.current) return;
 
-      const url = new URL(window.location.href);
-      let changed = false;
+      const currentUrl = new URL(window.location.href);
+      const newParams = new URLSearchParams();
 
+      // Set view
+      newParams.set('view', state.activeView);
+
+      // Set view-specific params
       if (state.activeView === 'lesson' && state.activeLessonId) {
-        if (url.searchParams.get('view') !== 'lesson') { url.searchParams.set('view', 'lesson'); changed = true; }
-        if (url.searchParams.get('id') !== state.activeLessonId) { url.searchParams.set('id', state.activeLessonId); changed = true; }
-        if (url.searchParams.has('el')) { url.searchParams.delete('el'); changed = true; }
-      } else if (state.activeView === 'explorer') {
-        if (url.searchParams.get('view') !== 'explorer') { url.searchParams.set('view', 'explorer'); changed = true; }
-        if (url.searchParams.has('id')) { url.searchParams.delete('id'); changed = true; }
-        if (url.searchParams.has('el')) { url.searchParams.delete('el'); changed = true; }
-      } else {
-        if (url.searchParams.get('view') !== 'periodic-table') { url.searchParams.set('view', 'periodic-table'); changed = true; }
-        if (url.searchParams.has('id')) { url.searchParams.delete('id'); changed = true; }
-        
-        if (state.selectedElement) {
-          if (url.searchParams.get('el') !== state.selectedElement.symbol) { 
-            url.searchParams.set('el', state.selectedElement.symbol); 
-            changed = true; 
-          }
-        } else {
-          if (url.searchParams.has('el')) { url.searchParams.delete('el'); changed = true; }
-        }
+        newParams.set('id', state.activeLessonId);
+      } else if (state.activeView === 'periodic-table' && state.selectedElement) {
+        newParams.set('el', state.selectedElement.symbol);
       }
 
-      if (changed) {
-        window.history.pushState({}, '', url);
+      // Only push state if the search string actually changed
+      const newSearch = `?${newParams.toString()}`;
+      if (currentUrl.search !== newSearch) {
+        window.history.pushState({}, '', `${currentUrl.pathname}${newSearch}`);
       }
     });
   }, []);

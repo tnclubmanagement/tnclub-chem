@@ -1,0 +1,112 @@
+export type ChemicalState = 'solid' | 'liquid' | 'gas' | 'aqueous';
+export type ColorTheme = 'blue' | 'red' | 'white' | 'colorless' | 'brown' | 'green' | 'yellow' | 'purple';
+
+export interface Chemical {
+  id: string;
+  name: string;
+  formula: string;
+  state: ChemicalState;
+  colorTheme: ColorTheme;
+  colorHex: string;
+}
+
+export const CHEMICALS: Record<string, Chemical> = {
+  h2o: {
+    id: 'h2o',
+    name: 'Nước',
+    formula: 'H₂O',
+    state: 'liquid',
+    colorTheme: 'colorless',
+    colorHex: '#e0f7fa'
+  },
+  na: {
+    id: 'na',
+    name: 'Natri',
+    formula: 'Na',
+    state: 'solid',
+    colorTheme: 'white',
+    colorHex: '#d1d5db'
+  },
+  naoh: {
+    id: 'naoh',
+    name: 'Natri hiđroxit',
+    formula: 'NaOH',
+    state: 'aqueous',
+    colorTheme: 'colorless',
+    colorHex: '#f3f4f6'
+  },
+  h2: {
+    id: 'h2',
+    name: 'Khí hiđro',
+    formula: 'H₂',
+    state: 'gas',
+    colorTheme: 'colorless',
+    colorHex: '#ffffff'
+  },
+  cuso4: {
+    id: 'cuso4',
+    name: 'Đồng(II) sunfat',
+    formula: 'CuSO₄',
+    state: 'aqueous',
+    colorTheme: 'blue',
+    colorHex: '#3b82f6'
+  },
+  cu_oh_2: {
+    id: 'cu_oh_2',
+    name: 'Đồng(II) hiđroxit',
+    formula: 'Cu(OH)₂',
+    state: 'solid',
+    colorTheme: 'blue',
+    colorHex: '#2563eb'
+  },
+  hcl: {
+    id: 'hcl',
+    name: 'Axit clohiđric',
+    formula: 'HCl',
+    state: 'aqueous',
+    colorTheme: 'colorless',
+    colorHex: '#e5e7eb'
+  },
+  agno3: {
+    id: 'agno3',
+    name: 'Bạc nitrat',
+    formula: 'AgNO₃',
+    state: 'aqueous',
+    colorTheme: 'colorless',
+    colorHex: '#e5e7eb'
+  },
+  nacl: {
+    id: 'nacl',
+    name: 'Natri clorua',
+    formula: 'NaCl',
+    state: 'aqueous',
+    colorTheme: 'colorless',
+    colorHex: '#e5e7eb'
+  },
+  agcl: {
+    id: 'agcl',
+    name: 'Bạc clorua',
+    formula: 'AgCl',
+    state: 'solid',
+    colorTheme: 'white',
+    colorHex: '#ffffff'
+  },
+  nano3: {
+    id: 'nano3',
+    name: 'Natri nitrat',
+    formula: 'NaNO₃',
+    state: 'aqueous',
+    colorTheme: 'colorless',
+    colorHex: '#e5e7eb'
+  }
+};
+
+export const AVAILABLE_CHEMICALS = [
+  CHEMICALS.h2o,
+  CHEMICALS.na,
+  CHEMICALS.naoh,
+  CHEMICALS.cuso4,
+  CHEMICALS.hcl,
+  CHEMICALS.agno3,
+  CHEMICALS.nacl
+];

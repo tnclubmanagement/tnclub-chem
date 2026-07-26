@@ -9,22 +9,21 @@ import styles from './PeriodicTable.module.css';
 export const PeriodicTable: React.FC = () => {
   const { setActiveGroup, setActivePeriod, activeGroup, activePeriod, quizModeActive, setQuizModeActive, setQuizTargetZ, soundEnabled } = useChemStore();
 
-  const quizQuestions = [
-    { q: "Tìm Kim loại kiềm nhẹ nhất?", a: 3 },
-    { q: "Nguyên tố nào là khối lõi của ngành công nghiệp bán dẫn?", a: 14 },
-    { q: "Khí hiếm nào được bơm vào khinh khí cầu an toàn?", a: 2 },
-    { q: "Kim loại lỏng duy nhất ở nhiệt độ phòng?", a: 80 },
-    { q: "Nguyên tố có độ âm điện lớn nhất?", a: 9 },
-    { q: "Thành phần cốt lõi của xương và răng?", a: 20 },
-    { q: "Khí duy trì sự cháy và hô hấp?", a: 8 },
-    { q: "Kim loại có điểm nóng chảy cao nhất (dùng làm dây tóc bóng đèn)?", a: 74 }
-  ];
-
   const [currentQuiz, setCurrentQuiz] = React.useState<{q: string, a: number} | null>(null);
   const [quizStatus, setQuizStatus] = React.useState<'idle' | 'correct' | 'wrong'>('idle');
 
   React.useEffect(() => {
     if (quizModeActive) {
+      const quizQuestions = [
+        { q: "Tìm Kim loại kiềm nhẹ nhất?", a: 3 },
+        { q: "Nguyên tố nào là khối lõi của ngành công nghiệp bán dẫn?", a: 14 },
+        { q: "Khí hiếm nào được bơm vào khinh khí cầu an toàn?", a: 2 },
+        { q: "Kim loại lỏng duy nhất ở nhiệt độ phòng?", a: 80 },
+        { q: "Nguyên tố có độ âm điện lớn nhất?", a: 9 },
+        { q: "Thành phần cốt lõi của xương và răng?", a: 20 },
+        { q: "Khí duy trì sự cháy và hô hấp?", a: 8 },
+        { q: "Kim loại có điểm nóng chảy cao nhất (dùng làm dây tóc bóng đèn)?", a: 74 }
+      ];
       const q = quizQuestions[Math.floor(Math.random() * quizQuestions.length)];
       setCurrentQuiz(q);
       setQuizTargetZ(q.a);
@@ -33,7 +32,7 @@ export const PeriodicTable: React.FC = () => {
       setCurrentQuiz(null);
       setQuizTargetZ(null);
     }
-  }, [quizModeActive]);
+  }, [quizModeActive, setQuizTargetZ]);
 
   const renderGroupHeaders = () => {
     const headers = [];

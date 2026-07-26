@@ -41,6 +41,12 @@ export const Breadcrumb: React.FC = () => {
           )}
         </>
       )}
+
+      {activeView === 'virtual-lab' && (
+        <span className={styles.itemActive}>
+          🧪 Phòng Thí Nghiệm Ảo
+        </span>
+      )}
     </div>
   );
 };

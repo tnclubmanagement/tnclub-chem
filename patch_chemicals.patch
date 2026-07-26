@@ -1,0 +1,15 @@
+--- src/modules/VirtualLab/data/chemicals.ts
++++ src/modules/VirtualLab/data/chemicals.ts
+@@ -82,6 +82,14 @@
+     colorTheme: 'colorless',
+     colorHex: '#e5e7eb'
++  },
++  na2so4: {
++    id: 'na2so4',
++    name: 'Natri sunfat',
++    formula: 'Na₂SO₄',
++    state: 'aqueous',
++    colorTheme: 'colorless',
++    colorHex: '#e5e7eb'
+   }
+ };

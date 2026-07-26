@@ -1,6 +1,7 @@
 import { PeriodicTableModule as PeriodicTable, ElementPanel, Sidebar, useChemStore } from './modules/PeriodicTable';
 import { LessonView } from './modules/BondModels';
 import { MolecularExplorer } from './modules/MolecularExplorer/MolecularExplorer';
+import { VirtualLab } from './modules/VirtualLab';
 import { Breadcrumb } from './components/Breadcrumb/Breadcrumb';
 import { useUrlSync } from './hooks/useUrlSync';
 import './App.css'; // Vite default styles, we can clean it up later if needed
@@ -14,6 +15,7 @@ function App() {
       {/* 3D Main Canvas will go here later */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
         {activeView === 'explorer' && <MolecularExplorer />}
+        {activeView === 'virtual-lab' && <VirtualLab />}
       </div>
 
       {/* UI Overlay */}

@@ -1,22 +1,33 @@
-/* ElementPanel.module.css */
+/* ElementPanel.module.css — Glassmorphism & Cyberpunk Neon UI */
+
 .rightPanel { 
     position: absolute; 
     top: 0; 
     right: 0; 
     height: 100%; 
     width: 400px; /* default width */
-    background: rgba(15, 23, 42, 0.65); 
-    border-left: 1px solid rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(40px); 
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); 
+    background: rgba(4, 10, 26, 0.82); 
+    border-left: 1px solid rgba(0, 247, 255, 0.15); 
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7), inset 1px 0 0 rgba(255, 255, 255, 0.05); 
     z-index: 30; 
     display: flex; 
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
     pointer-events: auto; 
 }
 
 .rightPanel.hidden { 
     transform: translateX(105%); 
+}
+
+/* Collapsed state */
+.rightPanel.collapsed {
+    width: 52px !important;
+    overflow: hidden;
+    background: rgba(4, 10, 26, 0.92);
+    border-left-color: rgba(0, 247, 255, 0.3);
 }
 
 .resizer { 
@@ -31,7 +42,7 @@
 }
 
 .resizer:hover, .resizer.dragging { 
-    background: rgba(14, 165, 233, 0.5); 
+    background: rgba(0, 247, 255, 0.5); 
 }
 
 .panelContent { 
@@ -43,64 +54,139 @@
     overflow-x: hidden; 
 }
 
+/* Header */
 .panelHeader { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    padding: 1rem 1.5rem; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-    background: rgba(255, 255, 255, 0.02); 
+    padding: 0.9rem 1.2rem; 
+    border-bottom: 1px solid rgba(0, 247, 255, 0.12); 
+    background: rgba(0, 247, 255, 0.03); 
+    gap: 8px;
 }
 
 .panelTitle { 
-    color: #94a3b8; 
-    font-size: 0.9rem; 
-    font-weight: 600; 
+    color: #00f7ff; 
+    font-size: 0.85rem; 
+    font-weight: 700; 
+    font-family: 'Outfit', sans-serif;
     text-transform: uppercase; 
     letter-spacing: 1px; 
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.closeBtn { 
-    background: transparent; 
-    border: none; 
-    color: #94a3b8; 
-    font-size: 1.2rem; 
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.iconBtn { 
+    background: rgba(255, 255, 255, 0.04); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    color: rgba(140, 160, 200, 0.8); 
+    font-size: 0.9rem; 
     cursor: pointer; 
-    padding: 0.5rem; 
-    border-radius: 4px; 
-    transition: all 0.2s; 
+    padding: 0.35rem 0.6rem; 
+    border-radius: 6px; 
+    transition: all 0.2s ease; 
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.closeBtn:hover { 
-    background: rgba(255,255,255,0.1); 
-    color: #fff; 
+.iconBtn:hover { 
+    background: rgba(0, 247, 255, 0.12); 
+    color: #00f7ff; 
+    border-color: rgba(0, 247, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
 }
 
+.closeBtn {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.closeBtn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+/* Collapsed Peek Bar */
+.collapsedPeek {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1.5rem;
+    height: 100%;
+    cursor: pointer;
+}
+
+.peekExpandBtn {
+    background: rgba(0, 247, 255, 0.1);
+    border: 1px solid rgba(0, 247, 255, 0.3);
+    color: #00f7ff;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
+}
+
+.peekExpandBtn:hover {
+    background: rgba(0, 247, 255, 0.25);
+    transform: scale(1.1);
+}
+
+.peekVerticalText {
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    color: rgba(0, 247, 255, 0.8);
+    text-shadow: 0 0 8px rgba(0, 247, 255, 0.4);
+}
+
+/* Panel Info Body */
 .panelInfo { 
-    padding: 2rem 1.5rem; 
+    padding: 1.5rem 1.25rem; 
     flex: 1; 
 }
 
 .elementBadge { 
     display: flex; 
     align-items: center; 
-    gap: 1.5rem; 
-    margin-bottom: 2rem; 
+    gap: 1.25rem; 
+    margin-bottom: 1.5rem; 
 }
 
 .modalSymbol { 
-    font-size: 4rem; 
-    font-weight: 800; 
+    font-size: 3.5rem; 
+    font-weight: 900; 
+    font-family: 'Outfit', sans-serif;
     color: #fff; 
-    text-shadow: 0 0 20px rgba(255,255,255,0.3); 
-    background: rgba(255, 255, 255, 0.05); 
-    width: 100px; 
-    height: 100px; 
+    text-shadow: 0 0 25px rgba(0, 247, 255, 0.5); 
+    background: rgba(0, 247, 255, 0.05); 
+    width: 90px; 
+    height: 90px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     border-radius: 16px; 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(0, 247, 255, 0.2); 
+    box-shadow: inset 0 0 15px rgba(0, 247, 255, 0.08);
 }
 
 .elementHeaderText { 
@@ -110,97 +196,104 @@
 }
 
 .modalName { 
-    font-size: 2rem; 
-    font-weight: 700; 
+    font-size: 1.7rem; 
+    font-weight: 800; 
+    font-family: 'Outfit', sans-serif;
     color: #fff; 
     margin: 0;
 }
 
 .modalCategory { 
-    font-size: 0.9rem; 
-    color: #0ea5e9; 
+    font-size: 0.82rem; 
+    color: #00f7ff; 
     text-transform: uppercase; 
-    font-weight: 600; 
+    font-weight: 700; 
+    font-family: 'JetBrains Mono', monospace;
     letter-spacing: 1px; 
 }
 
 .modalDivider { 
     height: 1px; 
-    background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%); 
-    margin: 1.5rem 0; 
+    background: linear-gradient(90deg, rgba(0, 247, 255, 0.3) 0%, transparent 100%); 
+    margin: 1.25rem 0; 
 }
 
 .modalDetails h3 { 
-    font-size: 1.1rem; 
+    font-size: 1rem; 
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
     color: #fff; 
-    margin-bottom: 1rem; 
+    margin-bottom: 0.75rem; 
 }
 
 .modalDesc { 
-    color: #cbd5e1; 
-    line-height: 1.6; 
-    font-size: 0.95rem; 
+    color: rgba(200, 220, 255, 0.85); 
+    line-height: 1.65; 
+    font-size: 0.9rem; 
 }
 
 .configSection {
     margin-top: 1rem; 
-    padding: 1rem; 
-    background: rgba(0,255,255,0.05); 
-    border-left: 3px solid #06b6d4; 
-    border-radius: 4px;
+    padding: 0.9rem 1rem; 
+    background: rgba(0, 247, 255, 0.04); 
+    border-left: 3px solid #00f7ff; 
+    border-radius: 6px;
 }
 
 .configHeading {
-    color: #06b6d4; 
-    margin-bottom: 0.5rem; 
-    font-size: 0.9rem;
+    color: #00f7ff; 
+    margin-bottom: 0.4rem; 
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
 }
 
 .configText {
     font-family: 'JetBrains Mono', monospace; 
-    font-size: 1.1rem; 
+    font-size: 1.05rem; 
     color: #fff; 
     font-weight: 700;
 }
 
 .appHeading {
     margin-top: 1.5rem; 
-    color: #10b981;
+    color: #00ff80 !important;
 }
 
 /* Tabs */
 .visualizerWrapper {
     position: relative;
     width: 100%;
-    height: 300px;
-    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: 280px;
+    background: radial-gradient(circle at center, rgba(15, 30, 60, 0.8) 0%, rgba(3, 8, 24, 0.95) 100%);
+    border-bottom: 1px solid rgba(0, 247, 255, 0.12);
     overflow: hidden;
 }
 
 .tabSwitchContainer {
     position: absolute;
-    top: 16px;
+    top: 12px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     display: flex;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 5, 20, 0.7);
     border-radius: 30px;
-    padding: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    width: 340px;
+    padding: 3px;
+    border: 1px solid rgba(0, 247, 255, 0.2);
+    backdrop-filter: blur(10px);
+    width: 320px;
 }
 
 .tabSwitch {
     position: absolute;
-    top: 4px;
-    height: calc(100% - 8px);
-    width: calc(33.333% - 2.6px);
-    background: rgba(255, 255, 255, 0.2);
+    top: 3px;
+    height: calc(100% - 6px);
+    width: calc(33.333% - 2px);
+    background: rgba(0, 247, 255, 0.2);
+    border: 1px solid rgba(0, 247, 255, 0.4);
     border-radius: 26px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 12px rgba(0, 247, 255, 0.3);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -208,10 +301,10 @@
     position: relative;
     z-index: 1;
     flex: 1;
-    padding: 8px 10px;
-    font-size: 0.8rem;
+    padding: 6px 8px;
+    font-size: 0.78rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: rgba(140, 160, 200, 0.75);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -220,6 +313,136 @@
 }
 
 .tabBtnActive {
+    color: #00f7ff;
+    text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+}
+
+/* =========================================
+   GROUP & PERIOD INFORMATION STYLES
+   ========================================= */
+.groupCard {
+    background: rgba(0, 247, 255, 0.03);
+    border: 1px solid rgba(0, 247, 255, 0.12);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.groupBadge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    border: 1px solid currentColor;
+}
+
+.groupTitle {
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
     color: #fff;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+    margin: 0 0 0.5rem 0;
+}
+
+.infoBlock {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.025);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.infoBlockTitle {
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: #00f7ff;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+
+.infoBlockText {
+    font-size: 0.88rem;
+    color: rgba(220, 235, 255, 0.85);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.elementsGridSection {
+    margin-top: 1.5rem;
+}
+
+.elementsGridTitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    color: #fff;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.elementCountBadge {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #00f7ff;
+    background: rgba(0, 247, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.elementsChipsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+    gap: 8px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.elementChip {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.elementChip:hover {
+    background: rgba(0, 247, 255, 0.12);
+    border-color: #00f7ff;
+    box-shadow: 0 0 12px rgba(0, 247, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.chipZ {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.chipSymbol {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: #fff;
+}
+
+.chipName {
+    font-size: 0.58rem;
+    color: rgba(200, 220, 255, 0.7);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }

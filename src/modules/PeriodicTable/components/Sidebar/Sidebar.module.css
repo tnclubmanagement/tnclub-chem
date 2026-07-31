@@ -1,159 +1,293 @@
-/* Sidebar.module.css */
-.sidebarMini {
-    width: 72px; /* var(--sidebar-width) */
-    height: 100%;
-    background: rgba(15, 23, 42, 0.5); 
-    backdrop-filter: blur(24px); 
-    -webkit-backdrop-filter: blur(24px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08); 
-    pointer-events: auto;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    padding-top: 1.5rem;
-    box-shadow: 10px 0 30px rgba(0,0,0,0.5); 
-    z-index: 40;
-    position: absolute;
-    left: 0;
-    top: 0;
+/* Sidebar.module.css — Neon Cyberpunk Navigation */
+
+.sidebar {
+  width: 72px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  pointer-events: auto;
+
+  /* Glass panel */
+  background: rgba(5, 5, 18, 0.75);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.6), inset -1px 0 0 rgba(255, 255, 255, 0.03);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  gap: 0;
 }
 
-.logoMini { 
-    font-size: 1.8rem; 
-    margin-bottom: 2rem; 
-    cursor: pointer; 
-    position: relative; 
+/* ---- Logo ---- */
+.logo {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.navGroup { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 1rem; 
-    width: 100%; 
-    align-items: center; 
+.logo:hover {
+  transform: scale(1.12);
 }
 
+.logoIcon {
+  font-size: 1.6rem;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 8px rgba(0, 247, 255, 0.5));
+  animation: neonPulse 3s ease-in-out infinite;
+}
+
+.logoRing {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#050512, #050512) padding-box,
+              conic-gradient(
+                from 0deg,
+                #00f7ff,
+                #8f00ff,
+                #ff1adb,
+                #00ff80,
+                #00f7ff
+              ) border-box;
+  animation: spinSlow 6s linear infinite;
+}
+
+.logo:hover .logoRing {
+  animation-duration: 2s;
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+}
+
+/* ---- Divider ---- */
+.divider {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 8px 0 16px;
+}
+
+/* ---- Nav Group ---- */
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  align-items: center;
+}
+
+/* ---- Nav Item ---- */
 .navItem {
-    width: 48px; 
-    height: 48px; 
-    border-radius: 12px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    background: rgba(255, 255, 255, 0.03); 
-    border: 1px solid transparent;
-    cursor: pointer; 
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-    position: relative;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition:
+    background 0.25s var(--ease-smooth, ease),
+    border-color 0.25s var(--ease-smooth, ease),
+    box-shadow 0.25s var(--ease-smooth, ease),
+    transform 0.2s var(--ease-spring, ease);
+  overflow: visible;
+  --item-color: #00f7ff;
 }
 
-.navItem:hover, .active { 
-    background: rgba(59, 130, 246, 0.2); 
-    border-color: rgba(59, 130, 246, 0.5); 
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2); 
-    transform: translateX(2px); 
+.navItem:hover {
+  background: color-mix(in srgb, var(--item-color) 8%, transparent);
+  border-color: color-mix(in srgb, var(--item-color) 30%, transparent);
+  transform: translateX(2px);
+  box-shadow:
+    0 0 15px color-mix(in srgb, var(--item-color) 20%, transparent),
+    inset 0 0 8px color-mix(in srgb, var(--item-color) 5%, transparent);
 }
 
-.navIcon { 
-    font-size: 1.4rem; 
-    pointer-events: none; 
+.navItem.active {
+  background: color-mix(in srgb, var(--item-color) 12%, transparent);
+  border-color: color-mix(in srgb, var(--item-color) 45%, transparent);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--item-color) 25%, transparent),
+    0 0 40px color-mix(in srgb, var(--item-color) 10%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--item-color) 8%, transparent);
 }
 
+/* Active indicator bar (left edge) */
+.activeBar {
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 28px;
+  border-radius: 0 3px 3px 0;
+  background: var(--item-color);
+  box-shadow: 0 0 10px var(--item-color), 0 0 20px var(--item-color);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navItem.active .activeBar {
+  transform: translateY(-50%) scaleY(1);
+}
+
+/* ---- Nav Icon ---- */
+.navIcon {
+  font-size: 1.4rem;
+  pointer-events: none;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.navItem:hover .navIcon {
+  color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--item-color) 70%, transparent));
+  transform: scale(1.1);
+}
+
+.navItem.active .navIcon {
+  color: var(--item-color);
+  filter: drop-shadow(0 0 8px var(--item-color));
+}
+
+/* ---- Tooltip ---- */
 .tooltip {
-    position: absolute; 
-    left: 60px; 
-    top: 50%; 
-    transform: translateY(-50%) translateX(-10px);
-    background: rgba(15, 23, 42, 0.9); 
-    padding: 8px 12px; 
-    border-radius: 6px; 
-    color: #fff; 
-    font-size: 0.85rem; 
-    font-weight: 500; 
-    white-space: nowrap;
-    opacity: 0; 
-    pointer-events: none; 
-    transition: all 0.2s; 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    box-shadow: 4px 4px 15px rgba(0,0,0,0.5);
+  position: absolute;
+  left: 62px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-8px);
+  background: rgba(5, 5, 20, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 7px 14px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 100;
 }
 
-.navItem:not(.hasFlyout):hover .tooltip { 
-    opacity: 1; 
-    transform: translateY(-50%) translateX(0); 
+.tooltip::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Hover Submenu */
+.navItem:not(.hasFlyout):hover .tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ---- Flyout Submenu ---- */
 .hasFlyout::after {
-    content: ''; 
-    position: absolute; 
-    left: 100%; 
-    top: 0; 
-    width: 20px; 
-    height: 100%; 
-    z-index: 10;
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  z-index: 10;
 }
 
 .submenuFlyout {
-    position: absolute; 
-    left: 60px; 
-    top: 0; 
-    width: max-content; 
-    min-width: 260px; 
-    background: rgba(15, 23, 42, 0.85); 
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    border-radius: 16px; 
-    padding: 1.2rem; 
-    box-shadow: 10px 10px 30px rgba(0,0,0,0.6);
-    opacity: 0; 
-    pointer-events: none; 
-    transform: translateX(-15px); 
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-    z-index: 20;
+  position: absolute;
+  left: 62px;
+  top: 0;
+  width: max-content;
+  min-width: 240px;
+  background: rgba(5, 8, 25, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow:
+    12px 12px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(143, 0, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
 }
 
-.hasFlyout:hover .submenuFlyout { 
-    opacity: 1; 
-    pointer-events: auto; 
-    transform: translateX(0); 
+.hasFlyout:hover .submenuFlyout {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
-.submenuFlyout h4 { 
-    color: #94a3b8; 
-    font-size: 0.8rem; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    margin-bottom: 0.8rem; 
-    padding-bottom: 0.5rem; 
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
+.submenuFlyout h4 {
+  color: rgba(143, 0, 255, 0.8);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(143, 0, 255, 0.15);
+  font-family: 'JetBrains Mono', monospace;
 }
 
-.lessonsSubmenu { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.4rem; 
+.lessonsSubmenu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 360px;
+  overflow-y: auto;
 }
 
-.lessonLink { 
-    background: transparent; 
-    border: none; 
-    color: #f8fafc; 
-    padding: 0.6rem 0.8rem; 
-    border-radius: 8px; 
-    font-size: 0.9rem; 
-    font-weight: 500; 
-    cursor: pointer; 
-    text-align: left; 
-    transition: all 0.2s; 
+.lessonLink {
+  background: transparent;
+  border: none;
+  color: rgba(200, 210, 240, 0.75);
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
 }
 
-.lessonLink:hover { 
-    background: rgba(255,255,255,0.1); 
-    padding-left: 1rem; 
+.lessonLink:hover {
+  background: rgba(143, 0, 255, 0.12);
+  color: rgba(255, 255, 255, 0.95);
+  padding-left: 14px;
 }
 
-.lessonLink.activeLesson { 
-    color: #60a5fa; 
-    background: rgba(59, 130, 246, 0.15); 
+.lessonLink.activeLesson {
+  color: #8f00ff;
+  background: rgba(143, 0, 255, 0.15);
+  border-left: 2px solid #8f00ff;
 }

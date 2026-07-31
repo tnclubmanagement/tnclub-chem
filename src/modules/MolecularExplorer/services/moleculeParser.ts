@@ -13,7 +13,13 @@ export interface Bond {
 export interface Molecule {
   id: string;
   name: string;
+  nameVi?: string;
   formula: string;
+  category?: string;
+  molarMass?: number;
+  geometry?: string;
+  description?: string;
+  applications?: string[];
   atoms: Atom[];
   bonds: Bond[];
 }

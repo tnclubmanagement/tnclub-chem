@@ -11,9 +11,12 @@ interface AtomNodeProps {
 }
 
 export const AtomNode = ({ id, symbol, position }: AtomNodeProps) => {
-  const { setHoveredAtomId, hoveredAtomId, renderMode } = useExplorerStore();
+  const { setHoveredAtomId, hoveredAtomId, renderMode, isMeasureMode, selectedMeasureAtomIds, addMeasureAtomId } = useExplorerStore();
   
   const isHovered = hoveredAtomId === id;
+  const measureIndex = selectedMeasureAtomIds.indexOf(id);
+  const isSelectedForMeasure = measureIndex !== -1;
+
   const baseRadius = getElementRadius(symbol);
   const radius = renderMode === 'space-filling' ? baseRadius * 1.6 : baseRadius;
   const color = getElementColor(symbol);
@@ -29,10 +32,10 @@ export const AtomNode = ({ id, symbol, position }: AtomNodeProps) => {
       thickness: baseRadius * 2,
       clearcoat: 1,
       clearcoatRoughness: 0.1,
-      emissive: new THREE.Color(isHovered ? color : '#000000'),
-      emissiveIntensity: isHovered ? 0.6 : 0,
+      emissive: new THREE.Color(isSelectedForMeasure ? '#ff1adb' : isHovered ? color : '#000000'),
+      emissiveIntensity: isSelectedForMeasure ? 0.8 : isHovered ? 0.6 : 0,
     });
-  }, [color, isHovered, renderMode, baseRadius]);
+  }, [color, isHovered, isSelectedForMeasure, renderMode, baseRadius]);
 
   return (
     <mesh
@@ -46,15 +49,42 @@ export const AtomNode = ({ id, symbol, position }: AtomNodeProps) => {
         e.stopPropagation();
         setHoveredAtomId(null);
       }}
+      onClick={(e) => {
+        if (isMeasureMode) {
+          e.stopPropagation();
+          addMeasureAtomId(id);
+        }
+      }}
     >
       <sphereGeometry args={[radius, 32, 32]} />
       
-      {isHovered && (
+      {isSelectedForMeasure && (
+        <Html center>
+          <div style={{
+            background: '#ff1adb',
+            color: '#fff',
+            width: '24px',
+            height: '24px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 800,
+            fontSize: '0.85rem',
+            boxShadow: '0 0 12px #ff1adb',
+            pointerEvents: 'none',
+          }}>
+            {measureIndex + 1}
+          </div>
+        </Html>
+      )}
+
+      {isHovered && !isSelectedForMeasure && (
         <Html distanceFactor={10} center>
           <div style={{
-            background: 'rgba(20, 20, 20, 0.7)',
+            background: 'rgba(20, 20, 20, 0.75)',
             backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
             padding: '4px 12px',
             borderRadius: '8px',
             color: '#fff',
@@ -64,7 +94,7 @@ export const AtomNode = ({ id, symbol, position }: AtomNodeProps) => {
             pointerEvents: 'none',
             whiteSpace: 'nowrap'
           }}>
-            {symbol} ({id})
+            {symbol} ({id}) {isMeasureMode ? '— Click để chọn đo' : ''}
           </div>
         </Html>
       )}

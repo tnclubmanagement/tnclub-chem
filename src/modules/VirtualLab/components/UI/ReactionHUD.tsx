@@ -54,7 +54,8 @@ export const ReactionHUD: React.FC = () => {
                       }
                       speakText(readText);
                     }}
-                    title="Đọc nội dung"
+                    title="Đọc nội dung nhật ký"
+                    aria-label="Đọc nội dung nhật ký bằng AI"
                   >
                     🔊
                   </button>
@@ -71,6 +72,8 @@ export const ReactionHUD: React.FC = () => {
           onMouseEnter={() => playSciFiSound('hover')}
           className={`${styles.btn} ${styles.btnClear}`}
           style={{ width: '100%' }}
+          title="Xóa toàn bộ nhật ký phản ứng"
+          aria-label="Xóa nhật ký phản ứng"
         >
           Xóa Nhật ký
         </button>

@@ -1,38 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS — Neon Cyberpunk Glassmorphism System
+   ============================================================ */
 :root {
-    --bg-color: #050508;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-color: #3b82f6;
-    --accent-hover: #2563eb;
-    --success: #10b981;
-    --danger: #ef4444;
-    --glass-bg: rgba(15, 23, 42, 0.5);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    --sidebar-width: 72px; 
+  /* 60% — Deep space background */
+  --bg-deep: #03040d;
+  --bg-space: #050510;
+  --bg-surface: #0a0b1a;
+
+  /* 30% — Frosted glass panels */
+  --glass-bg: rgba(255, 255, 255, 0.018);
+  --glass-bg-hover: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-border-bright: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* 10% — Neon accent colors */
+  --neon-cyan: hsl(183, 100%, 50%);     /* #00f7ff */
+  --neon-cyan-dim: rgba(0, 247, 255, 0.12);
+  --neon-magenta: hsl(310, 100%, 55%); /* #ff1adb */
+  --neon-magenta-dim: rgba(255, 26, 219, 0.12);
+  --neon-green: hsl(150, 100%, 50%);   /* #00ff80 */
+  --neon-green-dim: rgba(0, 255, 128, 0.12);
+  --neon-purple: hsl(272, 100%, 58%);  /* #8f00ff */
+  --neon-purple-dim: rgba(143, 0, 255, 0.12);
+  --neon-amber: hsl(38, 100%, 55%);    /* #ffaf00 */
+
+  /* Glow formulas — multi-layer for cinematic effect */
+  --glow-cyan: 0 0 8px rgba(0, 247, 255, 0.35), 0 0 25px rgba(0, 247, 255, 0.15), 0 0 60px rgba(0, 247, 255, 0.06);
+  --glow-magenta: 0 0 8px rgba(255, 26, 219, 0.35), 0 0 25px rgba(255, 26, 219, 0.15);
+  --glow-green: 0 0 8px rgba(0, 255, 128, 0.35), 0 0 25px rgba(0, 255, 128, 0.15);
+
+  /* Typography */
+  --font-display: 'Outfit', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Text */
+  --text-primary: #f0f4ff;
+  --text-secondary: #8892b0;
+  --text-muted: rgba(136, 146, 176, 0.6);
+
+  /* Layout */
+  --sidebar-width: 72px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-    font-family: 'Inter', -apple-system, sans-serif; 
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body { 
-    background-color: var(--bg-color); 
-    color: var(--text-primary); 
-    overflow: hidden; 
-    height: 100vh; 
-    width: 100vw; 
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    margin: 0;
-    max-width: none;
-    border: none;
-    text-align: left;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  margin: 0;
+  max-width: none;
+  border: none;
+  text-align: left;
+}
+
+/* ============================================================
+   GLOBAL KEYFRAMES
+   ============================================================ */
+
+/* Ambient pulse for neon elements */
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50%       { opacity: 0.85; filter: brightness(1.15); }
+}
+
+/* Slow drift for background orbs */
+@keyframes orbDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.05); }
+  66%  { transform: translate(-20px, 15px) scale(0.97); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Shimmer scan line */
+@keyframes shimmerScan {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Fade + lift in */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Spinning ring for logo */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Hero text flicker */
+@keyframes textFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55%                           { opacity: 0.85; }
+}
+
+/* Particle float */
+@keyframes particleFloat {
+  0%   { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
+  25%  { transform: translateY(-18px) translateX(8px) rotate(5deg); opacity: 1; }
+  50%  { transform: translateY(-8px) translateX(-10px) rotate(-3deg); opacity: 0.8; }
+  75%  { transform: translateY(-22px) translateX(5px) rotate(8deg); opacity: 1; }
+  100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
+}
+
+/* Grid scan line */
+@keyframes scanLine {
+  0%   { top: 0%; opacity: 0.4; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Count-up number reveal */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Glow border rotate */
+@keyframes rotateBorder {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* ============================================================
+   SCROLLBAR (Global)
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Neon text gradient */
+.text-neon-cyan {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-neon-magenta {
+  background: linear-gradient(135deg, var(--neon-magenta), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass panel base */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
 }

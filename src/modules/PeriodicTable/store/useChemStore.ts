@@ -9,7 +9,7 @@ interface ChemStoreState {
   activePeriod: number | null;
   isPanelOpen: boolean;
   activeTab: 'atom' | 'bond' | 'real';
-  activeView: 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
+  activeView: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
   activeLessonId: string | null;
   
   // Actions
@@ -20,7 +20,7 @@ interface ChemStoreState {
   setActivePeriod: (period: number | null) => void;
   closePanel: () => void;
   setActiveTab: (tab: 'atom' | 'bond' | 'real') => void;
-  setActiveView: (view: 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab') => void;
+  setActiveView: (view: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab') => void;
   setActiveLessonId: (id: string | null) => void;
 
   quizModeActive: boolean;
@@ -40,7 +40,7 @@ export const useChemStore = create<ChemStoreState>((set) => ({
   activePeriod: null,
   isPanelOpen: false,
   activeTab: (localStorage.getItem('edu3d_activeTab') as 'atom' | 'bond' | 'real') || 'atom',
-  activeView: 'periodic-table',
+  activeView: 'home',
   activeLessonId: null,
 
   setSelectedElement: (el) => set({ 

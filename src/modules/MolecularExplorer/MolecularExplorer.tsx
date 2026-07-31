@@ -1,14 +1,29 @@
 import { MoleculeCanvas } from './components/3D/MoleculeCanvas';
 import { ExplorerOverlay } from './components/UI/ExplorerOverlay';
+import { CompareDeck } from './components/UI/CompareDeck';
 import { Suspense } from 'react';
+import styles from './MolecularExplorer.module.css';
 
 export const MolecularExplorer = () => {
   return (
-    <div style={{ position: 'absolute', inset: 0, background: '#050505', overflow: 'hidden' }}>
-      <Suspense fallback={<div style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Loading 3D Engine...</div>}>
+    <div className={styles.explorerContainer}>
+      {/* Ambient glow orbs */}
+      <div className={styles.glowOrb1} />
+      <div className={styles.glowOrb2} />
+
+      <Suspense
+        fallback={
+          <div className={styles.loadingFallback}>
+            <div className={styles.loadingSpinner} />
+            <span>⬡ Khởi tạo Engine 3D...</span>
+          </div>
+        }
+      >
         <MoleculeCanvas />
       </Suspense>
+
       <ExplorerOverlay />
+      <CompareDeck />
     </div>
   );
 };

@@ -3,39 +3,73 @@ import { useChemStore } from '../../store/useChemStore';
 import { LESSONS } from '../../data/lessons';
 import styles from './Sidebar.module.css';
 
+type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
+
+const NAV_ITEMS: Array<{
+  view: ViewType;
+  icon: string;
+  label: string;
+  accentColor: string;
+}> = [
+  { view: 'home',           icon: '⌂',  label: 'Trang Chủ',       accentColor: '#00f7ff' },
+  { view: 'periodic-table', icon: '⚛',  label: 'Bảng Tuần Hoàn',  accentColor: '#00f7ff' },
+  { view: 'explorer',       icon: '⬡',  label: 'Phòng Phân Tích 3D', accentColor: '#ff1adb' },
+  { view: 'virtual-lab',    icon: '⚗',  label: 'Phòng Thí Nghiệm', accentColor: '#00ff80' },
+];
+
 export const Sidebar: React.FC = () => {
   const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
 
   return (
-    <aside className={styles.sidebarMini}>
-      <div className={styles.logoMini} title="ChemEdu 3D">
-        🔬
-      </div>
-      
-      <div className={styles.navGroup}>
-        {/* Category 1: Periodic Table */}
-        <div 
-          className={`${styles.navItem} ${activeView === 'periodic-table' ? styles.active : ''}`}
-          onClick={() => setActiveView('periodic-table')}
-        >
-          <span className={styles.navIcon}>🔲</span>
-          <div className={styles.tooltip}>Bảng Tuần Hoàn</div>
-        </div>
+    <aside className={styles.sidebar}>
+      {/* Logo / Brand */}
+      <button
+        className={styles.logo}
+        onClick={() => setActiveView('home')}
+        title="ChemEdu 3D — Trang chủ"
+      >
+        <span className={styles.logoIcon}>⚗️</span>
+        <div className={styles.logoRing} />
+      </button>
 
-        {/* Category 2: Lessons / Compounds */}
-        <div 
+      <div className={styles.divider} />
+
+      <nav className={styles.navGroup}>
+        {NAV_ITEMS.map((item) => {
+          const isActive = activeView === item.view;
+          return (
+            <div
+              key={item.view}
+              className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+              style={{ '--item-color': item.accentColor } as React.CSSProperties}
+              onClick={() => setActiveView(item.view)}
+            >
+              {/* Active indicator bar */}
+              <div className={styles.activeBar} />
+
+              <span className={styles.navIcon}>{item.icon}</span>
+
+              {/* Tooltip */}
+              <div className={styles.tooltip}>{item.label}</div>
+            </div>
+          );
+        })}
+
+        {/* Lessons flyout stays separate */}
+        <div
           className={`${styles.navItem} ${styles.hasFlyout} ${activeView === 'lesson' ? styles.active : ''}`}
+          style={{ '--item-color': '#8f00ff' } as React.CSSProperties}
           onClick={() => {
             setActiveView('lesson');
             if (activeView !== 'lesson') setActiveLessonId(null);
           }}
         >
+          <div className={styles.activeBar} />
           <span className={styles.navIcon}>📚</span>
-          <div className={styles.tooltip}>Bài Học & Hợp Chất</div>
-          
-          {/* Flyout Sub-menu (appears on hover) */}
+          <div className={styles.tooltip}>Bài Học &amp; Trắc Nghiệm</div>
+
           <div className={styles.submenuFlyout}>
-            <h4>Mô Hình Liên Kết</h4>
+            <h4>Bài Học &amp; Trắc Nghiệm</h4>
             <nav className={styles.lessonsSubmenu}>
               {LESSONS.map((lesson) => (
                 <button
@@ -53,25 +87,7 @@ export const Sidebar: React.FC = () => {
             </nav>
           </div>
         </div>
-
-        {/* Category 3: 3D Lab Explorer */}
-        <div 
-          className={`${styles.navItem} ${activeView === 'explorer' ? styles.active : ''}`}
-          onClick={() => setActiveView('explorer')}
-        >
-          <span className={styles.navIcon}>🧬</span>
-          <div className={styles.tooltip}>Phân tử 3D</div>
-        </div>
-
-        {/* Category 4: Virtual Lab */}
-        <div 
-          className={`${styles.navItem} ${activeView === 'virtual-lab' ? styles.active : ''}`}
-          onClick={() => setActiveView('virtual-lab')}
-        >
-          <span className={styles.navIcon}>🧪</span>
-          <div className={styles.tooltip}>Phòng Thí Nghiệm</div>
-        </div>
-      </div>
+      </nav>
     </aside>
   );
 };

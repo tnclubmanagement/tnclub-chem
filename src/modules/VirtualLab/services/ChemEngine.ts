@@ -84,6 +84,36 @@ export const ChemEngine = {
       };
     }
 
+    // 1.2. Mixing with Water (Dissolution / Dilution)
+    // Na and K react with water, which is handled above. Other things just dissolve or dilute (simplified).
+    if (isWater(c1) || isWater(c2)) {
+      const substance = isWater(c1) ? c2 : c1;
+
+      // Ignore metals that don't react with water for now (like Fe, Cu, Ag)
+      if (['salt', 'acid', 'base'].includes(substance.group)) {
+        const action = substance.state === 'solid' ? 'Hòa tan' : 'Pha loãng';
+        const newProduct: Chemical = {
+          ...substance,
+          id: `${substance.id}_aq`,
+          state: 'aqueous',
+          colorTheme: substance.colorTheme === 'white' ? 'colorless' : substance.colorTheme,
+          colorHex: substance.colorHex === '#ffffff' ? '#e0f7fa' : substance.colorHex,
+        };
+        
+        return {
+          id: `dilute_${c1.id}_${c2.id}`,
+          reactants: [c1, c2],
+          products: [newProduct],
+          equationHTML: `${substance.formula} + H₂O &rarr; Dung dịch ${substance.formula}`,
+          effect: 'none',
+          description: `${action} ${substance.name} bằng nước cất.`
+        };
+      } else if (substance.group === 'metal') {
+        // Unreactive metals with water
+        return null;
+      }
+    }
+
     // 1.5. Kim loại + Axit (vd: Mg + HCl)
     const isAcid = (c: Chemical) => c.formula.startsWith('H') && !isWater(c) && c.formula !== 'H₂';
     const isMetal = (c: Chemical) => METAL_REACTIVITY_SERIES.includes(c.formula);

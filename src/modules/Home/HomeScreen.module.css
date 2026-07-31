@@ -1,0 +1,503 @@
+/* HomeScreen.module.css — Cinematic Landing Page — Fully Responsive */
+
+/* ================================================================
+   ROOT LAYOUT — Two-column on wide, single-column stacked on small
+   ================================================================ */
+.home {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  /* [sidebar gap] [hero] [gap] [feature grid] */
+  grid-template-columns: 72px 1fr auto;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 40%, rgba(0, 100, 180, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 70% 70%, rgba(120, 0, 200, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #03040d 0%, #05051a 50%, #03040d 100%);
+}
+
+/* Inner container that sits right of the sidebar */
+.contentArea {
+  grid-column: 2 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding: clamp(24px, 4vh, 56px) clamp(24px, 4vw, 56px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   BACKGROUNDS (always absolute, behind content)
+   ================================================================ */
+.starfield {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orb1, .orb2, .orb3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: orbDrift 18s ease-in-out infinite;
+}
+
+.orb1 {
+  width: clamp(240px, 35vw, 480px);
+  height: clamp(240px, 35vw, 480px);
+  background: radial-gradient(circle, rgba(0, 120, 255, 0.12) 0%, transparent 70%);
+  top: -80px;
+  left: 10%;
+  animation-duration: 22s;
+}
+
+.orb2 {
+  width: clamp(180px, 26vw, 360px);
+  height: clamp(180px, 26vw, 360px);
+  background: radial-gradient(circle, rgba(180, 0, 255, 0.1) 0%, transparent 70%);
+  bottom: 0;
+  right: 5%;
+  animation-duration: 17s;
+  animation-delay: -5s;
+}
+
+.orb3 {
+  width: clamp(140px, 20vw, 280px);
+  height: clamp(140px, 20vw, 280px);
+  background: radial-gradient(circle, rgba(0, 255, 128, 0.08) 0%, transparent 70%);
+  top: 40%;
+  left: 55%;
+  animation-duration: 25s;
+  animation-delay: -10s;
+}
+
+/* ---- Floating particles ---- */
+.particle {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  pointer-events: none;
+  z-index: 1;
+  animation: particleFloat linear infinite;
+  user-select: none;
+  opacity: 0.45;
+}
+
+/* ---- Scan line ---- */
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 247, 255, 0.15) 30%,
+    rgba(0, 247, 255, 0.35) 50%,
+    rgba(0, 247, 255, 0.15) 70%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+  animation: scanLine 8s linear infinite;
+}
+
+/* ================================================================
+   HERO SECTION (left column)
+   ================================================================ */
+.heroSection {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 2.5vh, 28px);
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 600px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 247, 255, 0.06);
+  border: 1px solid rgba(0, 247, 255, 0.2);
+  color: rgba(0, 247, 255, 0.9);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: clamp(0.72rem, 1.2vw, 0.84rem);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.08);
+  white-space: nowrap;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00f7ff;
+  box-shadow: 0 0 8px #00f7ff;
+  animation: neonPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.heroTitle {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(6px, 1vw, 12px);
+  line-height: 0.9;
+  font-family: 'Outfit', sans-serif;
+  flex-wrap: wrap;
+}
+
+.titleLine1 {
+  font-size: clamp(3.2rem, 7vw, 8rem);
+  font-weight: 900;
+  color: #f0f4ff;
+  letter-spacing: clamp(-2px, -0.5vw, -4px);
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
+}
+
+.titleLine2 {
+  font-size: clamp(3.2rem, 7vw, 8rem);
+  font-weight: 900;
+  color: #f0f4ff;
+  letter-spacing: clamp(-2px, -0.5vw, -4px);
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
+}
+
+.titleAccent {
+  font-size: clamp(2rem, 4.5vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #00f7ff 0%, #00ff80 50%, #8f00ff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: clamp(-1px, -0.2vw, -2px);
+  animation: rotateBorder 4s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 247, 255, 0.4));
+}
+
+.heroDesc {
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(160, 180, 220, 0.85);
+  max-width: 480px;
+}
+
+/* ---- CTAs ---- */
+.heroCtas {
+  display: flex;
+  gap: clamp(10px, 1.5vw, 16px);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(10px, 1.5vh, 14px) clamp(20px, 2.5vw, 32px);
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 600;
+  color: #03040d;
+  background: linear-gradient(135deg, #00f7ff 0%, #00d4aa 100%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.35), 0 4px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ctaPrimary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  border-radius: inherit;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 40px rgba(0, 247, 255, 0.5), 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.ctaArrow {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+.ctaSecondary {
+  padding: clamp(9px, 1.4vh, 13px) clamp(18px, 2.2vw, 28px);
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.ctaSecondary:hover {
+  background: rgba(0, 255, 128, 0.08);
+  border-color: rgba(0, 255, 128, 0.4);
+  color: #00ff80;
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ---- Stats ---- */
+.statsRow {
+  display: flex;
+  gap: clamp(16px, 3vw, 32px);
+  padding-top: clamp(16px, 2vh, 24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statValue {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700;
+  color: #00f7ff;
+  text-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+  animation: countUp 0.6s ease-out both;
+}
+
+.statLabel {
+  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+  color: rgba(140, 160, 200, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+/* ================================================================
+   FEATURE GRID (right column)
+   ================================================================ */
+.featureGrid {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(10px, 1.5vw, 16px);
+  width: clamp(260px, 36vw, 480px);
+  flex-shrink: 0;
+}
+
+.featureCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: clamp(14px, 2vw, 22px);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: clamp(14px, 2vw, 20px);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  min-height: 0;
+}
+
+.featureCard:hover {
+  border-color: var(--card-color, rgba(0, 247, 255, 0.4));
+  box-shadow:
+    0 0 0 1px var(--card-color, rgba(0, 247, 255, 0.2)),
+    0 8px 40px var(--card-glow, rgba(0, 247, 255, 0.15)),
+    0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Shimmer */
+.cardShimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.featureCard:hover .cardShimmer { left: 160%; }
+
+.cardIcon {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  filter: drop-shadow(0 0 10px var(--card-color, rgba(0, 247, 255, 0.5)));
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover .cardIcon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.cardTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+  font-weight: 700;
+  color: #f0f4ff;
+  line-height: 1.2;
+}
+
+.cardDesc {
+  font-size: clamp(0.7rem, 0.9vw, 0.78rem);
+  color: rgba(140, 160, 200, 0.75);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardCta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--card-color, #00f7ff);
+  text-shadow: 0 0 10px var(--card-color, rgba(0, 247, 255, 0.5));
+  margin-top: auto;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.featureCard:hover .cardCta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardCorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at top right, var(--card-color, rgba(0, 247, 255, 0.15)) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.featureCard:hover .cardCorner { opacity: 1; }
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+   ================================================================ */
+
+/* Narrow viewport — stacked: hero above, cards below in a row */
+@media (max-width: 960px) {
+  .home {
+    grid-template-columns: 72px 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .contentArea {
+    grid-column: 2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 3vh, 36px) clamp(16px, 3vw, 28px);
+    gap: clamp(18px, 2.5vh, 28px);
+    overflow-y: auto;
+  }
+
+  .heroSection {
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .heroTitle {
+    justify-content: center;
+  }
+
+  .heroCtas {
+    justify-content: center;
+  }
+
+  .statsRow {
+    justify-content: center;
+  }
+
+  .heroDesc {
+    text-align: center;
+    max-width: 520px;
+  }
+
+  .featureGrid {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .cardDesc {
+    display: none;
+  }
+}
+
+/* Very narrow — 2x2 grid for feature cards */
+@media (max-width: 720px) {
+  .contentArea {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .titleLine1, .titleLine2 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .titleAccent {
+    font-size: clamp(1.6rem, 7vw, 2.5rem);
+  }
+
+  .particle {
+    display: none;
+  }
+}

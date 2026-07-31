@@ -1,0 +1,74 @@
+/* MolecularExplorer.module.css — 3D Space & Canvas Container */
+
+.explorerContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 30%, rgba(0, 60, 180, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 75% 65%, rgba(120, 0, 200, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 40% at 55% 10%, rgba(0, 180, 255, 0.06) 0%, transparent 60%),
+    linear-gradient(160deg, #03040f 0%, #070820 40%, #030312 100%);
+  user-select: none;
+}
+
+/* Ambient glow orbs */
+.glowOrb1 {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  top: 5%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(0, 120, 255, 0.12) 0%, transparent 70%);
+  filter: blur(70px);
+  pointer-events: none;
+  animation: orbDrift 20s ease-in-out infinite;
+}
+
+.glowOrb2 {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  bottom: 8%;
+  right: 10%;
+  background: radial-gradient(circle, rgba(160, 0, 255, 0.1) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: orbDrift 16s ease-in-out infinite reverse;
+}
+
+/* Loading fallback */
+.loadingFallback {
+  color: #00f7ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  gap: 12px;
+  text-shadow: 0 0 15px rgba(0, 247, 255, 0.6);
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 247, 255, 0.15);
+  border-top-color: #00f7ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.08); }
+}

@@ -1,6 +1,6 @@
 import { CHEMICALS, type Chemical } from './chemicals';
 
-export type VisualEffectType = 'explosion' | 'gas_bubbles' | 'precipitation_white' | 'precipitation_blue' | 'color_change_blue' | 'color_change_pink';
+export type VisualEffectType = 'explosion' | 'gas_bubbles' | 'precipitation_white' | 'precipitation_blue' | 'color_change_blue' | 'color_change_pink' | 'none';
 
 export interface Reaction {
   id: string;

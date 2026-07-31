@@ -14,7 +14,10 @@ export const LessonDashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <h1 className={styles.title}>Thư viện Mô hình Phân tử</h1>
+      <h1 className={styles.title}>📚 Bài Học &amp; Trắc Nghiệm Hóa Học</h1>
+      <p className={styles.subtitle}>
+        Học lý thuyết liên kết hóa học, cấu trúc góc 3D và ôn luyện bài tập trắc nghiệm tương tác
+      </p>
       
       <div className={styles.grid}>
         {LESSONS.map(lesson => (
@@ -23,6 +26,7 @@ export const LessonDashboard: React.FC = () => {
             className={styles.card}
             onClick={() => handleLessonSelect(lesson.id)}
           >
+            <div className={styles.badge}>🎯 Bài học &amp; Quiz</div>
             <div className={styles.iconWrapper}>
               ⚛️
             </div>

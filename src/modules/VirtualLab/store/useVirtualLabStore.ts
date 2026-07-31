@@ -3,12 +3,13 @@ import type { Chemical } from '../data/chemicals';
 import { type Reaction } from '../data/reactions';
 import { ChemEngine } from '../services/ChemEngine';
 import { playSciFiSound } from '../../PeriodicTable/utils/audio';
+import { MISSIONS } from '../data/missions';
 
 export interface LogEntry {
   id: number;
   equationHTML?: string;
   description: string;
-  type: 'reaction' | 'info' | 'warning';
+  type: 'reaction' | 'info' | 'warning' | 'mission';
 }
 
 interface VirtualLabState {
@@ -32,6 +33,15 @@ interface VirtualLabState {
   setTtsVoiceURI: (uri: string | null) => void;
   setIsAutoPlayVoice: (isAutoPlay: boolean) => void;
   runExample: (chem1: Chemical, chem2: Chemical) => Promise<void>;
+  
+  // Gamification
+  isMissionModeActive: boolean;
+  activeMissionIndex: number;
+  completedMissions: string[];
+  completeCurrentMission: () => Promise<void>;
+  toggleMissionMode: () => void;
+  skipToNextMission: () => void;
+  goToPreviousMission: () => void;
 }
 
 export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
@@ -46,6 +56,62 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
   ttsSpeed: 1.0,
   ttsVoiceURI: null,
   isAutoPlayVoice: true, // Default to true as the user wants auto play
+
+  isMissionModeActive: false,
+  activeMissionIndex: 0,
+  completedMissions: [],
+
+  toggleMissionMode: () => {
+    const { isMissionModeActive } = get();
+    set({ 
+      isMissionModeActive: !isMissionModeActive,
+      // Optional: reset missions when starting
+      activeMissionIndex: 0,
+      completedMissions: []
+    });
+  },
+
+  skipToNextMission: () => {
+    const { activeMissionIndex } = get();
+    if (activeMissionIndex < MISSIONS.length - 1) {
+      set({ activeMissionIndex: activeMissionIndex + 1 });
+    }
+  },
+
+  goToPreviousMission: () => {
+    const { activeMissionIndex } = get();
+    if (activeMissionIndex > 0) {
+      set({ activeMissionIndex: activeMissionIndex - 1 });
+    }
+  },
+
+  completeCurrentMission: async () => {
+    const { activeMissionIndex, completedMissions } = get();
+    const mission = MISSIONS[activeMissionIndex];
+    if (!mission || completedMissions.includes(mission.id)) return;
+
+    playSciFiSound('success');
+    
+    set({
+      completedMissions: [...completedMissions, mission.id],
+      reactionLog: [
+        { id: Date.now(), description: mission.rewardText, type: 'mission' },
+        ...get().reactionLog
+      ]
+    });
+
+    if (get().isAutoPlayVoice) {
+      const m = await import('../utils/speech');
+      await m.speakText(mission.rewardText);
+    }
+
+    // Advance to next mission after a short delay
+    setTimeout(() => {
+      if (activeMissionIndex < MISSIONS.length - 1) {
+        set({ activeMissionIndex: activeMissionIndex + 1 });
+      }
+    }, 4000);
+  },
 
   addReactant: async (chemical) => {
     const { reactants, isReacting, isPouring } = get();
@@ -104,6 +170,13 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
         const reactionSpeechPromise = get().isAutoPlayVoice 
           ? import('../utils/speech').then(m => m.speakText(reaction.description)) 
           : Promise.resolve();
+
+        // Check mission
+        const currentMission = MISSIONS[get().activeMissionIndex];
+        if (get().isMissionModeActive && currentMission && currentMission.targetReactionIds && currentMission.targetReactionIds.includes(reaction.id)) {
+          // Await both the normal speech and then trigger mission completion which has its own speech
+          reactionSpeechPromise.then(() => get().completeCurrentMission());
+        }
 
         // Stop the visual effects after 5 seconds OR when speech finishes
         await Promise.all([

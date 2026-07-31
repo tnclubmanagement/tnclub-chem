@@ -5,6 +5,7 @@ import { MolecularExplorer } from './modules/MolecularExplorer/MolecularExplorer
 import { VirtualLab } from './modules/VirtualLab';
 import { Breadcrumb } from './components/Breadcrumb/Breadcrumb';
 import { HomeScreen } from './modules/Home/HomeScreen';
+import { LanguageSwitcher } from './components/LanguageSwitcher/LanguageSwitcher';
 import { useUrlSync } from './hooks/useUrlSync';
 import './App.css';
 
@@ -20,6 +21,17 @@ function App() {
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: '#03040d' }}>
+      {/* Global Top-Right Language Switcher Header */}
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        right: '24px',
+        zIndex: 100,
+        pointerEvents: 'auto',
+      }}>
+        <LanguageSwitcher />
+      </div>
+
       {/* Animated view transitions */}
       <AnimatePresence mode="wait">
         {activeView === 'home' && (

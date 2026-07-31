@@ -2,10 +2,12 @@ import React from 'react';
 import { useChemStore } from '../../../PeriodicTable';
 import { LESSONS } from '../../../PeriodicTable/data/lessons';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import styles from './LessonDashboard.module.css';
 
 export const LessonDashboard: React.FC = () => {
   const { setActiveLessonId, soundEnabled } = useChemStore();
+  const { t } = useTranslation();
 
   const handleLessonSelect = (id: string) => {
     playSciFiSound('click', soundEnabled);
@@ -14,19 +16,19 @@ export const LessonDashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <h1 className={styles.title}>📚 Bài Học &amp; Trắc Nghiệm Hóa Học</h1>
+      <h1 className={styles.title}>📚 {t('lessons', 'title')}</h1>
       <p className={styles.subtitle}>
-        Học lý thuyết liên kết hóa học, cấu trúc góc 3D và ôn luyện bài tập trắc nghiệm tương tác
+        {t('lessons', 'subtitle')}
       </p>
-      
+
       <div className={styles.grid}>
-        {LESSONS.map(lesson => (
-          <div 
-            key={lesson.id} 
+        {LESSONS.map((lesson) => (
+          <div
+            key={lesson.id}
             className={styles.card}
             onClick={() => handleLessonSelect(lesson.id)}
           >
-            <div className={styles.badge}>🎯 Bài học &amp; Quiz</div>
+            <div className={styles.badge}>{t('lessons', 'badge')}</div>
             <div className={styles.iconWrapper}>
               ⚛️
             </div>

@@ -32,7 +32,7 @@ export const useUrlSync = () => {
         store.setActiveView('virtual-lab');
       } else {
         // Default
-        store.setActiveView('periodic-table');
+        store.setActiveView('home');
       }
     };
 

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import styles from './ExplorerOverlay.module.css';
 
 const CATEGORIES = [
@@ -42,6 +43,8 @@ export const ExplorerOverlay = () => {
     toggleCompareMode,
   } = useExplorerStore();
 
+  const { t, language } = useTranslation();
+
   // Initialize with first molecule if none selected
   useEffect(() => {
     if (!selectedMolecule && MOCK_MOLECULES.length > 0) {
@@ -78,8 +81,8 @@ export const ExplorerOverlay = () => {
       >
         <div className={styles.brand}>
           <div className={styles.brandBadge}>🔬</div>
-          <div className={styles.brandTitle}>PHÒNG PHÂN TÍCH 3D</div>
-          <span className={styles.brandSub}>Sandbox 3D Tương Tác</span>
+          <div className={styles.brandTitle}>{t('explorer', 'brandTitle')}</div>
+          <span className={styles.brandSub}>{t('explorer', 'brandSub')}</span>
         </div>
 
         {/* Category Pills */}
@@ -103,7 +106,7 @@ export const ExplorerOverlay = () => {
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="Tìm phân tử, công thức..."
+            placeholder={t('explorer', 'searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -120,7 +123,7 @@ export const ExplorerOverlay = () => {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }}
       >
         <div>
-          <h4 className={styles.sectionTitle}>🧪 Chọn Phân tử ({filteredMolecules.length})</h4>
+          <h4 className={styles.sectionTitle}>🧪 {t('explorer', 'selectMolecule')} ({filteredMolecules.length})</h4>
           <select
             className={styles.selector}
             value={selectedMolecule?.id || ''}
@@ -131,7 +134,7 @@ export const ExplorerOverlay = () => {
           >
             {filteredMolecules.map((mol) => (
               <option key={mol.id} value={mol.id}>
-                {mol.formula} - {mol.nameVi || mol.name}
+                {mol.formula} - {language === 'en' ? mol.name : mol.nameVi || mol.name}
               </option>
             ))}
           </select>
@@ -144,9 +147,9 @@ export const ExplorerOverlay = () => {
                   selectedMolecule?.id === mol.id ? styles.quickMolActive : ''
                 }`}
                 onClick={() => setSelectedMolecule(mol)}
-                title={mol.nameVi || mol.name}
+                title={language === 'en' ? mol.name : mol.nameVi || mol.name}
               >
-                <span className={styles.molNameVi}>{mol.nameVi || mol.name}</span>
+                <span className={styles.molNameVi}>{language === 'en' ? mol.name : mol.nameVi || mol.name}</span>
                 <span className={styles.molFormula}>{mol.formula}</span>
               </button>
             ))}
@@ -155,45 +158,45 @@ export const ExplorerOverlay = () => {
 
         {/* Academic Feature Deck */}
         <div>
-          <h4 className={styles.sectionTitle}>🎓 Chuyên Sâu Hóa Học 3D</h4>
+          <h4 className={styles.sectionTitle}>🎓 {t('explorer', 'academicTitle')}</h4>
           <div className={styles.modeGroup} style={{ flexDirection: 'column', gap: '8px' }}>
             <button
               className={`${styles.btn} ${showLonePairs ? styles.btnActive : ''}`}
               onClick={toggleShowLonePairs}
             >
-              👁️ Cặp Electron Tự Do (Lone Pairs)
+              {t('explorer', 'lonePairsBtn')}
             </button>
             <button
               className={`${styles.btn} ${showOrbitals ? styles.btnActive : ''}`}
               onClick={toggleShowOrbitals}
             >
-              ☁️ Xen Phủ Orbital (σ &amp; π)
+              {t('explorer', 'orbitalsBtn')}
             </button>
             <button
               className={`${styles.btn} ${showDipole ? styles.btnActive : ''}`}
               onClick={toggleShowDipole}
             >
-              ⚡ Vector Dipole Momen (μ)
+              {t('explorer', 'dipoleBtn')}
             </button>
             <button
               className={`${styles.btn} ${isMeasureMode ? styles.btnActive : ''}`}
               onClick={toggleIsMeasureMode}
             >
-              📐 Đo Góc &amp; Khoảng Cách 3D
+              {t('explorer', 'measureBtn')}
             </button>
             <button
               className={styles.btn}
               style={{ background: 'rgba(168, 85, 247, 0.25)', borderColor: '#a855f7' }}
               onClick={toggleCompareMode}
             >
-              ⚖️ So Sánh Phân Tử Song Song
+              {t('explorer', 'compareBtn')}
             </button>
           </div>
         </div>
 
         {/* Render Mode Toggle */}
         <div>
-          <h4 className={styles.sectionTitle}>👁️ Kiểu Render 3D</h4>
+          <h4 className={styles.sectionTitle}>👁️ {t('explorer', 'renderTitle')}</h4>
           <div className={styles.modeGroup}>
             <button
               className={`${styles.btn} ${
@@ -201,7 +204,7 @@ export const ExplorerOverlay = () => {
               }`}
               onClick={() => setRenderMode('ball-and-stick')}
             >
-              ⚛️ Ball &amp; Stick
+              {t('explorer', 'ballAndStick')}
             </button>
             <button
               className={`${styles.btn} ${
@@ -209,26 +212,26 @@ export const ExplorerOverlay = () => {
               }`}
               onClick={() => setRenderMode('space-filling')}
             >
-              🔮 Space Filling
+              {t('explorer', 'spaceFilling')}
             </button>
           </div>
         </div>
 
         {/* Rotation & Explode Sliders */}
         <div>
-          <h4 className={styles.sectionTitle}>🎛️ Điều khiển Mô hình</h4>
+          <h4 className={styles.sectionTitle}>🎛️ {t('explorer', 'controlsTitle')}</h4>
           <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
             <button
               className={`${styles.btn} ${isAutoRotate ? styles.btnActive : ''}`}
               onClick={toggleAutoRotate}
             >
-              {isAutoRotate ? '⏸️ Dừng Xoay' : '▶️ Tự Xoay'}
+              {isAutoRotate ? t('explorer', 'stopRotate') : t('explorer', 'startRotate')}
             </button>
           </div>
 
           <div className={styles.sliderBox}>
             <div className={styles.sliderHeader}>
-              <span>Tách rời cấu trúc (Explode):</span>
+              <span>{t('explorer', 'explodeLabel')}</span>
               <span className={styles.sliderVal}>{explodeRadius.toFixed(1)}x</span>
             </div>
             <input
@@ -258,7 +261,9 @@ export const ExplorerOverlay = () => {
           <div className={styles.molHeaderBadge}>
             <div className={styles.formulaBox}>{selectedMolecule.formula}</div>
             <div className={styles.molTitles}>
-              <h2 className={styles.nameVi}>{selectedMolecule.nameVi || selectedMolecule.name}</h2>
+              <h2 className={styles.nameVi}>
+                {language === 'en' ? selectedMolecule.name : selectedMolecule.nameVi || selectedMolecule.name}
+              </h2>
               <span className={styles.nameEn}>{selectedMolecule.name}</span>
             </div>
           </div>
@@ -266,29 +271,29 @@ export const ExplorerOverlay = () => {
           {/* Key Specs */}
           <div className={styles.specGrid}>
             <div className={styles.specCard}>
-              <span className={styles.specLabel}>Khối lượng phân tử:</span>
+              <span className={styles.specLabel}>{t('explorer', 'molarMass')}</span>
               <span className={styles.specValue}>
                 {selectedMolecule.molarMass ? `${selectedMolecule.molarMass} g/mol` : '---'}
               </span>
             </div>
             <div className={styles.specCard}>
-              <span className={styles.specLabel}>Tổng nguyên tử:</span>
-              <span className={styles.specValue}>{selectedMolecule.atoms.length} hạt</span>
+              <span className={styles.specLabel}>{t('explorer', 'totalAtoms')}</span>
+              <span className={styles.specValue}>{selectedMolecule.atoms.length}</span>
             </div>
             <div className={styles.specCard}>
-              <span className={styles.specLabel}>Số liên kết:</span>
-              <span className={styles.specValue}>{selectedMolecule.bonds.length} liên kết</span>
+              <span className={styles.specLabel}>{t('explorer', 'bondsCount')}</span>
+              <span className={styles.specValue}>{selectedMolecule.bonds.length}</span>
             </div>
             <div className={styles.specCard}>
-              <span className={styles.specLabel}>Cấu trúc hình học:</span>
-              <span className={styles.specValue}>{selectedMolecule.geometry || 'Tiêu chuẩn'}</span>
+              <span className={styles.specLabel}>{t('explorer', 'geometry')}</span>
+              <span className={styles.specValue}>{selectedMolecule.geometry || '---'}</span>
             </div>
           </div>
 
           {/* Description */}
           {selectedMolecule.description && (
             <div>
-              <h4 className={styles.sectionTitle}>📖 Giới thiệu hóa học</h4>
+              <h4 className={styles.sectionTitle}>{t('explorer', 'chemistryIntro')}</h4>
               <div className={styles.descBox}>{selectedMolecule.description}</div>
             </div>
           )}
@@ -296,7 +301,7 @@ export const ExplorerOverlay = () => {
           {/* Real world Applications */}
           {selectedMolecule.applications && selectedMolecule.applications.length > 0 && (
             <div>
-              <h4 className={styles.sectionTitle}>💡 Ứng dụng thực tế</h4>
+              <h4 className={styles.sectionTitle}>{t('explorer', 'realWorldApps')}</h4>
               <div className={styles.appList}>
                 {selectedMolecule.applications.map((app, idx) => (
                   <div key={idx} className={styles.appItem}>
@@ -311,7 +316,7 @@ export const ExplorerOverlay = () => {
           {/* Interactive Atom Chips */}
           <div>
             <h4 className={styles.sectionTitle}>
-              ⚛️ Danh sách Nguyên tử trong phân tử ({selectedMolecule.atoms.length})
+              ⚛️ {t('explorer', 'atomList')} ({selectedMolecule.atoms.length})
             </h4>
             <div className={styles.atomsChipList}>
               {selectedMolecule.atoms.map((atom) => (

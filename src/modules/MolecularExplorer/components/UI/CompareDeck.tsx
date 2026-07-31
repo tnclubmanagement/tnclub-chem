@@ -2,6 +2,7 @@ import React from 'react';
 import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
 import { calculateLonePairs, calculateDipoleMoment } from '../../services/vseprEngine';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import styles from './CompareDeck.module.css';
 
 export const CompareDeck: React.FC = () => {
@@ -12,6 +13,7 @@ export const CompareDeck: React.FC = () => {
     compareMolecule,
     setCompareMolecule,
   } = useExplorerStore();
+  const { t, language } = useTranslation();
 
   if (!isCompareMode || !selectedMolecule) return null;
 
@@ -27,10 +29,10 @@ export const CompareDeck: React.FC = () => {
     <div className={styles.compareModal}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <span>⚖️ SO SÁNH ĐỐI CHIẾU PHÂN TỬ 3D</span>
+          <span>⚖️ {t('compare', 'title')}</span>
         </div>
         <button className={styles.closeBtn} onClick={toggleCompareMode}>
-          ✕ Đóng Chế Độ So Sánh
+          {t('compare', 'closeBtn')}
         </button>
       </div>
 
@@ -39,28 +41,32 @@ export const CompareDeck: React.FC = () => {
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <span className={styles.formula}>{selectedMolecule.formula}</span>
-            <span className={styles.name}>{selectedMolecule.nameVi || selectedMolecule.name}</span>
+            <span className={styles.name}>
+              {language === 'en' ? selectedMolecule.name : selectedMolecule.nameVi || selectedMolecule.name}
+            </span>
           </div>
 
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Dạng Hình Học VSEPR:</span>
-            <span className={styles.specVal}>{selectedMolecule.geometry || 'Tiêu chuẩn'}</span>
+            <span className={styles.specLabel}>{t('compare', 'vseprGeometry')}</span>
+            <span className={styles.specVal}>{selectedMolecule.geometry || '---'}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Cặp Electron Tự Do (Lone Pairs):</span>
-            <span className={styles.specVal}>{mol1LpCount} cặp</span>
+            <span className={styles.specLabel}>{t('compare', 'lonePairCount')}</span>
+            <span className={styles.specVal}>{mol1LpCount} {t('compare', 'pairsUnit')}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Momen Lưỡng Cực (Dipole μ):</span>
-            <span className={styles.specVal}>{mol1Dipole.magnitude} D ({mol1Dipole.isPolar ? 'Phân cực' : 'Không phân cực'})</span>
+            <span className={styles.specLabel}>{t('compare', 'dipoleMoment')}</span>
+            <span className={styles.specVal}>
+              {mol1Dipole.magnitude} D ({mol1Dipole.isPolar ? t('compare', 'polar') : t('compare', 'nonPolar')})
+            </span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Hạt Nguyên Tử:</span>
-            <span className={styles.specVal}>{selectedMolecule.atoms.length} hạt</span>
+            <span className={styles.specLabel}>{t('compare', 'totalAtoms')}</span>
+            <span className={styles.specVal}>{selectedMolecule.atoms.length} {t('compare', 'atomsUnit')}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Liên Kết Hóa Học:</span>
-            <span className={styles.specVal}>{selectedMolecule.bonds.length} liên kết</span>
+            <span className={styles.specLabel}>{t('compare', 'bondsCount')}</span>
+            <span className={styles.specVal}>{selectedMolecule.bonds.length} {t('compare', 'bondsUnit')}</span>
           </div>
         </div>
 
@@ -77,7 +83,7 @@ export const CompareDeck: React.FC = () => {
             >
               {MOCK_MOLECULES.map((m) => (
                 <option key={m.id} value={m.id}>
-                  {m.formula} - {m.nameVi || m.name}
+                  {m.formula} - {language === 'en' ? m.name : m.nameVi || m.name}
                 </option>
               ))}
             </select>
@@ -85,24 +91,26 @@ export const CompareDeck: React.FC = () => {
           </div>
 
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Dạng Hình Học VSEPR:</span>
-            <span className={styles.specVal}>{compareMol.geometry || 'Tiêu chuẩn'}</span>
+            <span className={styles.specLabel}>{t('compare', 'vseprGeometry')}</span>
+            <span className={styles.specVal}>{compareMol.geometry || '---'}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Cặp Electron Tự Do (Lone Pairs):</span>
-            <span className={styles.specVal}>{mol2LpCount} cặp</span>
+            <span className={styles.specLabel}>{t('compare', 'lonePairCount')}</span>
+            <span className={styles.specVal}>{mol2LpCount} {t('compare', 'pairsUnit')}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Momen Lưỡng Cực (Dipole μ):</span>
-            <span className={styles.specVal}>{mol2Dipole.magnitude} D ({mol2Dipole.isPolar ? 'Phân cực' : 'Không phân cực'})</span>
+            <span className={styles.specLabel}>{t('compare', 'dipoleMoment')}</span>
+            <span className={styles.specVal}>
+              {mol2Dipole.magnitude} D ({mol2Dipole.isPolar ? t('compare', 'polar') : t('compare', 'nonPolar')})
+            </span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Hạt Nguyên Tử:</span>
-            <span className={styles.specVal}>{compareMol.atoms.length} hạt</span>
+            <span className={styles.specLabel}>{t('compare', 'totalAtoms')}</span>
+            <span className={styles.specVal}>{compareMol.atoms.length} {t('compare', 'atomsUnit')}</span>
           </div>
           <div className={styles.specRow}>
-            <span className={styles.specLabel}>Số Liên Kết Hóa Học:</span>
-            <span className={styles.specVal}>{compareMol.bonds.length} liên kết</span>
+            <span className={styles.specLabel}>{t('compare', 'bondsCount')}</span>
+            <span className={styles.specVal}>{compareMol.bonds.length} {t('compare', 'bondsUnit')}</span>
           </div>
         </div>
       </div>

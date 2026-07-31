@@ -1,0 +1,22 @@
+{
+  "badge": "Interactive 3D Chemistry Platform",
+  "heroLine1": "CHEM",
+  "heroLine2": "EDU",
+  "heroAccent": "3D",
+  "heroDesc": "Explore the world of chemistry through vibrant 3D graphics. From atoms to reactions — all before your eyes.",
+  "startBtn": "Start Exploring",
+  "labBtn": "Enter Virtual Lab",
+  "statElements": "Elements",
+  "statMolecules": "3D Molecules",
+  "statReactions": "Reactions",
+  "statGraphics": "Real Graphics",
+  "featurePeriodicTitle": "3D Periodic Table",
+  "featurePeriodicDesc": "118 elements with interactive effects. Filter by group, period, physical state.",
+  "featureExplorerTitle": "3D Analyzer Lab",
+  "featureExplorerDesc": "Interactive 3D Sandbox: Render modes, explode view, specs & atomic coordinates.",
+  "featureLabTitle": "Virtual Lab",
+  "featureLabDesc": "3D virtual chemical reaction simulator. Combine chemicals and observe results.",
+  "featureLessonsTitle": "Lessons & Quizzes",
+  "featureLessonsDesc": "Learn chemical bond theory & practice interactive multiple choice quizzes.",
+  "cardCta": "Open Now"
+}

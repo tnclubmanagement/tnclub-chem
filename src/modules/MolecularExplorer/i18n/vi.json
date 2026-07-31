@@ -1,0 +1,43 @@
+{
+  "explorer": {
+    "brandTitle": "PHÒNG PHÂN TÍCH 3D",
+    "brandSub": "Sandbox 3D Tương Tác",
+    "searchPlaceholder": "Tìm phân tử, công thức...",
+    "selectMolecule": "Chọn Phân tử",
+    "academicTitle": "Chuyên Sâu Hóa Học 3D",
+    "lonePairsBtn": "👁️ Cặp Electron Tự Do (Lone Pairs)",
+    "orbitalsBtn": "☁️ Xen Phủ Orbital (σ & π)",
+    "dipoleBtn": "⚡ Vector Dipole Momen (μ)",
+    "measureBtn": "📐 Đo Góc & Khoảng Cách 3D",
+    "compareBtn": "⚖️ So Sánh Phân Tử Song Song",
+    "renderTitle": "Kiểu Render 3D",
+    "ballAndStick": "⚛️ Ball & Stick",
+    "spaceFilling": "🔮 Space Filling",
+    "controlsTitle": "Điều khiển Mô hình",
+    "stopRotate": "⏸️ Dừng Xoay",
+    "startRotate": "▶️ Tự Xoay",
+    "explodeLabel": "Tách rời cấu trúc (Explode):",
+    "molarMass": "Khối lượng phân tử:",
+    "totalAtoms": "Tổng nguyên tử:",
+    "bondsCount": "Số liên kết:",
+    "geometry": "Cấu trúc hình học:",
+    "chemistryIntro": "📖 Giới thiệu hóa học",
+    "realWorldApps": "💡 Ứng dụng thực tế",
+    "atomList": "Danh sách Nguyên tử trong phân tử",
+    "measureHelp": "Click vào 2 nguyên tử để đo khoảng cách (Å) hoặc 3 nguyên tử để đo góc liên kết (°)."
+  },
+  "compare": {
+    "title": "SO SÁNH ĐỐI CHIẾU PHÂN TỬ 3D",
+    "closeBtn": "✕ Đóng Chế Độ So Sánh",
+    "vseprGeometry": "Dạng Hình Học VSEPR:",
+    "lonePairCount": "Số Cặp Electron Tự Do (Lone Pairs):",
+    "dipoleMoment": "Momen Lưỡng Cực (Dipole μ):",
+    "polar": "Phân cực",
+    "nonPolar": "Không phân cực",
+    "totalAtoms": "Số Hạt Nguyên Tử:",
+    "bondsCount": "Số Liên Kết Hóa Học:",
+    "pairsUnit": "cặp",
+    "atomsUnit": "hạt",
+    "bondsUnit": "liên kết"
+  }
+}

@@ -1,0 +1,38 @@
+.switcherContainer {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 247, 255, 0.2);
+  border-radius: 999px;
+  padding: 3px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+.langBtn {
+  background: transparent;
+  border: none;
+  color: rgba(200, 220, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.langBtn:hover {
+  color: #00f7ff;
+}
+
+.active {
+  background: rgba(0, 247, 255, 0.2);
+  color: #00f7ff;
+  border: 1px solid rgba(0, 247, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+}

@@ -1,0 +1,43 @@
+{
+  "explorer": {
+    "brandTitle": "3D ANALYZER LAB",
+    "brandSub": "Interactive 3D Sandbox",
+    "searchPlaceholder": "Search molecule, formula...",
+    "selectMolecule": "Select Molecule",
+    "academicTitle": "Academic 3D Chemistry",
+    "lonePairsBtn": "👁️ Lone Pair Electrons (VSEPR)",
+    "orbitalsBtn": "☁️ Orbital Overlap (σ & π)",
+    "dipoleBtn": "⚡ Dipole Moment Vector (μ)",
+    "measureBtn": "📐 3D Angle & Distance Tool",
+    "compareBtn": "⚖️ Side-by-Side Molecule Comparison",
+    "renderTitle": "3D Render Style",
+    "ballAndStick": "⚛️ Ball & Stick",
+    "spaceFilling": "🔮 Space Filling",
+    "controlsTitle": "Model Controls",
+    "stopRotate": "⏸️ Stop Rotate",
+    "startRotate": "▶️ Auto Rotate",
+    "explodeLabel": "Explode Structure:",
+    "molarMass": "Molecular Mass:",
+    "totalAtoms": "Total Atoms:",
+    "bondsCount": "Total Bonds:",
+    "geometry": "Geometry Structure:",
+    "chemistryIntro": "📖 Chemistry Introduction",
+    "realWorldApps": "💡 Real World Applications",
+    "atomList": "Atoms List in Molecule",
+    "measureHelp": "Click 2 atoms to measure distance (Å) or 3 atoms to measure bond angle (°)."
+  },
+  "compare": {
+    "title": "SIDE-BY-SIDE 3D MOLECULE COMPARISON",
+    "closeBtn": "✕ Close Compare Deck",
+    "vseprGeometry": "VSEPR Geometry Shape:",
+    "lonePairCount": "Lone Pair Electron Count:",
+    "dipoleMoment": "Dipole Moment (μ):",
+    "polar": "Polar",
+    "nonPolar": "Non-polar",
+    "totalAtoms": "Total Atom Count:",
+    "bondsCount": "Chemical Bonds Count:",
+    "pairsUnit": "pairs",
+    "atomsUnit": "atoms",
+    "bondsUnit": "bonds"
+  }
+}

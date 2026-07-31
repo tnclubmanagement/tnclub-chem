@@ -1,24 +1,27 @@
 import React from 'react';
 import { useChemStore } from '../../store/useChemStore';
 import { LESSONS } from '../../data/lessons';
+import { useTranslation } from '../../../../i18n/useTranslation';
+import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
 import styles from './Sidebar.module.css';
 
 type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
 
-const NAV_ITEMS: Array<{
-  view: ViewType;
-  icon: string;
-  label: string;
-  accentColor: string;
-}> = [
-  { view: 'home',           icon: '⌂',  label: 'Trang Chủ',       accentColor: '#00f7ff' },
-  { view: 'periodic-table', icon: '⚛',  label: 'Bảng Tuần Hoàn',  accentColor: '#00f7ff' },
-  { view: 'explorer',       icon: '⬡',  label: 'Phòng Phân Tích 3D', accentColor: '#ff1adb' },
-  { view: 'virtual-lab',    icon: '⚗',  label: 'Phòng Thí Nghiệm', accentColor: '#00ff80' },
-];
-
 export const Sidebar: React.FC = () => {
   const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
+  const { t } = useTranslation();
+
+  const navItems: Array<{
+    view: ViewType;
+    icon: string;
+    label: string;
+    accentColor: string;
+  }> = [
+    { view: 'home',           icon: '⌂',  label: t('nav', 'home'),          accentColor: '#00f7ff' },
+    { view: 'periodic-table', icon: '⚛',  label: t('nav', 'periodicTable'), accentColor: '#00f7ff' },
+    { view: 'explorer',       icon: '⬡',  label: t('nav', 'explorer'),      accentColor: '#ff1adb' },
+    { view: 'virtual-lab',    icon: '⚗',  label: t('nav', 'virtualLab'),    accentColor: '#00ff80' },
+  ];
 
   return (
     <aside className={styles.sidebar}>
@@ -26,7 +29,7 @@ export const Sidebar: React.FC = () => {
       <button
         className={styles.logo}
         onClick={() => setActiveView('home')}
-        title="ChemEdu 3D — Trang chủ"
+        title="ChemEdu 3D"
       >
         <span className={styles.logoIcon}>⚗️</span>
         <div className={styles.logoRing} />
@@ -35,7 +38,7 @@ export const Sidebar: React.FC = () => {
       <div className={styles.divider} />
 
       <nav className={styles.navGroup}>
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const isActive = activeView === item.view;
           return (
             <div
@@ -66,10 +69,10 @@ export const Sidebar: React.FC = () => {
         >
           <div className={styles.activeBar} />
           <span className={styles.navIcon}>📚</span>
-          <div className={styles.tooltip}>Bài Học &amp; Trắc Nghiệm</div>
+          <div className={styles.tooltip}>{t('nav', 'lessons')}</div>
 
           <div className={styles.submenuFlyout}>
-            <h4>Bài Học &amp; Trắc Nghiệm</h4>
+            <h4>{t('nav', 'lessonsFlyoutTitle')}</h4>
             <nav className={styles.lessonsSubmenu}>
               {LESSONS.map((lesson) => (
                 <button
@@ -88,6 +91,11 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
       </nav>
+
+      {/* Bottom Language Switcher */}
+      <div style={{ marginTop: 'auto', marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
+        <LanguageSwitcher />
+      </div>
     </aside>
   );
 };

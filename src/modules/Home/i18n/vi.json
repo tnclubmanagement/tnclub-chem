@@ -1,0 +1,22 @@
+{
+  "badge": "Nền tảng Hoá học Tương tác 3D",
+  "heroLine1": "CHEM",
+  "heroLine2": "EDU",
+  "heroAccent": "3D",
+  "heroDesc": "Khám phá thế giới hoá học qua đồ hoạ 3D sống động. Từ nguyên tử đến phản ứng — tất cả trước mắt bạn.",
+  "startBtn": "Bắt đầu Khám phá",
+  "labBtn": "Vào Lab ngay",
+  "statElements": "Nguyên tố",
+  "statMolecules": "Phân tử 3D",
+  "statReactions": "Phản ứng",
+  "statGraphics": "Đồ họa thực",
+  "featurePeriodicTitle": "Bảng Tuần Hoàn 3D",
+  "featurePeriodicDesc": "118 nguyên tố với hiệu ứng tương tác. Lọc theo nhóm, chu kỳ, trạng thái.",
+  "featureExplorerTitle": "Phòng Phân Tích 3D",
+  "featureExplorerDesc": "Sandbox 3D tương tác: Đổi kiểu render, nổ bóc tách hạt, tra thông số & tọa độ.",
+  "featureLabTitle": "Phòng Thí Nghiệm",
+  "featureLabDesc": "Mô phỏng phản ứng hóa học ảo 3D. Kết hợp hóa chất và quan sát kết quả.",
+  "featureLessonsTitle": "Bài Học & Trắc Nghiệm",
+  "featureLessonsDesc": "Học lý thuyết góc liên kết hóa học & ôn luyện câu hỏi trắc nghiệm tương tác.",
+  "cardCta": "Mở ngay"
+}

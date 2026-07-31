@@ -18,8 +18,11 @@ export interface Molecule {
   category?: string;
   molarMass?: number;
   geometry?: string;
+  geometryEn?: string;
   description?: string;
+  descriptionEn?: string;
   applications?: string[];
+  applicationsEn?: string[];
   atoms: Atom[];
   bonds: Bond[];
 }

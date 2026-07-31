@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
@@ -44,6 +44,41 @@ export const ExplorerOverlay = () => {
   } = useExplorerStore();
 
   const { t, language } = useTranslation();
+  const [drawerWidth, setDrawerWidth] = useState(380);
+  const [drawerHeight, setDrawerHeight] = useState(260);
+  const isResizingRef = React.useRef(false);
+
+  useEffect(() => {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!isResizingRef.current) return;
+      if (window.innerWidth > 1100) {
+        let newW = window.innerWidth - e.clientX;
+        if (newW < 280) newW = 280;
+        if (newW > 650) newW = 650;
+        setDrawerWidth(newW);
+      } else {
+        let newH = window.innerHeight - e.clientY;
+        if (newH < 140) newH = 140;
+        if (newH > 520) newH = 520;
+        setDrawerHeight(newH);
+      }
+    };
+
+    const handlePointerUp = () => {
+      if (isResizingRef.current) {
+        isResizingRef.current = false;
+        document.body.style.cursor = '';
+      }
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+  }, []);
 
   // Initialize with first molecule if none selected
   useEffect(() => {
@@ -253,10 +288,29 @@ export const ExplorerOverlay = () => {
       {selectedMolecule && (
         <motion.div
           className={styles.infoDrawer}
+          style={
+            {
+              '--drawer-width': `${drawerWidth}px`,
+              '--drawer-height': `${drawerHeight}px`,
+            } as React.CSSProperties
+          }
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
+          {/* Draggable Resizer Bar */}
+          <div
+            className={styles.resizerHandle}
+            onPointerDown={(e) => {
+              isResizingRef.current = true;
+              document.body.style.cursor =
+                window.innerWidth > 1100 ? 'ew-resize' : 'ns-resize';
+              e.preventDefault();
+            }}
+            title="Kéo rê để thay đổi kích thước bảng mô tả"
+          >
+            <div className={styles.resizerGrip} />
+          </div>
           {/* Header Badge */}
           <div className={styles.molHeaderBadge}>
             <div className={styles.formulaBox}>{selectedMolecule.formula}</div>
@@ -286,24 +340,36 @@ export const ExplorerOverlay = () => {
             </div>
             <div className={styles.specCard}>
               <span className={styles.specLabel}>{t('explorer', 'geometry')}</span>
-              <span className={styles.specValue}>{selectedMolecule.geometry || '---'}</span>
+              <span className={styles.specValue}>
+                {language === 'en'
+                  ? selectedMolecule.geometryEn || selectedMolecule.geometry || '---'
+                  : selectedMolecule.geometry || '---'}
+              </span>
             </div>
           </div>
 
           {/* Description */}
-          {selectedMolecule.description && (
+          {(selectedMolecule.description || selectedMolecule.descriptionEn) && (
             <div>
               <h4 className={styles.sectionTitle}>{t('explorer', 'chemistryIntro')}</h4>
-              <div className={styles.descBox}>{selectedMolecule.description}</div>
+              <div className={styles.descBox}>
+                {language === 'en'
+                  ? selectedMolecule.descriptionEn || selectedMolecule.description
+                  : selectedMolecule.description}
+              </div>
             </div>
           )}
 
           {/* Real world Applications */}
-          {selectedMolecule.applications && selectedMolecule.applications.length > 0 && (
+          {((language === 'en' && selectedMolecule.applicationsEn?.length) ||
+            selectedMolecule.applications?.length) && (
             <div>
               <h4 className={styles.sectionTitle}>{t('explorer', 'realWorldApps')}</h4>
               <div className={styles.appList}>
-                {selectedMolecule.applications.map((app, idx) => (
+                {(language === 'en'
+                  ? selectedMolecule.applicationsEn || selectedMolecule.applications || []
+                  : selectedMolecule.applications || []
+                ).map((app, idx) => (
                   <div key={idx} className={styles.appItem}>
                     <span className={styles.appBullet}>❖</span>
                     <span>{app}</span>

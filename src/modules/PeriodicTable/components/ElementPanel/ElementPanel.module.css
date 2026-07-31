@@ -50,8 +50,7 @@
     display: flex; 
     flex-direction: column; 
     height: 100%; 
-    overflow-y: auto; 
-    overflow-x: hidden; 
+    overflow: hidden; 
 }
 
 /* Header */
@@ -161,8 +160,42 @@
 
 /* Panel Info Body */
 .panelInfo { 
-    padding: 1.5rem 1.25rem; 
-    flex: 1; 
+    padding: 1.5rem 1.25rem;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Vertical Resizer between 3D Visualizer and panelInfo */
+.vizResizer {
+    width: 100%;
+    height: 10px;
+    cursor: ns-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+    z-index: 20;
+}
+
+.vizResizer:hover {
+    background: rgba(0, 247, 255, 0.12);
+}
+
+.vizResizerGrip {
+    width: 48px;
+    height: 3px;
+    background: rgba(0, 247, 255, 0.4);
+    border-radius: 999px;
+    box-shadow: 0 0 6px rgba(0, 247, 255, 0.4);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vizResizer:hover .vizResizerGrip {
+    background: #00f7ff;
+    box-shadow: 0 0 12px #00f7ff;
 }
 
 .elementBadge { 

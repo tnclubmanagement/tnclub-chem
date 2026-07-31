@@ -48,7 +48,11 @@ export const CompareDeck: React.FC = () => {
 
           <div className={styles.specRow}>
             <span className={styles.specLabel}>{t('compare', 'vseprGeometry')}</span>
-            <span className={styles.specVal}>{selectedMolecule.geometry || '---'}</span>
+            <span className={styles.specVal}>
+              {language === 'en'
+                ? selectedMolecule.geometryEn || selectedMolecule.geometry || '---'
+                : selectedMolecule.geometry || '---'}
+            </span>
           </div>
           <div className={styles.specRow}>
             <span className={styles.specLabel}>{t('compare', 'lonePairCount')}</span>
@@ -92,7 +96,11 @@ export const CompareDeck: React.FC = () => {
 
           <div className={styles.specRow}>
             <span className={styles.specLabel}>{t('compare', 'vseprGeometry')}</span>
-            <span className={styles.specVal}>{compareMol.geometry || '---'}</span>
+            <span className={styles.specVal}>
+              {language === 'en'
+                ? compareMol.geometryEn || compareMol.geometry || '---'
+                : compareMol.geometry || '---'}
+            </span>
           </div>
           <div className={styles.specRow}>
             <span className={styles.specLabel}>{t('compare', 'lonePairCount')}</span>

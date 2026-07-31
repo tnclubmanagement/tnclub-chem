@@ -4,10 +4,12 @@ import { ElementBox } from './ElementBox';
 import { Controls } from './Controls';
 import { useChemStore } from '../../store/useChemStore';
 import { playSciFiSound } from '../../utils/audio';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import styles from './PeriodicTable.module.css';
 
 export const PeriodicTable: React.FC = () => {
   const { setActiveGroup, setActivePeriod, activeGroup, activePeriod, quizModeActive, setQuizModeActive, setQuizTargetZ, soundEnabled } = useChemStore();
+  const { t } = useTranslation();
 
   const [currentQuiz, setCurrentQuiz] = React.useState<{q: string, a: number} | null>(null);
   const [quizStatus, setQuizStatus] = React.useState<'idle' | 'correct' | 'wrong'>('idle');
@@ -71,20 +73,20 @@ export const PeriodicTable: React.FC = () => {
   return (
     <section className={styles.overlay}>
       <div className={styles.topbar}>
-        <h2>Bảng Tuần Hoàn Các Nguyên Tố</h2>
-        <div className={styles.subtitle}>Click vào nguyên tố để xem cấu trúc 3D</div>
+        <h2>{t('periodicTable', 'title')}</h2>
+        <div className={styles.subtitle}>{t('periodicTable', 'subtitle')}</div>
       </div>
-      
+
       <Controls />
-      
+
       <div className={styles.gridWrapper}>
         <div className={styles.grid}>
           {renderGroupHeaders()}
           {renderPeriodHeaders()}
           {ELEMENTS.map((el) => (
-            <ElementBox 
-              key={el.z} 
-              element={el} 
+            <ElementBox
+              key={el.z}
+              element={el}
               onQuizFeedback={(isCorrect) => setQuizStatus(isCorrect ? 'correct' : 'wrong')}
             />
           ))}
@@ -95,16 +97,16 @@ export const PeriodicTable: React.FC = () => {
         <div className={styles.ptQuizFloat} style={{ borderColor: quizStatus === 'correct' ? '#10b981' : quizStatus === 'wrong' ? '#ef4444' : '#0ea5e9' }}>
           {quizStatus === 'idle' && (
             <>
-              <h3 style={{ marginBottom: '0.5rem', color: '#0ea5e9', fontSize: '1.4rem' }}>🎮 Thử thách:</h3>
+              <h3 style={{ marginBottom: '0.5rem', color: '#0ea5e9', fontSize: '1.4rem' }}>{t('periodicTable', 'quizTitle')}</h3>
               <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>{currentQuiz.q}</p>
-              <p style={{ fontSize: '0.95rem', color: '#94a3b8' }}>Click vào đúng ô nguyên tố trên bảng tuần hoàn!</p>
+              <p style={{ fontSize: '0.95rem', color: '#94a3b8' }}>{t('periodicTable', 'quizPrompt')}</p>
             </>
           )}
           {quizStatus === 'correct' && (
             <>
-              <h3 style={{ marginBottom: '0.5rem', color: '#10b981' }}>🎉 Chính xác!</h3>
-              <p style={{ fontSize: '1.1rem' }}>Bạn đã tìm đúng nguyên tố.</p>
-              <button 
+              <h3 style={{ marginBottom: '0.5rem', color: '#10b981' }}>{t('periodicTable', 'quizCorrectTitle')}</h3>
+              <p style={{ fontSize: '1.1rem' }}>{t('periodicTable', 'quizCorrectDesc')}</p>
+              <button
                 className={styles.quizNextBtn}
                 onClick={() => {
                   playSciFiSound('click', soundEnabled);
@@ -112,23 +114,23 @@ export const PeriodicTable: React.FC = () => {
                   setTimeout(() => setQuizModeActive(true), 100);
                 }}
               >
-                Tiếp tục
+                {t('periodicTable', 'quizNextBtn')}
               </button>
             </>
           )}
           {quizStatus === 'wrong' && (
             <>
-              <h3 style={{ marginBottom: '0.5rem', color: '#ef4444' }}>❌ Sai rồi!</h3>
-              <p style={{ fontSize: '1.1rem' }}>Đó không phải là đáp án đúng.</p>
-              <button 
+              <h3 style={{ marginBottom: '0.5rem', color: '#ef4444' }}>{t('periodicTable', 'quizWrongTitle')}</h3>
+              <p style={{ fontSize: '1.1rem' }}>{t('periodicTable', 'quizWrongDesc')}</p>
+              <button
                 className={styles.quizNextBtn}
                 onClick={() => { playSciFiSound('click', soundEnabled); setQuizStatus('idle'); }}
               >
-                Thử lại
+                {t('periodicTable', 'quizRetryBtn')}
               </button>
             </>
           )}
-          <button 
+          <button
             className={styles.quizCloseBtn}
             onClick={() => { playSciFiSound('click', soundEnabled); setQuizModeActive(false); }}
           >

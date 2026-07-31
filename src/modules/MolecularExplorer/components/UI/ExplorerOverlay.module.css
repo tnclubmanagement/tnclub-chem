@@ -340,37 +340,99 @@
   grid-column: 3;
   grid-row: 2;
   pointer-events: auto;
-  background: rgba(3, 8, 26, 0.78);
+  position: relative;
+  width: var(--drawer-width, 380px);
+  background: rgba(3, 8, 26, 0.82);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(0, 247, 255, 0.12);
+  border: 1px solid rgba(0, 247, 255, 0.15);
   border-radius: 20px;
-  padding: 20px;
+  padding: clamp(12px, 4cqi, 20px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: clamp(10px, 3.5cqi, 16px);
   box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
   align-self: start;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
+  container-type: inline-size;
+}
+
+/* Draggable Resizer Bar */
+.resizerHandle {
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 10px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.resizerHandle:hover {
+  background: rgba(0, 247, 255, 0.15);
+}
+
+.resizerGrip {
+  width: 3px;
+  height: 36px;
+  background: rgba(0, 247, 255, 0.4);
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+  transition: background 0.2s ease;
+}
+
+.resizerHandle:hover .resizerGrip {
+  background: #00f7ff;
+  box-shadow: 0 0 12px #00f7ff;
 }
 
 .molHeaderBadge {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding-bottom: 14px;
+  gap: clamp(8px, 3cqi, 14px);
+  padding-bottom: clamp(8px, 3cqi, 14px);
   border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+  position: relative;
+}
+
+.infoDrawerCollapsed .molHeaderBadge {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.drawerCollapseBtn {
+  margin-left: auto;
+  background: rgba(0, 247, 255, 0.08);
+  border: 1px solid rgba(0, 247, 255, 0.25);
+  color: #00f7ff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.drawerCollapseBtn:hover {
+  background: rgba(0, 247, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
 }
 
 .formulaBox {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.6rem;
+  font-size: clamp(1.15rem, 5.5cqi, 1.6rem);
   font-weight: 900;
   color: #00f7ff;
   background: rgba(0, 247, 255, 0.08);
   border: 1px solid rgba(0, 247, 255, 0.25);
-  padding: 10px 14px;
+  padding: clamp(6px, 2cqi, 10px) clamp(8px, 3.5cqi, 14px);
   border-radius: 14px;
   box-shadow: 0 0 16px rgba(0, 247, 255, 0.15);
   white-space: nowrap;
@@ -380,61 +442,69 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  overflow: hidden;
 }
 
 .nameVi {
-  font-size: 1.25rem;
+  font-size: clamp(0.95rem, 4.5cqi, 1.25rem);
   font-weight: 800;
   font-family: 'Outfit', sans-serif;
   color: #fff;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nameEn {
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 3.2cqi, 0.82rem);
   color: rgba(140, 160, 200, 0.7);
   font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Details grid */
 .specGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: clamp(6px, 2cqi, 8px);
 }
 
 .specCard {
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: clamp(6px, 2cqi, 8px) clamp(8px, 2.5cqi, 10px);
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .specLabel {
-  font-size: 0.68rem;
+  font-size: clamp(0.6rem, 2.8cqi, 0.68rem);
   font-family: 'JetBrains Mono', monospace;
   color: rgba(140, 160, 200, 0.65);
   text-transform: uppercase;
 }
 
 .specValue {
-  font-size: 0.88rem;
+  font-size: clamp(0.75rem, 3.6cqi, 0.88rem);
   font-weight: 700;
   color: #00f7ff;
   font-family: 'JetBrains Mono', monospace;
+  word-break: break-word;
 }
 
 /* Description & Applications */
 .descBox {
-  font-size: 0.84rem;
+  font-size: clamp(0.75rem, 3.5cqi, 0.84rem);
   color: rgba(200, 220, 255, 0.85);
-  line-height: 1.6;
+  line-height: 1.5;
   background: rgba(0, 247, 255, 0.03);
   border-left: 3px solid #00f7ff;
-  padding: 10px 12px;
+  padding: clamp(6px, 2.5cqi, 10px) clamp(8px, 3cqi, 12px);
   border-radius: 6px;
 }
 
@@ -447,8 +517,8 @@
 .appItem {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 0.8rem;
+  gap: 6px;
+  font-size: clamp(0.72rem, 3.2cqi, 0.8rem);
   color: rgba(200, 220, 255, 0.8);
   line-height: 1.4;
 }
@@ -462,15 +532,15 @@
 .atomsChipList {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .atomChip {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4px 10px;
+  padding: clamp(3px, 1.2cqi, 4px) clamp(6px, 2.5cqi, 10px);
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: clamp(0.68rem, 3cqi, 0.75rem);
   font-family: 'JetBrains Mono', monospace;
   color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
@@ -485,26 +555,53 @@
 }
 
 /* ================================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE BREAKPOINTS (Zero Squishing for 3D Model Area)
    ================================================================ */
 @media (max-width: 1100px) {
   .overlayContainer {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto 1fr auto;
     padding-left: 80px;
   }
   .infoDrawer {
     grid-column: 1 / -1;
     grid-row: 3;
+    width: 100% !important;
+    height: var(--drawer-height, 240px);
+    max-height: 520px;
+  }
+  .resizerHandle {
+    top: -4px;
+    left: 0;
     width: 100%;
+    height: 10px;
+    cursor: ns-resize;
+  }
+  .resizerGrip {
+    width: 48px;
+    height: 3px;
   }
 }
 
 @media (max-width: 768px) {
   .overlayContainer {
     grid-template-columns: 1fr;
-    padding: 12px 12px 12px 76px;
+    grid-template-rows: auto auto 1fr auto;
+    padding: 10px 10px 10px 72px;
   }
   .categoryPills {
     display: none;
+  }
+  .controlDeck {
+    grid-column: 1;
+    grid-row: 2;
+    max-height: 180px;
+  }
+  .infoDrawer {
+    grid-column: 1;
+    grid-row: 4;
+    width: 100% !important;
+    height: var(--drawer-height, 200px);
+    max-height: 480px;
   }
 }

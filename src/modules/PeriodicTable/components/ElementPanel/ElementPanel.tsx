@@ -4,6 +4,7 @@ import { AtomVisualizer } from '../3D/AtomVisualizer';
 import { BondVisualizer } from '../3D/BondVisualizer';
 import { RealImageTab } from './RealImageTab';
 import { getApplicationText } from '../../utils/applicationData';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import {
   GROUPS_DATA,
   PERIODS_DATA,
@@ -24,28 +25,48 @@ export const ElementPanel: React.FC = () => {
     setActiveTab,
   } = useChemStore();
 
+  const { t, language } = useTranslation();
+
   const [width, setWidth] = useState(400);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [vizHeight, setVizHeight] = useState(280);
   const isResizing = useRef(false);
+  const isVizResizing = useRef(false);
 
   // Restore saved width
   useEffect(() => {
     const savedWidth = localStorage.getItem('edu3d_panelWidth');
-    if (savedWidth) {
-      setWidth(parseInt(savedWidth, 10));
-    }
+    if (savedWidth) setWidth(parseInt(savedWidth, 10));
+    const savedVizH = localStorage.getItem('edu3d_vizHeight');
+    if (savedVizH) setVizHeight(parseInt(savedVizH, 10));
 
     const handlePointerMove = (e: PointerEvent) => {
-      if (!isResizing.current) return;
-      let newWidth = window.innerWidth - e.clientX;
-      if (newWidth < 320) newWidth = 320;
-      if (newWidth > 700) newWidth = 700;
-      setWidth(newWidth);
+      if (isResizing.current) {
+        let newWidth = window.innerWidth - e.clientX;
+        if (newWidth < 320) newWidth = 320;
+        if (newWidth > 700) newWidth = 700;
+        setWidth(newWidth);
+      }
+      if (isVizResizing.current) {
+        // Calculate new height relative to panel top
+        const panel = document.getElementById('element-panel-content');
+        if (!panel) return;
+        const rect = panel.getBoundingClientRect();
+        let newH = e.clientY - rect.top;
+        if (newH < 140) newH = 140;
+        if (newH > 520) newH = 520;
+        setVizHeight(newH);
+        localStorage.setItem('edu3d_vizHeight', String(newH));
+      }
     };
 
     const handlePointerUp = () => {
       if (isResizing.current) {
         isResizing.current = false;
+        document.body.style.cursor = '';
+      }
+      if (isVizResizing.current) {
+        isVizResizing.current = false;
         document.body.style.cursor = '';
       }
     };
@@ -90,7 +111,7 @@ export const ElementPanel: React.FC = () => {
         <div
           className={styles.collapsedPeek}
           onClick={() => setIsCollapsed(false)}
-          title="Mở rộng bảng thông tin"
+          title={t('periodicTable', 'expandTooltip')}
         >
           <button className={styles.peekExpandBtn} aria-label="Mở rộng">
             ‹
@@ -125,23 +146,23 @@ export const ElementPanel: React.FC = () => {
         }}
       />
 
-      <div className={styles.panelContent}>
+      <div className={styles.panelContent} id="element-panel-content">
         {/* Panel Header */}
         <div className={styles.panelHeader}>
           <h3 className={styles.panelTitle}>
             {selectedElement
-              ? `Nguyên Tố: ${selectedElement.symbol}`
+              ? `${t('periodicTable', 'elementPanelTitle')} ${selectedElement.symbol}`
               : activeGroup
-              ? `Thông tin Nhóm ${activeGroup}`
-              : `Thông tin Chu kỳ ${activePeriod}`}
+              ? `${t('periodicTable', 'groupInfoTitle')} ${activeGroup}`
+              : `${t('periodicTable', 'periodInfoTitle')} ${activePeriod}`}
           </h3>
           <div className={styles.headerActions}>
             <button
               className={styles.iconBtn}
               onClick={() => setIsCollapsed(true)}
-              title="Thu gọn bảng thông tin"
+              title={t('periodicTable', 'collapseBtn')}
             >
-              » Thu gọn
+              {t('periodicTable', 'collapseBtn')}
             </button>
             <button
               className={`${styles.iconBtn} ${styles.closeBtn}`}
@@ -159,7 +180,7 @@ export const ElementPanel: React.FC = () => {
         {selectedElement && (
           <>
             {/* 3D Visualizer Section with Tabs */}
-            <div className={styles.visualizerWrapper}>
+            <div className={styles.visualizerWrapper} style={{ height: `${vizHeight}px` }}>
               <div className={styles.tabSwitchContainer}>
                 <div
                   className={styles.tabSwitch}
@@ -177,19 +198,19 @@ export const ElementPanel: React.FC = () => {
                   className={`${styles.tabBtn} ${activeTab === 'atom' ? styles.tabBtnActive : ''}`}
                   onClick={() => setActiveTab('atom')}
                 >
-                  ⚛ Nguyên Tử
+                  {t('periodicTable', 'tabAtom')}
                 </button>
                 <button
                   className={`${styles.tabBtn} ${activeTab === 'bond' ? styles.tabBtnActive : ''}`}
                   onClick={() => setActiveTab('bond')}
                 >
-                  🔗 Liên Kết
+                  {t('periodicTable', 'tabBond')}
                 </button>
                 <button
                   className={`${styles.tabBtn} ${activeTab === 'real' ? styles.tabBtnActive : ''}`}
                   onClick={() => setActiveTab('real')}
                 >
-                  📸 Thực Tế
+                  {t('periodicTable', 'tabReal')}
                 </button>
               </div>
 
@@ -198,11 +219,25 @@ export const ElementPanel: React.FC = () => {
               {activeTab === 'real' && <RealImageTab elementName={selectedElement.name} />}
             </div>
 
+            {/* Vertical Resizer between 3D Visualizer and Panel Info */}
+            <div
+              className={styles.vizResizer}
+              onPointerDown={(e) => {
+                isVizResizing.current = true;
+                document.body.style.cursor = 'ns-resize';
+                e.preventDefault();
+              }}
+            >
+              <div className={styles.vizResizerGrip} />
+            </div>
+
             <div className={styles.panelInfo}>
               <div className={styles.elementBadge}>
                 <h1 className={styles.modalSymbol}>{selectedElement.symbol}</h1>
                 <div className={styles.elementHeaderText}>
-                  <h2 className={styles.modalName}>{selectedElement.name}</h2>
+                  <h2 className={styles.modalName}>
+                    {language === 'en' ? selectedElement.name.split(' ')[0] : selectedElement.name}
+                  </h2>
                   <span className={styles.modalCategory}>{selectedElement.category}</span>
                 </div>
               </div>
@@ -210,23 +245,33 @@ export const ElementPanel: React.FC = () => {
               <div className={styles.modalDivider}></div>
 
               <div className={styles.modalDetails}>
-                <h3>Thông tin khám phá</h3>
+                <h3>{t('periodicTable', 'discoveryInfo')}</h3>
                 <p className={styles.modalDesc}>
-                  Mô hình cấu trúc Bohr của <b>{selectedElement.name}</b>:<br />
-                  <br />
-                  Gồm hạt nhân ở trung tâm và <b>{selectedElement.z} electron</b> xoay quanh trên các
-                  phân lớp quỹ đạo lượng tử.
+                  {language === 'en' ? (
+                    <>
+                      Bohr atomic model of <b>{selectedElement.name.split(' ')[0]}</b>:<br />
+                      <br />
+                      Comprising a central nucleus surrounded by <b>{selectedElement.z} electron{selectedElement.z > 1 ? 's' : ''}</b> in quantum orbital shells.
+                    </>
+                  ) : (
+                    <>
+                      Mô hình cấu trúc Bohr của <b>{selectedElement.name}</b>:<br />
+                      <br />
+                      Gồm hạt nhân ở trung tâm và <b>{selectedElement.z} electron</b> xoay quanh trên các
+                      phân lớp quỹ đạo lượng tử.
+                    </>
+                  )}
                 </p>
 
                 {selectedElement.electronConfig && (
                   <div className={styles.configSection}>
-                    <h4 className={styles.configHeading}>Cấu hình Electron:</h4>
+                    <h4 className={styles.configHeading}>{t('periodicTable', 'electronConfigLabel')}:</h4>
                     <code className={styles.configText}>{selectedElement.electronConfig}</code>
                   </div>
                 )}
 
-                <h3 className={styles.appHeading}>💡 Ứng dụng thực tế</h3>
-                <p className={styles.modalDesc}>{getApplicationText(selectedElement)}</p>
+                <h3 className={styles.appHeading}>{t('periodicTable', 'applicationsLabel')}</h3>
+                <p className={styles.modalDesc}>{getApplicationText(selectedElement, language)}</p>
               </div>
             </div>
           </>

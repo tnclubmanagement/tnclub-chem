@@ -10,11 +10,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'inorganic',
     molarMass: 18.015,
     geometry: 'Góc (Bent ~104.5°)',
+    geometryEn: 'Bent (~104.5°)',
     description: 'Nước là hợp chất hóa học sống còn của trái đất, có tính phân cực cao nhờ góc liên kết 104.5° giữa 2 nguyên tử H và 1 nguyên tử O.',
+    descriptionEn: 'Water is an essential chemical compound for Earth, highly polar due to its 104.5° bond angle between 2 hydrogen atoms and 1 oxygen atom.',
     applications: [
       'Dung môi hòa tan sinh học chính của cơ thể sống',
       'Điều hòa khí hậu & sinh thái hành tinh',
       'Nguyên liệu chính trong các phản ứng thủy phân',
+    ],
+    applicationsEn: [
+      'Primary biological solvent in living organisms',
+      'Regulates global climate & planetary ecology',
+      'Key reactant in industrial hydrolysis reactions',
     ],
     atoms: [
       { id: 'O1', symbol: 'O', position: [0, 0.12, 0] },
@@ -34,11 +41,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'inorganic',
     molarMass: 44.01,
     geometry: 'Thẳng hàng (Linear 180°)',
+    geometryEn: 'Linear (180°)',
     description: 'Chất khí không màu, sản phẩm của quá trình hô hấp tế bào và đốt cháy nhiên liệu hữu cơ. Cấu trúc 3 nguyên tử thẳng hàng với 2 liên kết đôi.',
+    descriptionEn: 'Colorless gas produced by cellular respiration and fossil fuel combustion. Linear triatomic structure with 2 double bonds.',
     applications: [
       'Nguyên liệu quang hợp của thực vật tạo oxy',
       'Đóng chai nước giải khát có ga (bão hòa CO₂)',
       'Băng khô (đá khô) làm lạnh bảo quản phẩm màu',
+    ],
+    applicationsEn: [
+      'Essential raw material for plant photosynthesis',
+      'Carbonated beverage & soda carbonation',
+      'Dry ice refrigerant for cold storage',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [0, 0, 0] },
@@ -58,11 +72,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'inorganic',
     molarMass: 48.0,
     geometry: 'Góc (Bent ~116.8°)',
+    geometryEn: 'Bent (~116.8°)',
     description: 'Thù hình của Oxi gồm 3 nguyên tử Oxi liên kết tạo tầng ozon khí quyển bảo vệ trái đất khỏi tia cực tím (UV) có hại.',
+    descriptionEn: 'Triatomic allotrope of oxygen forming the stratospheric ozone layer protecting Earth from harmful solar UV rays.',
     applications: [
       'Tầng ozon bảo vệ sự sống khỏi tia UV',
       'Khử trùng nước sinh hoạt và không khí bệnh viện',
       'Chất oxi hóa mạnh trong công nghiệp hóa chất',
+    ],
+    applicationsEn: [
+      'Ozone layer protecting life from solar UV radiation',
+      'Water sterilization & hospital air purification',
+      'Strong oxidizing agent in industrial synthesis',
     ],
     atoms: [
       { id: 'O1', symbol: 'O', position: [0, 0.45, 0] },
@@ -82,11 +103,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'inorganic',
     molarMass: 17.03,
     geometry: 'Chóp tam giác (Trigonal Pyramidal)',
+    geometryEn: 'Trigonal Pyramidal (~107°)',
     description: 'Khí không màu, mùi khai nồng đặc trưng, dễ hóa lỏng. Đóng vai trò nguyên liệu sản xuất phân bón nitơ hàng đầu.',
+    descriptionEn: 'Colorless gas with a characteristic pungent odor, easily liquefied. Principal feedstock for nitrogen fertilizer production.',
     applications: [
       'Sản xuất phân đạm (Ure, Amoni Nitrat)',
       'Dung môi làm lạnh trong máy lạnh công nghiệp',
       'Tẩy rửa và tổng hợp axit nitric HNO₃',
+    ],
+    applicationsEn: [
+      'Nitrogen fertilizer synthesis (Urea, Ammonium Nitrate)',
+      'Industrial refrigerant solvent in cooling systems',
+      'Cleansing agent & nitric acid (HNO₃) precursor',
     ],
     atoms: [
       { id: 'N1', symbol: 'N', position: [0, 0.2, 0] },
@@ -108,11 +136,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'inorganic',
     molarMass: 64.06,
     geometry: 'Góc (Bent ~119°)',
-    description: 'Khí không màu, mùi hăng cay, sinh ra từ ngọn núi lửa và khí thải đốt than đá. Là nguyên nhân chính gây ra mưa axit.',
+    geometryEn: 'Bent (~119°)',
+    description: 'Khí không màu, mùi hăng cay, sinh ra từ ngọn núi lửa và khí thải đốt thanh đá. Là nguyên nhân chính gây ra mưa axit.',
+    descriptionEn: 'Colorless gas with a pungent choking smell, released by volcanoes and coal combustion. Major contributor to acid rain.',
     applications: [
       'Tiền chất sản xuất Axit Sunfuric H₂SO₄',
       'Tẩy trắng bột giấy và đường sinh học',
       'Chất chống oxi hóa trong sản xuất rượu vang',
+    ],
+    applicationsEn: [
+      'Sulfuric acid (H₂SO₄) production precursor',
+      'Paper pulp bleaching & biothermal refining',
+      'Antioxidant and preservative in winemaking',
     ],
     atoms: [
       { id: 'S1', symbol: 'S', position: [0, 0.35, 0] },
@@ -134,11 +169,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'acid_base',
     molarMass: 98.07,
     geometry: 'Tứ diện trung tâm S (Tetrahedral S)',
+    geometryEn: 'Tetrahedral (around Central S)',
     description: 'Vua của các loại hóa chất công nghiệp, axit mạnh vô cơ có tính háo nước cực mạnh và tính oxi hóa cao.',
+    descriptionEn: 'King of industrial chemicals, a strong inorganic mineral acid with extreme dehydrating power and high oxidative reactivity.',
     applications: [
       'Sản xuất phân bón supephotphat',
       'Dung dịch điện phân ắc quy ô tô',
       'Tinh chế dầu mỏ & luyện kim màu',
+    ],
+    applicationsEn: [
+      'Superphosphate fertilizer manufacturing',
+      'Lead-acid battery electrolyte in automobiles',
+      'Petroleum refining & metallurgy processing',
     ],
     atoms: [
       { id: 'S1', symbol: 'S', position: [0, 0, 0] },
@@ -166,11 +208,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'acid_base',
     molarMass: 60.05,
     geometry: 'Tứ diện C-CH₃ & Phẳng C=O',
+    geometryEn: 'Tetrahedral C-CH₃ & Planar C=O',
     description: 'Axit hữu cơ cacboxylic phổ biến nhất, thành phần chính tạo nên vị chua đặc trưng của giấm ăn tự nhiên.',
+    descriptionEn: 'Most common carboxylic organic acid, giving natural vinegar its signature sour taste and sharp aroma.',
     applications: [
       'Gia vị thực phẩm & chế biến đồ chua',
       'Sản xuất tơ nhân tạo (xenlulozo axetat)',
       'Tổng hợp polime kiềm (VAM, PVA)',
+    ],
+    applicationsEn: [
+      'Food condiment & pickling preservation agent',
+      'Synthetic fiber production (cellulose acetate)',
+      'Alkali polymer synthesis (VAM, PVA)',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [-1.1, 0, 0] },
@@ -202,11 +251,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'organic',
     molarMass: 16.04,
     geometry: 'Tứ diện đều (Tetrahedral 109.5°)',
+    geometryEn: 'Tetrahedral (109.5°)',
     description: 'Hydrocacbon no đơn giản nhất, thành phần chính của khí thiên nhiên và khí bùn ao, có cấu trúc 3D tứ diện đều hoàn hảo.',
+    descriptionEn: 'Simplest saturated hydrocarbon, primary component of natural gas and marsh gas, with a perfect 3D tetrahedral geometry.',
     applications: [
       'Nhiên liệu đốt sinh hoạt và công nghiệp',
       'Sản xuất khí Hydro trong phản ứng reforming',
       'Tổng hợp metanol và chất hóa dẻo',
+    ],
+    applicationsEn: [
+      'Domestic & industrial heating fuel',
+      'Hydrogen gas production via steam reforming',
+      'Methanol & plasticizer chemical synthesis',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [0, 0, 0] },
@@ -230,11 +286,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'organic',
     molarMass: 46.07,
     geometry: 'Chuỗi Tứ diện C-C-O',
+    geometryEn: 'Tetrahedral Chain C-C-O',
     description: 'Ancol mạch thẳng chiết xuất từ quá trình lên men đường lên men sinh học, được ứng dụng rộng rãi trong y tế và nhiên liệu E5.',
+    descriptionEn: 'Straight-chain alcohol produced by bio-fermentation of sugars, widely utilized in medicine and E5 biofuel blends.',
     applications: [
       'Sát trùng y tế & sản xuất gel rửa tay',
       'Pha chế đồ uống có cồn giải trí',
       'Nhiên liệu sinh học thân thiện môi trường',
+    ],
+    applicationsEn: [
+      'Medical disinfectant & hand sanitizer gel',
+      'Alcoholic beverage formulation',
+      'Eco-friendly renewable biofuel',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [-1.2, -0.2, 0] },
@@ -266,11 +329,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'organic',
     molarMass: 78.11,
     geometry: 'Lục giác phẳng (Planar Hexagonal)',
+    geometryEn: 'Planar Hexagonal (120°)',
     description: 'Hydrocacbon thơm tiêu biểu nhất có hệ liên kết π liên hợp thơm vô cùng bền vững cấu trúc lục giác phẳng.',
+    descriptionEn: 'Archetypal aromatic hydrocarbon with a highly stable conjugated π-ring system in a flat hexagonal arrangement.',
     applications: [
       'Dung môi hữu cơ quan trọng trong hóa học',
       'Tổng hợp stiren chế tạo nhựa Polystyren (PS)',
       'Tiền chất sản xuất keo dán & thuốc nhuộm',
+    ],
+    applicationsEn: [
+      'Essential organic solvent in chemical synthesis',
+      'Styrene precursor for Polystyrene (PS) plastics',
+      'Dye, resin & industrial glue manufacturing',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [1.4, 0, 0] },
@@ -311,11 +381,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'bio',
     molarMass: 180.16,
     geometry: 'Vòng Thơm Este-Axit',
+    geometryEn: 'Aromatic Ester-Acid Ring',
     description: 'Thuốc chống viêm hạ sốt giảm đau kinh điển nhất lịch sử y học (Acetylsalicylic acid).',
+    descriptionEn: 'Most famous anti-inflammatory, antipyretic, and analgesic medication in medical history (Acetylsalicylic acid).',
     applications: [
       'Giảm đau, hạ sốt và chống viêm nhẹ',
       'Ngăn ngừa đột quỵ & đông máu cơ tim',
       'Ứng dụng hỗ trợ nông sinh học',
+    ],
+    applicationsEn: [
+      'Relieves pain, fever, and mild inflammation',
+      'Prevents stroke & blood clots in cardiovascular care',
+      'Agricultural plant defense trigger',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [0, 0, 0] },
@@ -372,11 +449,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'bio',
     molarMass: 194.19,
     geometry: 'Vòng Kép Purin Alkaloid',
+    geometryEn: 'Bicyclic Purine Alkaloid Ring',
     description: 'Chất kích thích hệ thần kinh trung ương phổ biến nhất thế giới có trong cà phê, trà và ca cao giúp tăng sự tỉnh táo.',
+    descriptionEn: 'World most widely consumed central nervous system stimulant found in coffee, tea, and cocoa to enhance mental alertness.',
     applications: [
       'Tăng cường sự tập trung và tỉnh táo trí não',
       'Thành phần thuốc giảm đau kết hợp (Paracetamol Extra)',
       'Hỗ trợ trao đổi chất trong thể thao',
+    ],
+    applicationsEn: [
+      'Boosts mental alertness and cognitive focus',
+      'Combined painkiller formulation (Paracetamol Extra)',
+      'Metabolic & athletic performance support',
     ],
     atoms: [
       { id: 'C1', symbol: 'C', position: [-0.6, 0.7, 0] },
@@ -442,11 +526,18 @@ export const MOCK_MOLECULES: Molecule[] = [
     category: 'material',
     molarMass: 58.44,
     geometry: 'Mạng lập phương tâm diện Ion (FCC Grid)',
+    geometryEn: 'Face-Centered Cubic Ionic Grid (FCC)',
     description: 'Mô hình 3D ô cơ sở mạng tinh thể ion Muối Ăn NaCl gồm các cation Na⁺ và anion Cl⁻ xen kẽ lẫn nhau.',
+    descriptionEn: '3D ionic unit cell crystal lattice of Table Salt (NaCl), consisting of alternating Na⁺ cations and Cl⁻ anions.',
     applications: [
       'Gia vị thực phẩm thiết yếu cho con người',
       'Điện phân dung dịch sản xuất Xút (NaOH) & Khí Clo',
       'Truyền dịch y tế (Dung dịch nước muối sinh lý 0.9%)',
+    ],
+    applicationsEn: [
+      'Essential culinary seasoning for human diet',
+      'Chlor-alkali electrolysis for NaOH & Cl₂ production',
+      'Medical intravenous saline solution (0.9% NaCl)',
     ],
     atoms: [
       { id: 'Na1', symbol: 'Na', position: [-0.9, -0.9, -0.9] },

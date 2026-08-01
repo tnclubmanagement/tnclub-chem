@@ -57,6 +57,12 @@ export interface TranslationDictionary {
     realWorldApps: string;
     atomList: string;
     measureHelp: string;
+    catAll: string;
+    catInorganic: string;
+    catOrganic: string;
+    catAcidBase: string;
+    catBio: string;
+    catMaterial: string;
   };
   compare: {
     title: string;

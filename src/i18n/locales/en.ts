@@ -57,6 +57,12 @@ export const en: TranslationDictionary = {
     realWorldApps: '💡 Real-world Applications',
     atomList: 'Atoms list in molecule',
     measureHelp: 'Click to select for measurement',
+    catAll: 'All',
+    catInorganic: 'Inorganic',
+    catOrganic: 'Organic',
+    catAcidBase: 'Acid & Base',
+    catBio: 'Biology & Medicine',
+    catMaterial: 'Crystal',
   },
   compare: {
     title: 'SIDE-BY-SIDE MOLECULE COMPARISON',

@@ -24,7 +24,13 @@
     "chemistryIntro": "📖 Giới thiệu hóa học",
     "realWorldApps": "💡 Ứng dụng thực tế",
     "atomList": "Danh sách Nguyên tử trong phân tử",
-    "measureHelp": "Click vào 2 nguyên tử để đo khoảng cách (Å) hoặc 3 nguyên tử để đo góc liên kết (°)."
+    "measureHelp": "Click vào 2 nguyên tử để đo khoảng cách (Å) hoặc 3 nguyên tử để đo góc liên kết (°).",
+    "catAll": "Tất cả",
+    "catInorganic": "Vô cơ",
+    "catOrganic": "Hữu cơ",
+    "catAcidBase": "Axit & Bazơ",
+    "catBio": "Sinh học & Y học",
+    "catMaterial": "Tinh thể"
   },
   "compare": {
     "title": "SO SÁNH ĐỐI CHIẾU PHÂN TỬ 3D",

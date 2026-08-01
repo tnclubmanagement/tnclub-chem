@@ -24,7 +24,13 @@
     "chemistryIntro": "📖 Chemistry Introduction",
     "realWorldApps": "💡 Real World Applications",
     "atomList": "Atoms List in Molecule",
-    "measureHelp": "Click 2 atoms to measure distance (Å) or 3 atoms to measure bond angle (°)."
+    "measureHelp": "Click 2 atoms to measure distance (Å) or 3 atoms to measure bond angle (°).",
+    "catAll": "All",
+    "catInorganic": "Inorganic",
+    "catOrganic": "Organic",
+    "catAcidBase": "Acid & Base",
+    "catBio": "Biology & Medicine",
+    "catMaterial": "Crystal"
   },
   "compare": {
     "title": "SIDE-BY-SIDE 3D MOLECULE COMPARISON",

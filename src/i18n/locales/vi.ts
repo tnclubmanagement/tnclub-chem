@@ -57,6 +57,12 @@ export const vi: TranslationDictionary = {
     realWorldApps: '💡 Ứng dụng thực tế',
     atomList: 'Danh sách Nguyên tử trong phân tử',
     measureHelp: 'Click để chọn đo',
+    catAll: 'Tất cả',
+    catInorganic: 'Vô cơ',
+    catOrganic: 'Hữu cơ',
+    catAcidBase: 'Axit & Bazơ',
+    catBio: 'Sinh học & Y học',
+    catMaterial: 'Tinh thể',
   },
   compare: {
     title: 'SO SÁNH ĐỐI CHIẾU PHÂN TỬ 3D',

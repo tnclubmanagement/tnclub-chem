@@ -5,14 +5,6 @@ import { MOCK_MOLECULES } from '../../data/mockMolecules';
 import { useTranslation } from '../../../../i18n/useTranslation';
 import styles from './ExplorerOverlay.module.css';
 
-const CATEGORIES = [
-  { id: 'all', name: 'Tất cả' },
-  { id: 'inorganic', name: 'Vô cơ' },
-  { id: 'organic', name: 'Hữu cơ' },
-  { id: 'acid_base', name: 'Axit & Bazơ' },
-  { id: 'bio', name: 'Sinh học & Y học' },
-  { id: 'material', name: 'Tinh thể' },
-];
 
 export const ExplorerOverlay = () => {
   const {
@@ -102,6 +94,15 @@ export const ExplorerOverlay = () => {
     });
   }, [selectedCategory, searchQuery]);
 
+  const categories = useMemo(() => [
+    { id: 'all',       name: t('explorer', 'catAll') },
+    { id: 'inorganic', name: t('explorer', 'catInorganic') },
+    { id: 'organic',   name: t('explorer', 'catOrganic') },
+    { id: 'acid_base', name: t('explorer', 'catAcidBase') },
+    { id: 'bio',       name: t('explorer', 'catBio') },
+    { id: 'material',  name: t('explorer', 'catMaterial') },
+  ], [t]);
+
   return (
     <div className={styles.overlayContainer}>
 
@@ -122,7 +123,7 @@ export const ExplorerOverlay = () => {
 
         {/* Category Pills */}
         <div className={styles.categoryPills}>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat.id}
               className={`${styles.pillBtn} ${

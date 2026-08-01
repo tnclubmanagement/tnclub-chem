@@ -151,7 +151,7 @@ export const ExplorerOverlay = () => {
 
         {/* Language Switcher */}
         <div className={styles.topBarLangSwitch}>
-          <LanguageSwitcher />
+          <LanguageSwitcher horizontal />
         </div>
       </motion.div>
 

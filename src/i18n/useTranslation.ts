@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { Language, TranslationDictionary } from './types';
-import { vi, en } from './locales';
+import { SUPPORTED_LANGUAGES } from './types';
+import { LOCALES, vi } from './locales';
 
 interface LanguageState {
   language: Language;
@@ -27,11 +28,6 @@ export const useLanguageStore = create<LanguageState>((set) => ({
   },
 }));
 
-const LOCALES: Record<Language, TranslationDictionary> = {
-  vi,
-  en,
-};
-
 export const useTranslation = () => {
   const { language, setLanguage } = useLanguageStore();
   const dict = LOCALES[language] || LOCALES.vi;
@@ -43,12 +39,17 @@ export const useTranslation = () => {
     section: K1,
     key: K2
   ): string => {
-    return (dict[section] && (dict[section][key] as unknown as string)) || (vi[section][key] as unknown as string) || '';
+    return (
+      (dict[section] && (dict[section][key] as unknown as string)) ||
+      (vi[section] && (vi[section][key] as unknown as string)) ||
+      ''
+    );
   };
 
   return {
     t,
     language,
     setLanguage,
+    supportedLanguages: SUPPORTED_LANGUAGES,
   };
 };

@@ -11,6 +11,7 @@
   gap: 16px;
   box-sizing: border-box;
   z-index: 10;
+  color: var(--text-primary);
 }
 
 /* ================================================================
@@ -24,13 +25,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: rgba(3, 8, 26, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(0, 247, 255, 0.12);
+  border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 10px 18px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--glass-shadow);
 }
 
 .brand {
@@ -43,9 +44,9 @@
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: rgba(0, 247, 255, 0.1);
-  border: 1px solid rgba(0, 247, 255, 0.3);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--glass-border-bright);
+  color: var(--neon-cyan);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,10 +55,10 @@
 }
 
 .brandTitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #00f7ff 0%, #00ff80 100%);
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -66,12 +67,12 @@
 
 .brandSub {
   font-size: 0.7rem;
-  color: #00f7ff;
+  color: var(--neon-cyan);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: rgba(0, 247, 255, 0.1);
-  border: 1px solid rgba(0, 247, 255, 0.25);
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--glass-border);
   padding: 2px 8px;
   border-radius: 6px;
 }
@@ -85,13 +86,13 @@
 }
 
 .pillBtn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(140, 160, 200, 0.75);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -99,15 +100,15 @@
 }
 
 .pillBtn:hover {
-  background: rgba(0, 247, 255, 0.08);
-  border-color: rgba(0, 247, 255, 0.3);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
 }
 
 .pillActive {
-  background: rgba(0, 247, 255, 0.14);
-  border-color: rgba(0, 247, 255, 0.6);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
   box-shadow: 0 0 14px rgba(0, 247, 255, 0.2);
 }
 
@@ -122,18 +123,18 @@
 .searchInput {
   width: 100%;
   padding: 7px 12px 7px 32px;
-  background: rgba(0, 247, 255, 0.04);
-  border: 1px solid rgba(0, 247, 255, 0.15);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 999px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 0.8rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   outline: none;
   transition: all 0.25s ease;
 }
 
 .searchInput:focus {
-  border-color: rgba(0, 247, 255, 0.5);
+  border-color: var(--neon-cyan);
   box-shadow: 0 0 14px rgba(0, 247, 255, 0.2);
   width: 240px;
 }
@@ -142,7 +143,7 @@
   position: absolute;
   left: 10px;
   font-size: 0.8rem;
-  color: rgba(0, 247, 255, 0.6);
+  color: var(--neon-cyan);
   pointer-events: none;
 }
 
@@ -159,26 +160,26 @@
   grid-column: 1;
   grid-row: 2;
   pointer-events: auto;
-  background: rgba(3, 8, 26, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(0, 247, 255, 0.12);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--glass-shadow);
   align-self: start;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
 }
 
 .sectionTitle {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
-  color: rgba(0, 247, 255, 0.8);
+  color: var(--neon-cyan);
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin: 0 0 6px 0;
@@ -190,12 +191,12 @@
 .selector {
   width: 100%;
   padding: 10px 12px;
-  background: rgba(0, 247, 255, 0.05);
-  border: 1px solid rgba(0, 247, 255, 0.2);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 0.88rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   outline: none;
   cursor: pointer;
@@ -203,13 +204,13 @@
 }
 
 .selector:hover, .selector:focus {
-  border-color: rgba(0, 247, 255, 0.5);
+  border-color: var(--neon-cyan);
   box-shadow: 0 0 16px rgba(0, 247, 255, 0.15);
 }
 
 .selector option {
-  background: #080f26;
-  color: #fff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
 }
 
 /* Quick selector grid of molecule buttons */
@@ -223,8 +224,8 @@
 }
 
 .quickMolBtn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 8px 10px;
   text-align: left;
@@ -236,21 +237,21 @@
 }
 
 .quickMolBtn:hover {
-  background: rgba(0, 247, 255, 0.08);
-  border-color: rgba(0, 247, 255, 0.3);
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
 }
 
 .quickMolActive {
-  background: rgba(0, 247, 255, 0.12) !important;
-  border-color: rgba(0, 247, 255, 0.6) !important;
+  background: var(--neon-cyan-dim) !important;
+  border-color: var(--neon-cyan) !important;
   box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
 }
 
 .molNameVi {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-display);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -258,8 +259,8 @@
 
 .molFormula {
   font-size: 0.72rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: #00f7ff;
+  font-family: var(--font-mono);
+  color: var(--neon-cyan);
 }
 
 /* Mode toggle buttons */
@@ -270,29 +271,29 @@
 
 .btn {
   flex: 1;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(140, 160, 200, 0.8);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
   padding: 9px 12px;
   border-radius: 10px;
   cursor: pointer;
   font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-weight: 600;
   transition: all 0.25s ease;
   text-align: center;
 }
 
 .btn:hover {
-  background: rgba(0, 247, 255, 0.08);
-  border-color: rgba(0, 247, 255, 0.35);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
 }
 
 .btnActive {
-  background: rgba(0, 247, 255, 0.12);
-  border-color: rgba(0, 247, 255, 0.6);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
   box-shadow: 0 0 16px rgba(0, 247, 255, 0.2);
 }
 
@@ -301,8 +302,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  background: rgba(0, 247, 255, 0.03);
-  border: 1px solid rgba(0, 247, 255, 0.08);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   padding: 10px 12px;
   border-radius: 12px;
 }
@@ -311,12 +312,12 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: rgba(140, 160, 200, 0.8);
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
 }
 
 .sliderVal {
-  color: #00f7ff;
+  color: var(--neon-cyan);
   font-weight: 700;
 }
 
@@ -324,7 +325,7 @@
   -webkit-appearance: none;
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-border-bright);
   border-radius: 4px;
   outline: none;
 }
@@ -334,7 +335,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #00f7ff;
+  background: var(--neon-cyan);
   cursor: pointer;
   box-shadow: 0 0 12px rgba(0, 247, 255, 0.7);
 }
@@ -348,20 +349,19 @@
   pointer-events: auto;
   position: relative;
   width: var(--drawer-width, 380px);
-  background: rgba(3, 8, 26, 0.82);
+  background: var(--bg-surface);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(0, 247, 255, 0.15);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
-  padding: clamp(12px, 4cqi, 20px);
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 3.5cqi, 16px);
-  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5);
+  gap: 14px;
+  box-shadow: var(--glass-shadow);
   align-self: start;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
-  container-type: inline-size;
 }
 
 /* Draggable Resizer Bar */
@@ -380,29 +380,29 @@
 }
 
 .resizerHandle:hover {
-  background: rgba(0, 247, 255, 0.15);
+  background: var(--neon-cyan-dim);
 }
 
 .resizerGrip {
   width: 3px;
   height: 36px;
-  background: rgba(0, 247, 255, 0.4);
+  background: var(--neon-cyan);
   border-radius: 999px;
-  box-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+  box-shadow: 0 0 8px var(--neon-cyan);
   transition: background 0.2s ease;
 }
 
 .resizerHandle:hover .resizerGrip {
-  background: #00f7ff;
-  box-shadow: 0 0 12px #00f7ff;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan);
 }
 
 .molHeaderBadge {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 3cqi, 14px);
-  padding-bottom: clamp(8px, 3cqi, 14px);
-  border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-border);
   position: relative;
 }
 
@@ -413,12 +413,12 @@
 
 .drawerCollapseBtn {
   margin-left: auto;
-  background: rgba(0, 247, 255, 0.08);
-  border: 1px solid rgba(0, 247, 255, 0.25);
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
   padding: 5px 10px;
   border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   cursor: pointer;
@@ -427,18 +427,18 @@
 }
 
 .drawerCollapseBtn:hover {
-  background: rgba(0, 247, 255, 0.2);
+  background: var(--neon-cyan-dim);
   box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
 }
 
 .formulaBox {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(1.15rem, 5.5cqi, 1.6rem);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
   font-weight: 900;
-  color: #00f7ff;
-  background: rgba(0, 247, 255, 0.08);
-  border: 1px solid rgba(0, 247, 255, 0.25);
-  padding: clamp(6px, 2cqi, 10px) clamp(8px, 3.5cqi, 14px);
+  color: var(--neon-cyan);
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--glass-border-bright);
+  padding: 8px 14px;
   border-radius: 14px;
   box-shadow: 0 0 16px rgba(0, 247, 255, 0.15);
   white-space: nowrap;
@@ -452,10 +452,10 @@
 }
 
 .nameVi {
-  font-size: clamp(0.95rem, 4.5cqi, 1.25rem);
+  font-size: 1.15rem;
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
-  color: #fff;
+  font-family: var(--font-display);
+  color: var(--text-primary);
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -463,9 +463,9 @@
 }
 
 .nameEn {
-  font-size: clamp(0.7rem, 3.2cqi, 0.82rem);
-  color: rgba(140, 160, 200, 0.7);
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -475,42 +475,42 @@
 .specGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(6px, 2cqi, 8px);
+  gap: 8px;
 }
 
 .specCard {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
-  padding: clamp(6px, 2cqi, 8px) clamp(8px, 2.5cqi, 10px);
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .specLabel {
-  font-size: clamp(0.6rem, 2.8cqi, 0.68rem);
-  font-family: 'JetBrains Mono', monospace;
-  color: rgba(140, 160, 200, 0.65);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
   text-transform: uppercase;
 }
 
 .specValue {
-  font-size: clamp(0.75rem, 3.6cqi, 0.88rem);
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #00f7ff;
-  font-family: 'JetBrains Mono', monospace;
+  color: var(--neon-cyan);
+  font-family: var(--font-mono);
   word-break: break-word;
 }
 
 /* Description & Applications */
 .descBox {
-  font-size: clamp(0.75rem, 3.5cqi, 0.84rem);
-  color: rgba(200, 220, 255, 0.85);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
   line-height: 1.5;
-  background: rgba(0, 247, 255, 0.03);
-  border-left: 3px solid #00f7ff;
-  padding: clamp(6px, 2.5cqi, 10px) clamp(8px, 3cqi, 12px);
+  background: var(--neon-cyan-dim);
+  border-left: 3px solid var(--neon-cyan);
+  padding: 8px 12px;
   border-radius: 6px;
 }
 
@@ -524,22 +524,22 @@
   display: flex;
   align-items: flex-start;
   gap: 6px;
-  font-size: clamp(0.72rem, 3.2cqi, 0.8rem);
-  color: rgba(200, 220, 255, 0.8);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
 .appBullet {
-  color: #00ff80;
+  color: var(--neon-green);
   font-weight: bold;
 }
 
 /* Atom chips */
 .measureHelpText {
-  font-size: clamp(0.68rem, 2.8cqi, 0.78rem);
-  color: rgba(0, 247, 255, 0.75);
-  background: rgba(0, 247, 255, 0.07);
-  border: 1px solid rgba(0, 247, 255, 0.2);
+  font-size: 0.8rem;
+  color: var(--neon-cyan);
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 6px 10px;
   line-height: 1.5;
@@ -553,21 +553,21 @@
 }
 
 .atomChip {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: clamp(3px, 1.2cqi, 4px) clamp(6px, 2.5cqi, 10px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 4px 10px;
   border-radius: 999px;
-  font-size: clamp(0.68rem, 3cqi, 0.75rem);
-  font-family: 'JetBrains Mono', monospace;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .atomChip:hover, .atomChipActive {
-  background: rgba(0, 247, 255, 0.15);
-  border-color: #00f7ff;
-  color: #00f7ff;
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
   box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
 }
 

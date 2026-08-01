@@ -1,5 +1,17 @@
 export type Language = 'vi' | 'en';
 
+export interface LanguageMeta {
+  code: Language;
+  name: string;
+  nativeName: string;
+  flag: string;
+}
+
+export const SUPPORTED_LANGUAGES: LanguageMeta[] = [
+  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧' },
+];
+
 export interface TranslationDictionary {
   nav: {
     home: string;
@@ -9,6 +21,56 @@ export interface TranslationDictionary {
     lessons: string;
     lessonsFlyoutTitle: string;
     settings: string;
+  };
+  settings: {
+    title: string;
+    subtitle: string;
+    resetDefaults: string;
+    themeSection: string;
+    typographySection: string;
+    audioSection: string;
+    graphicsSection: string;
+    previewSection: string;
+    iconStyleLabel: string;
+    fontFamilyLabel: string;
+    fontSizeLabel: string;
+    soundFxLabel: string;
+    soundFxSub: string;
+    masterVolumeLabel: string;
+    languageLabel: string;
+    autoRotateLabel: string;
+    autoRotateSub: string;
+    graphicsQualityLabel: string;
+    previewBadge: string;
+    previewText: string;
+
+    themeCyberLabel: string;
+    themeCyberDesc: string;
+    themeNeonLabel: string;
+    themeNeonDesc: string;
+    themeNebulaLabel: string;
+    themeNebulaDesc: string;
+    themeLightLabel: string;
+    themeLightDesc: string;
+
+    fontSansLabel: string;
+    fontScifiLabel: string;
+    fontSerifLabel: string;
+    fontMonoLabel: string;
+
+    iconCyberLabel: string;
+    iconMinimalLabel: string;
+    iconScifiLabel: string;
+    iconTechLabel: string;
+
+    fontSizeSmall: string;
+    fontSizeMedium: string;
+    fontSizeLarge: string;
+    fontSizeXlarge: string;
+
+    graphicsHigh: string;
+    graphicsMedium: string;
+    graphicsLow: string;
   };
   home: {
     badge: string;

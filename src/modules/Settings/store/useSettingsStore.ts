@@ -5,11 +5,52 @@ export type FontSizeOption = 'small' | 'medium' | 'large' | 'xlarge';
 export type FontFamilyOption = 'sans' | 'scifi' | 'serif' | 'mono';
 export type ThemeMode = 'cyber' | 'neon' | 'nebula' | 'light';
 export type GraphicsQuality = 'high' | 'medium' | 'low';
+export type IconStyleOption = 'cyber' | 'minimal' | 'scifi' | 'tech';
+
+export const ICON_SETS: Record<IconStyleOption, Record<string, string>> = {
+  cyber: {
+    home: '⌂',
+    'periodic-table': '⚛',
+    explorer: '⬡',
+    'virtual-lab': '⚗',
+    lesson: '📚',
+    settings: '⚙',
+  },
+  minimal: {
+    home: '🏠',
+    'periodic-table': '📊',
+    explorer: '🔬',
+    'virtual-lab': '🧪',
+    lesson: '📖',
+    settings: '🛠',
+  },
+  scifi: {
+    home: '🌌',
+    'periodic-table': '⚛️',
+    explorer: '💎',
+    'virtual-lab': '🥽',
+    lesson: '📜',
+    settings: '⚙️',
+  },
+  tech: {
+    home: '[H]',
+    'periodic-table': '[P]',
+    explorer: '[X]',
+    'virtual-lab': '[V]',
+    lesson: '[L]',
+    settings: '[S]',
+  },
+};
+
+export const getNavIcon = (view: string, style: IconStyleOption = 'cyber') => {
+  return ICON_SETS[style]?.[view] || ICON_SETS.cyber[view] || '⚛';
+};
 
 export interface SettingsState {
   fontSize: FontSizeOption;
   fontFamily: FontFamilyOption;
   theme: ThemeMode;
+  iconStyle: IconStyleOption;
   soundEnabled: boolean;
   soundVolume: number;
   autoRotate3D: boolean;
@@ -18,6 +59,7 @@ export interface SettingsState {
   setFontSize: (size: FontSizeOption) => void;
   setFontFamily: (family: FontFamilyOption) => void;
   setTheme: (theme: ThemeMode) => void;
+  setIconStyle: (iconStyle: IconStyleOption) => void;
   setSoundEnabled: (enabled: boolean) => void;
   setSoundVolume: (volume: number) => void;
   setAutoRotate3D: (autoRotate: boolean) => void;
@@ -31,6 +73,7 @@ const DEFAULT_SETTINGS = {
   fontSize: 'medium' as FontSizeOption,
   fontFamily: 'sans' as FontFamilyOption,
   theme: 'cyber' as ThemeMode,
+  iconStyle: 'cyber' as IconStyleOption,
   soundEnabled: true,
   soundVolume: 80,
   autoRotate3D: true,
@@ -57,6 +100,7 @@ export const applySettingsToDOM = (settings: typeof DEFAULT_SETTINGS) => {
   root.setAttribute('data-theme', settings.theme);
   root.setAttribute('data-font-size', settings.fontSize);
   root.setAttribute('data-font-family', settings.fontFamily);
+  root.setAttribute('data-icon-style', settings.iconStyle);
 
   // Sync sound with ChemStore
   const chemStore = useChemStore.getState();
@@ -92,6 +136,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setTheme: (theme) => {
     set({ theme });
     saveSettings({ ...get(), theme });
+  },
+
+  setIconStyle: (iconStyle) => {
+    set({ iconStyle });
+    saveSettings({ ...get(), iconStyle });
   },
 
   setSoundEnabled: (soundEnabled) => {

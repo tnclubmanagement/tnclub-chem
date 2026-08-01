@@ -135,18 +135,25 @@
   --text-muted: #64748b;
 }
 
-/* Font Size Customizations */
-:root[data-font-size="small"] {
-  font-size: 14px;
-}
-:root[data-font-size="medium"] {
+/* Font Size Customizations — Apply directly to html root element */
+html, :root {
   font-size: 16px;
 }
-:root[data-font-size="large"] {
-  font-size: 18px;
+
+html[data-font-size="small"], :root[data-font-size="small"] {
+  font-size: 14px !important;
 }
-:root[data-font-size="xlarge"] {
-  font-size: 20px;
+
+html[data-font-size="medium"], :root[data-font-size="medium"] {
+  font-size: 16px !important;
+}
+
+html[data-font-size="large"], :root[data-font-size="large"] {
+  font-size: 18px !important;
+}
+
+html[data-font-size="xlarge"], :root[data-font-size="xlarge"] {
+  font-size: 20px !important;
 }
 
 /* Font Family Customizations */
@@ -186,9 +193,10 @@ html, body {
   background: var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-body);
+  font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, font-size 0.2s ease;
 }
 
 #root {
@@ -199,6 +207,7 @@ html, body {
   max-width: none;
   border: none;
   text-align: left;
+  font-size: 1rem;
 }
 
 /* ============================================================

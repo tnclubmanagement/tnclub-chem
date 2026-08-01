@@ -1,4 +1,4 @@
-/* ElementPanel.module.css — Glassmorphism & Cyberpunk Neon UI */
+/* ElementPanel.module.css — Glassmorphism & Dynamic Theme UI */
 
 .rightPanel { 
     position: absolute; 
@@ -6,16 +6,17 @@
     right: 0; 
     height: 100%; 
     width: 400px; /* default width */
-    background: rgba(4, 10, 26, 0.82); 
-    border-left: 1px solid rgba(0, 247, 255, 0.15); 
+    background: var(--bg-surface); 
+    border-left: 1px solid var(--glass-border-bright); 
     backdrop-filter: blur(30px) saturate(160%);
     -webkit-backdrop-filter: blur(30px) saturate(160%);
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7), inset 1px 0 0 rgba(255, 255, 255, 0.05); 
+    box-shadow: var(--glass-shadow); 
     z-index: 30; 
     display: flex; 
     flex-direction: column;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
     pointer-events: auto; 
+    color: var(--text-primary);
 }
 
 .rightPanel.hidden { 
@@ -26,8 +27,8 @@
 .rightPanel.collapsed {
     width: 52px !important;
     overflow: hidden;
-    background: rgba(4, 10, 26, 0.92);
-    border-left-color: rgba(0, 247, 255, 0.3);
+    background: var(--bg-surface);
+    border-left-color: var(--glass-border-bright);
 }
 
 .resizer { 
@@ -42,7 +43,7 @@
 }
 
 .resizer:hover, .resizer.dragging { 
-    background: rgba(0, 247, 255, 0.5); 
+    background: var(--neon-cyan); 
 }
 
 .panelContent { 
@@ -59,16 +60,16 @@
     justify-content: space-between; 
     align-items: center; 
     padding: 0.9rem 1.2rem; 
-    border-bottom: 1px solid rgba(0, 247, 255, 0.12); 
-    background: rgba(0, 247, 255, 0.03); 
+    border-bottom: 1px solid var(--glass-border); 
+    background: var(--glass-bg); 
     gap: 8px;
 }
 
 .panelTitle { 
-    color: #00f7ff; 
+    color: var(--neon-cyan); 
     font-size: 0.85rem; 
     font-weight: 700; 
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     text-transform: uppercase; 
     letter-spacing: 1px; 
     margin: 0;
@@ -84,9 +85,9 @@
 }
 
 .iconBtn { 
-    background: rgba(255, 255, 255, 0.04); 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    color: rgba(140, 160, 200, 0.8); 
+    background: var(--glass-bg); 
+    border: 1px solid var(--glass-border); 
+    color: var(--text-secondary); 
     font-size: 0.9rem; 
     cursor: pointer; 
     padding: 0.35rem 0.6rem; 
@@ -96,13 +97,13 @@
     align-items: center;
     gap: 4px;
     font-size: 0.78rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .iconBtn:hover { 
-    background: rgba(0, 247, 255, 0.12); 
-    color: #00f7ff; 
-    border-color: rgba(0, 247, 255, 0.4);
+    background: var(--neon-cyan-dim); 
+    color: var(--neon-cyan); 
+    border-color: var(--neon-cyan);
     box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
 }
 
@@ -115,7 +116,7 @@
 .closeBtn:hover {
     background: rgba(239, 68, 68, 0.25);
     border-color: #ef4444;
-    color: #fff;
+    color: #ef4444;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 }
 
@@ -131,9 +132,9 @@
 }
 
 .peekExpandBtn {
-    background: rgba(0, 247, 255, 0.1);
-    border: 1px solid rgba(0, 247, 255, 0.3);
-    color: #00f7ff;
+    background: var(--neon-cyan-dim);
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
@@ -143,18 +144,18 @@
 }
 
 .peekExpandBtn:hover {
-    background: rgba(0, 247, 255, 0.25);
+    background: var(--neon-cyan-dim);
     transform: scale(1.1);
 }
 
 .peekVerticalText {
     writing-mode: vertical-rl;
     text-transform: uppercase;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 2px;
     font-size: 0.85rem;
-    color: rgba(0, 247, 255, 0.8);
+    color: var(--neon-cyan);
     text-shadow: 0 0 8px rgba(0, 247, 255, 0.4);
 }
 
@@ -181,21 +182,21 @@
 }
 
 .vizResizer:hover {
-    background: rgba(0, 247, 255, 0.12);
+    background: var(--neon-cyan-dim);
 }
 
 .vizResizerGrip {
     width: 48px;
     height: 3px;
-    background: rgba(0, 247, 255, 0.4);
+    background: var(--neon-cyan);
     border-radius: 999px;
-    box-shadow: 0 0 6px rgba(0, 247, 255, 0.4);
+    box-shadow: 0 0 6px var(--neon-cyan);
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .vizResizer:hover .vizResizerGrip {
-    background: #00f7ff;
-    box-shadow: 0 0 12px #00f7ff;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 12px var(--neon-cyan);
 }
 
 .elementBadge { 
@@ -208,17 +209,17 @@
 .modalSymbol { 
     font-size: 3.5rem; 
     font-weight: 900; 
-    font-family: 'Outfit', sans-serif;
-    color: #fff; 
+    font-family: var(--font-display);
+    color: var(--text-primary); 
     text-shadow: 0 0 25px rgba(0, 247, 255, 0.5); 
-    background: rgba(0, 247, 255, 0.05); 
+    background: var(--neon-cyan-dim); 
     width: 90px; 
     height: 90px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     border-radius: 16px; 
-    border: 1px solid rgba(0, 247, 255, 0.2); 
+    border: 1px solid var(--glass-border-bright); 
     box-shadow: inset 0 0 15px rgba(0, 247, 255, 0.08);
 }
 
@@ -231,36 +232,36 @@
 .modalName { 
     font-size: 1.7rem; 
     font-weight: 800; 
-    font-family: 'Outfit', sans-serif;
-    color: #fff; 
+    font-family: var(--font-display);
+    color: var(--text-primary); 
     margin: 0;
 }
 
 .modalCategory { 
     font-size: 0.82rem; 
-    color: #00f7ff; 
+    color: var(--neon-cyan); 
     text-transform: uppercase; 
     font-weight: 700; 
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     letter-spacing: 1px; 
 }
 
 .modalDivider { 
     height: 1px; 
-    background: linear-gradient(90deg, rgba(0, 247, 255, 0.3) 0%, transparent 100%); 
+    background: linear-gradient(90deg, var(--glass-border-bright) 0%, transparent 100%); 
     margin: 1.25rem 0; 
 }
 
 .modalDetails h3 { 
     font-size: 1rem; 
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
-    color: #fff; 
+    color: var(--text-primary); 
     margin-bottom: 0.75rem; 
 }
 
 .modalDesc { 
-    color: rgba(200, 220, 255, 0.85); 
+    color: var(--text-secondary); 
     line-height: 1.65; 
     font-size: 0.9rem; 
 }
@@ -268,29 +269,29 @@
 .configSection {
     margin-top: 1rem; 
     padding: 0.9rem 1rem; 
-    background: rgba(0, 247, 255, 0.04); 
-    border-left: 3px solid #00f7ff; 
+    background: var(--neon-cyan-dim); 
+    border-left: 3px solid var(--neon-cyan); 
     border-radius: 6px;
 }
 
 .configHeading {
-    color: #00f7ff; 
+    color: var(--neon-cyan); 
     margin-bottom: 0.4rem; 
     font-size: 0.82rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
 }
 
 .configText {
-    font-family: 'JetBrains Mono', monospace; 
+    font-family: var(--font-mono); 
     font-size: 1.05rem; 
-    color: #fff; 
+    color: var(--text-primary); 
     font-weight: 700;
 }
 
 .appHeading {
     margin-top: 1.5rem; 
-    color: #00ff80 !important;
+    color: var(--neon-green) !important;
 }
 
 /* Tabs */
@@ -298,8 +299,8 @@
     position: relative;
     width: 100%;
     height: 280px;
-    background: radial-gradient(circle at center, rgba(15, 30, 60, 0.8) 0%, rgba(3, 8, 24, 0.95) 100%);
-    border-bottom: 1px solid rgba(0, 247, 255, 0.12);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--glass-border);
     overflow: hidden;
 }
 
@@ -310,10 +311,10 @@
     transform: translateX(-50%);
     z-index: 10;
     display: flex;
-    background: rgba(0, 5, 20, 0.7);
+    background: var(--glass-bg);
     border-radius: 30px;
     padding: 3px;
-    border: 1px solid rgba(0, 247, 255, 0.2);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
     width: 320px;
 }
@@ -323,8 +324,8 @@
     top: 3px;
     height: calc(100% - 6px);
     width: calc(33.333% - 2px);
-    background: rgba(0, 247, 255, 0.2);
-    border: 1px solid rgba(0, 247, 255, 0.4);
+    background: var(--neon-cyan-dim);
+    border: 1px solid var(--neon-cyan);
     border-radius: 26px;
     box-shadow: 0 0 12px rgba(0, 247, 255, 0.3);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -337,7 +338,7 @@
     padding: 6px 8px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: rgba(140, 160, 200, 0.75);
+    color: var(--text-secondary);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -346,7 +347,7 @@
 }
 
 .tabBtnActive {
-    color: #00f7ff;
+    color: var(--neon-cyan);
     text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
 }
 
@@ -354,8 +355,8 @@
    GROUP & PERIOD INFORMATION STYLES
    ========================================= */
 .groupCard {
-    background: rgba(0, 247, 255, 0.03);
-    border: 1px solid rgba(0, 247, 255, 0.12);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 14px;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
@@ -367,7 +368,7 @@
     border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
     margin-bottom: 0.75rem;
     border: 1px solid currentColor;
@@ -376,31 +377,31 @@
 .groupTitle {
     font-size: 1.35rem;
     font-weight: 800;
-    font-family: 'Outfit', sans-serif;
-    color: #fff;
+    font-family: var(--font-display);
+    color: var(--text-primary);
     margin: 0 0 0.5rem 0;
 }
 
 .infoBlock {
     margin-top: 1rem;
     padding: 0.8rem 1rem;
-    background: rgba(255, 255, 255, 0.025);
+    background: var(--glass-bg);
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
 }
 
 .infoBlockTitle {
     font-size: 0.78rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
-    color: #00f7ff;
+    color: var(--neon-cyan);
     text-transform: uppercase;
     margin-bottom: 0.3rem;
 }
 
 .infoBlockText {
     font-size: 0.88rem;
-    color: rgba(220, 235, 255, 0.85);
+    color: var(--text-secondary);
     line-height: 1.55;
     margin: 0;
 }
@@ -412,8 +413,8 @@
 .elementsGridTitle {
     font-size: 0.9rem;
     font-weight: 700;
-    font-family: 'Outfit', sans-serif;
-    color: #fff;
+    font-family: var(--font-display);
+    color: var(--text-primary);
     margin-bottom: 0.8rem;
     display: flex;
     align-items: center;
@@ -422,9 +423,9 @@
 
 .elementCountBadge {
     font-size: 0.75rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: #00f7ff;
-    background: rgba(0, 247, 255, 0.1);
+    font-family: var(--font-mono);
+    color: var(--neon-cyan);
+    background: var(--neon-cyan-dim);
     padding: 2px 8px;
     border-radius: 999px;
 }
@@ -439,8 +440,8 @@
 }
 
 .elementChip {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: 10px;
     padding: 8px 6px;
     display: flex;
@@ -452,28 +453,28 @@
 }
 
 .elementChip:hover {
-    background: rgba(0, 247, 255, 0.12);
-    border-color: #00f7ff;
+    background: var(--neon-cyan-dim);
+    border-color: var(--neon-cyan);
     box-shadow: 0 0 12px rgba(0, 247, 255, 0.25);
     transform: translateY(-2px);
 }
 
 .chipZ {
     font-size: 0.65rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-mono);
+    color: var(--text-muted);
 }
 
 .chipSymbol {
     font-size: 1.1rem;
     font-weight: 800;
-    font-family: 'Outfit', sans-serif;
-    color: #fff;
+    font-family: var(--font-display);
+    color: var(--text-primary);
 }
 
 .chipName {
     font-size: 0.58rem;
-    color: rgba(200, 220, 255, 0.7);
+    color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

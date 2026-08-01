@@ -89,7 +89,7 @@ export const AtomNode = ({ id, symbol, position }: AtomNodeProps) => {
             borderRadius: '8px',
             color: '#fff',
             fontFamily: 'sans-serif',
-            fontSize: '14px',
+            fontSize: '0.875rem',
             fontWeight: 'bold',
             pointerEvents: 'none',
             whiteSpace: 'nowrap'

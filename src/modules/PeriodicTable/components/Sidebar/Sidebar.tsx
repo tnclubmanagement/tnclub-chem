@@ -3,6 +3,7 @@ import { useChemStore } from '../../store/useChemStore';
 import { LESSONS } from '../../data/lessons';
 import { useTranslation } from '../../../../i18n/useTranslation';
 import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
+import { useSettingsStore, getNavIcon } from '../../../Settings/store/useSettingsStore';
 import styles from './Sidebar.module.css';
 
 type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings';
@@ -10,18 +11,17 @@ type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab
 export const Sidebar: React.FC = () => {
   const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
   const { t, language } = useTranslation();
+  const { iconStyle } = useSettingsStore();
 
-  const navItems: Array<{
+  const mainNavItems: Array<{
     view: ViewType;
-    icon: string;
     label: string;
     accentColor: string;
   }> = [
-    { view: 'home',           icon: '⌂',  label: t('nav', 'home'),          accentColor: '#00f7ff' },
-    { view: 'periodic-table', icon: '⚛',  label: t('nav', 'periodicTable'), accentColor: '#00f7ff' },
-    { view: 'explorer',       icon: '⬡',  label: t('nav', 'explorer'),      accentColor: '#ff1adb' },
-    { view: 'virtual-lab',    icon: '⚗',  label: t('nav', 'virtualLab'),    accentColor: '#00ff80' },
-    { view: 'settings',       icon: '⚙',  label: t('nav', 'settings'),      accentColor: '#e11d48' },
+    { view: 'home',           label: t('nav', 'home'),          accentColor: '#00f7ff' },
+    { view: 'periodic-table', label: t('nav', 'periodicTable'), accentColor: '#00f7ff' },
+    { view: 'explorer',       label: t('nav', 'explorer'),      accentColor: '#ff1adb' },
+    { view: 'virtual-lab',    label: t('nav', 'virtualLab'),    accentColor: '#00ff80' },
   ];
 
   return (
@@ -39,8 +39,9 @@ export const Sidebar: React.FC = () => {
       <div className={styles.divider} />
 
       <nav className={styles.navGroup}>
-        {navItems.map((item) => {
+        {mainNavItems.map((item) => {
           const isActive = activeView === item.view;
+          const icon = getNavIcon(item.view, iconStyle);
           return (
             <div
               key={item.view}
@@ -51,7 +52,7 @@ export const Sidebar: React.FC = () => {
               {/* Active indicator bar */}
               <div className={styles.activeBar} />
 
-              <span className={styles.navIcon}>{item.icon}</span>
+              <span className={styles.navIcon}>{icon}</span>
 
               {/* Tooltip */}
               <div className={styles.tooltip}>{item.label}</div>
@@ -59,7 +60,7 @@ export const Sidebar: React.FC = () => {
           );
         })}
 
-        {/* Lessons flyout stays separate */}
+        {/* Lessons flyout stays in main nav */}
         <div
           className={`${styles.navItem} ${styles.hasFlyout} ${activeView === 'lesson' ? styles.active : ''}`}
           style={{ '--item-color': '#8f00ff' } as React.CSSProperties}
@@ -69,7 +70,7 @@ export const Sidebar: React.FC = () => {
           }}
         >
           <div className={styles.activeBar} />
-          <span className={styles.navIcon}>📚</span>
+          <span className={styles.navIcon}>{getNavIcon('lesson', iconStyle)}</span>
           <div className={styles.tooltip}>{t('nav', 'lessons')}</div>
 
           <div className={styles.submenuFlyout}>
@@ -93,9 +94,21 @@ export const Sidebar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Bottom Language Switcher */}
-      <div style={{ marginTop: 'auto', marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
-        <LanguageSwitcher />
+      {/* Bottom Group: Settings & Language Switcher */}
+      <div className={styles.bottomGroup}>
+        <div
+          className={`${styles.navItem} ${activeView === 'settings' ? styles.active : ''}`}
+          style={{ '--item-color': '#00f7ff' } as React.CSSProperties}
+          onClick={() => setActiveView('settings')}
+        >
+          <div className={styles.activeBar} />
+          <span className={styles.navIcon}>{getNavIcon('settings', iconStyle)}</span>
+          <div className={styles.tooltip}>{t('nav', 'settings')}</div>
+        </div>
+
+        <div className={styles.langWrapper}>
+          <LanguageSwitcher />
+        </div>
       </div>
     </aside>
   );

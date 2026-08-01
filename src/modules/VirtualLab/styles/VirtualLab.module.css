@@ -494,7 +494,7 @@ input:checked + .slider:before {
 .filterBtn:hover,
 .filterBtn.active {
   background: var(--neon-border);
-  color: #fff;
+  color: var(--text-primary);
   border-color: var(--neon-border);
 }
 
@@ -908,7 +908,7 @@ input:checked + .slider:before {
   margin: 0;
   font-family: var(--font-title);
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .panelContent {
@@ -931,7 +931,7 @@ input:checked + .slider:before {
   color: var(--text-sub);
   border: none;
   font-family: var(--font-title);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   padding: 8px 16px;
@@ -945,7 +945,7 @@ input:checked + .slider:before {
 }
 
 .tabBtn.active {
-  color: #fff;
+  color: var(--text-primary);
   background: rgba(59, 130, 246, 0.2);
   border: 1px solid rgba(59, 130, 246, 0.5);
 }
@@ -991,7 +991,7 @@ input:checked + .slider:before {
 .theoryCardHeader h3 {
   margin: 0;
   font-family: var(--font-title);
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #60a5fa;
 }
 
@@ -1006,7 +1006,7 @@ input:checked + .slider:before {
   border-radius: 6px;
   padding: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -1020,7 +1020,7 @@ input:checked + .slider:before {
 
 .theoryCard p {
   margin: 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--text-sub);
 }
@@ -1033,11 +1033,11 @@ input:checked + .slider:before {
 }
 
 .propBadge {
-  font-size: 12px;
+  font-size: 0.75rem;
   padding: 4px 10px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
+  color: var(--text-secondary);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 /* Mission HUD Styles */
@@ -1047,7 +1047,7 @@ input:checked + .slider:before {
   left: 50%;
   transform: translateX(-50%);
   width: 380px;
-  background: rgba(15, 23, 42, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--neon-border);
@@ -1080,7 +1080,7 @@ input:checked + .slider:before {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .navBtn:hover:not(:disabled) {
@@ -1112,7 +1112,7 @@ input:checked + .slider:before {
 .missionContent h4 {
   margin: 0;
   font-size: 1rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .missionContent p {

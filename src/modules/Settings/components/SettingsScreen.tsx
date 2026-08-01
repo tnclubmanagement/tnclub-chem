@@ -1,19 +1,20 @@
 import React from 'react';
-import { useSettingsStore } from '../store/useSettingsStore';
-import type { FontSizeOption, FontFamilyOption, ThemeMode, GraphicsQuality } from '../store/useSettingsStore';
+import { useSettingsStore, getNavIcon } from '../store/useSettingsStore';
+import type { FontSizeOption, FontFamilyOption, ThemeMode, GraphicsQuality, IconStyleOption } from '../store/useSettingsStore';
 import { useTranslation } from '../../../i18n/useTranslation';
 import { playSciFiSound } from '../../PeriodicTable/utils/audio';
 import { useChemStore } from '../../PeriodicTable/store/useChemStore';
 import styles from './SettingsScreen.module.css';
 
 export const SettingsScreen: React.FC = () => {
-  const { language, setLanguage } = useTranslation();
+  const { t, language, setLanguage, supportedLanguages } = useTranslation();
   const { soundEnabled } = useChemStore();
 
   const {
     fontSize,
     fontFamily,
     theme,
+    iconStyle,
     soundEnabled: soundOn,
     soundVolume,
     autoRotate3D,
@@ -21,6 +22,7 @@ export const SettingsScreen: React.FC = () => {
     setFontSize,
     setFontFamily,
     setTheme,
+    setIconStyle,
     setSoundEnabled,
     setSoundVolume,
     setAutoRotate3D,
@@ -33,48 +35,71 @@ export const SettingsScreen: React.FC = () => {
   const themeOptions: Array<{ mode: ThemeMode; label: string; desc: string; colors: string[] }> = [
     {
       mode: 'cyber',
-      label: language === 'en' ? 'Cyber Space' : 'Vũ trụ Cyber',
-      desc: language === 'en' ? 'Deep Cyan & Neon Cyberpunk' : 'Vũ trụ Cyberpunk xanh Neon',
+      label: t('settings', 'themeCyberLabel'),
+      desc: t('settings', 'themeCyberDesc'),
       colors: ['#03040d', '#00f7ff', '#00ff80'],
     },
     {
       mode: 'neon',
-      label: language === 'en' ? 'Bioluminescence' : 'Hóa Quang Emerald',
-      desc: language === 'en' ? 'Deep Emerald & Neon Green' : 'Hóa quang sinh học xanh lá',
+      label: t('settings', 'themeNeonLabel'),
+      desc: t('settings', 'themeNeonDesc'),
       colors: ['#02140e', '#00ff9d', '#10b981'],
     },
     {
       mode: 'nebula',
-      label: language === 'en' ? 'Cosmic Nebula' : 'Tinh Vân Tím',
-      desc: language === 'en' ? 'Mystic Purple & Deep Magenta' : 'Không gian tím huyền bí',
+      label: t('settings', 'themeNebulaLabel'),
+      desc: t('settings', 'themeNebulaDesc'),
       colors: ['#0f051d', '#d946ef', '#8b5cf6'],
     },
     {
       mode: 'light',
-      label: language === 'en' ? 'Clean Lab' : 'Phòng Thí Nghiệm Sáng',
-      desc: language === 'en' ? 'Modern Glassy Light Mode' : 'Giao diện phòng lab sáng',
+      label: t('settings', 'themeLightLabel'),
+      desc: t('settings', 'themeLightDesc'),
       colors: ['#f8fafc', '#0284c7', '#059669'],
     },
   ];
 
   const fontFamilyOptions: Array<{ id: FontFamilyOption; label: string; preview: string }> = [
-    { id: 'sans', label: 'Inter Sans', preview: 'Inter / System UI' },
-    { id: 'scifi', label: 'Sci-Fi Future', preview: 'Space Grotesk' },
-    { id: 'serif', label: 'Academic Serif', preview: 'Cinzel Academic' },
-    { id: 'mono', label: 'Code Monospace', preview: 'Fira / JetBrains Mono' },
+    { id: 'sans', label: t('settings', 'fontSansLabel'), preview: 'Inter / System UI' },
+    { id: 'scifi', label: t('settings', 'fontScifiLabel'), preview: 'Space Grotesk' },
+    { id: 'serif', label: t('settings', 'fontSerifLabel'), preview: 'Cinzel Academic' },
+    { id: 'mono', label: t('settings', 'fontMonoLabel'), preview: 'Fira / JetBrains Mono' },
+  ];
+
+  const iconStyleOptions: Array<{ id: IconStyleOption; label: string; preview: string }> = [
+    {
+      id: 'cyber',
+      label: t('settings', 'iconCyberLabel'),
+      preview: '⌂  ⚛  ⬡  ⚗  📚  ⚙',
+    },
+    {
+      id: 'minimal',
+      label: t('settings', 'iconMinimalLabel'),
+      preview: '🏠  📊  🔬  🧪  📖  🛠',
+    },
+    {
+      id: 'scifi',
+      label: t('settings', 'iconScifiLabel'),
+      preview: '🌌  ⚛️  💎  🥽  📜  ⚙️',
+    },
+    {
+      id: 'tech',
+      label: t('settings', 'iconTechLabel'),
+      preview: '[H] [P] [X] [V] [L] [S]',
+    },
   ];
 
   const fontSizeOptions: Array<{ id: FontSizeOption; label: string; px: string }> = [
-    { id: 'small', label: language === 'en' ? 'Small' : 'Nhỏ', px: '14px' },
-    { id: 'medium', label: language === 'en' ? 'Standard' : 'Tiêu chuẩn', px: '16px' },
-    { id: 'large', label: language === 'en' ? 'Large' : 'Lớn', px: '18px' },
-    { id: 'xlarge', label: language === 'en' ? 'Extra Large' : 'Rất lớn', px: '20px' },
+    { id: 'small', label: t('settings', 'fontSizeSmall'), px: '14px' },
+    { id: 'medium', label: t('settings', 'fontSizeMedium'), px: '16px' },
+    { id: 'large', label: t('settings', 'fontSizeLarge'), px: '18px' },
+    { id: 'xlarge', label: t('settings', 'fontSizeXlarge'), px: '20px' },
   ];
 
   const graphicsQualityOptions: Array<{ id: GraphicsQuality; label: string }> = [
-    { id: 'high', label: language === 'en' ? 'High (Ultra 3D)' : 'Cao (Ultra 3D)' },
-    { id: 'medium', label: language === 'en' ? 'Medium (Balanced)' : 'Trung bình' },
-    { id: 'low', label: language === 'en' ? 'Low (Performance)' : 'Tiết kiệm pin' },
+    { id: 'high', label: t('settings', 'graphicsHigh') },
+    { id: 'medium', label: t('settings', 'graphicsMedium') },
+    { id: 'low', label: t('settings', 'graphicsLow') },
   ];
 
   return (
@@ -84,14 +109,8 @@ export const SettingsScreen: React.FC = () => {
         <div className={styles.titleGroup}>
           <div className={styles.icon}>⚙️</div>
           <div>
-            <h1 className={styles.title}>
-              {language === 'en' ? 'Application Settings' : 'Cài Đặt Ứng Dụng'}
-            </h1>
-            <p className={styles.subtitle}>
-              {language === 'en'
-                ? 'Customize themes, font styles, audio effects, and 3D graphics parameters'
-                : 'Tùy chỉnh giao diện, phông chữ, âm thanh và hiệu ứng 3D'}
-            </p>
+            <h1 className={styles.title}>{t('settings', 'title')}</h1>
+            <p className={styles.subtitle}>{t('settings', 'subtitle')}</p>
           </div>
         </div>
 
@@ -102,7 +121,7 @@ export const SettingsScreen: React.FC = () => {
             resetDefaults();
           }}
         >
-          🔄 {language === 'en' ? 'Reset Defaults' : 'Đặt lại mặc định'}
+          🔄 {t('settings', 'resetDefaults')}
         </button>
       </div>
 
@@ -111,7 +130,7 @@ export const SettingsScreen: React.FC = () => {
         {/* Section 1: Themes & Aesthetics */}
         <div className={styles.sectionCard}>
           <h2 className={styles.sectionTitle}>
-            🎨 {language === 'en' ? 'Theme & Aesthetic Mode' : 'Chủ Đề & Giao Diện'}
+            🎨 {t('settings', 'themeSection')}
           </h2>
           <div className={styles.optionGrid}>
             {themeOptions.map((opt) => (
@@ -138,15 +157,50 @@ export const SettingsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Section 2: Typography & Fonts */}
+        {/* Section 2: Icon Set Selection */}
         <div className={styles.sectionCard}>
           <h2 className={styles.sectionTitle}>
-            🔤 {language === 'en' ? 'Typography & Fonts' : 'Phông Chữ & Kích Thước'}
+            🧩 {t('settings', 'iconStyleLabel')}
           </h2>
+          <div className={styles.optionGrid}>
+            {iconStyleOptions.map((opt) => (
+              <div
+                key={opt.id}
+                className={`${styles.cardOption} ${iconStyle === opt.id ? styles.active : ''}`}
+                onClick={() => {
+                  triggerSound();
+                  setIconStyle(opt.id);
+                }}
+              >
+                <div className={styles.cardOptionTitle}>
+                  <span>{opt.label}</span>
+                  {iconStyle === opt.id && <span>✓</span>}
+                </div>
+                <div
+                  className={styles.cardOptionDesc}
+                  style={{
+                    fontSize: '1.1rem',
+                    letterSpacing: 2,
+                    fontWeight: 700,
+                    marginTop: 6,
+                    color: 'var(--neon-cyan)',
+                  }}
+                >
+                  {opt.preview}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 3: Typography & Fonts */}
+        <div className={styles.sectionCard}>
+          <h2 className={styles.sectionTitle}>
+            🔤 {t('settings', 'typographySection')}
+          </h2>
+
           <div className={styles.settingLabel}>
-            <span className={styles.labelTitle}>
-              {language === 'en' ? 'Font Family' : 'Kiểu phông chữ'}
-            </span>
+            <span className={styles.labelTitle}>{t('settings', 'fontFamilyLabel')}</span>
           </div>
           <div className={styles.optionGrid}>
             {fontFamilyOptions.map((opt) => (
@@ -168,9 +222,7 @@ export const SettingsScreen: React.FC = () => {
           </div>
 
           <div style={{ marginTop: 12 }} className={styles.settingLabel}>
-            <span className={styles.labelTitle}>
-              {language === 'en' ? 'Base Font Size' : 'Kích thước chữ'}
-            </span>
+            <span className={styles.labelTitle}>{t('settings', 'fontSizeLabel')}</span>
           </div>
           <div className={styles.optionGrid}>
             {fontSizeOptions.map((opt) => (
@@ -191,22 +243,16 @@ export const SettingsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Section 3: Audio & Sound */}
+        {/* Section 4: Audio & Sound */}
         <div className={styles.sectionCard}>
           <h2 className={styles.sectionTitle}>
-            🔊 {language === 'en' ? 'Sound & Audio Effects' : 'Âm Thanh & Hiệu Ứng'}
+            🔊 {t('settings', 'audioSection')}
           </h2>
           
           <div className={styles.settingRow}>
             <div className={styles.settingLabel}>
-              <span className={styles.labelTitle}>
-                {language === 'en' ? 'Sci-Fi Sound FX' : 'Hiệu ứng âm thanh Sci-Fi'}
-              </span>
-              <span className={styles.labelSub}>
-                {language === 'en'
-                  ? 'Interactive clicks, hover, and lab reaction sound effects'
-                  : 'Âm thanh khi tương tác click, rê chuột và phản ứng hóa học'}
-              </span>
+              <span className={styles.labelTitle}>{t('settings', 'soundFxLabel')}</span>
+              <span className={styles.labelSub}>{t('settings', 'soundFxSub')}</span>
             </div>
             <label className={styles.switch}>
               <input
@@ -224,9 +270,7 @@ export const SettingsScreen: React.FC = () => {
           {soundOn && (
             <div className={styles.settingRow}>
               <div className={styles.settingLabel} style={{ width: '100%' }}>
-                <span className={styles.labelTitle}>
-                  {language === 'en' ? 'Master Volume' : 'Âm lượng tổng'}
-                </span>
+                <span className={styles.labelTitle}>{t('settings', 'masterVolumeLabel')}</span>
                 <div className={styles.rangeWrapper} style={{ marginTop: 8 }}>
                   <input
                     type="range"
@@ -243,52 +287,38 @@ export const SettingsScreen: React.FC = () => {
           )}
         </div>
 
-        {/* Section 4: Graphics & Language */}
+        {/* Section 5: Graphics & Language */}
         <div className={styles.sectionCard}>
           <h2 className={styles.sectionTitle}>
-            🎮 {language === 'en' ? '3D Graphics & Language' : 'Đồ Họa 3D & Ngôn Ngữ'}
+            🎮 {t('settings', 'graphicsSection')}
           </h2>
 
           <div className={styles.settingRow}>
             <div className={styles.settingLabel}>
-              <span className={styles.labelTitle}>
-                {language === 'en' ? 'Language / Ngôn ngữ' : 'Ngôn ngữ ứng dụng'}
-              </span>
+              <span className={styles.labelTitle}>{t('settings', 'languageLabel')}</span>
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button
-                className={`${styles.cardOption} ${language === 'vi' ? styles.active : ''}`}
-                style={{ padding: '8px 16px', flexDirection: 'row', alignItems: 'center' }}
-                onClick={() => {
-                  triggerSound();
-                  setLanguage('vi');
-                }}
-              >
-                🇻🇳 Tiếng Việt
-              </button>
-              <button
-                className={`${styles.cardOption} ${language === 'en' ? styles.active : ''}`}
-                style={{ padding: '8px 16px', flexDirection: 'row', alignItems: 'center' }}
-                onClick={() => {
-                  triggerSound();
-                  setLanguage('en');
-                }}
-              >
-                🇬🇧 English
-              </button>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {supportedLanguages.map((langMeta) => (
+                <button
+                  key={langMeta.code}
+                  className={`${styles.cardOption} ${language === langMeta.code ? styles.active : ''}`}
+                  style={{ padding: '8px 12px', flexDirection: 'row', alignItems: 'center', gap: 6 }}
+                  onClick={() => {
+                    triggerSound();
+                    setLanguage(langMeta.code);
+                  }}
+                >
+                  <span>{langMeta.flag}</span>
+                  <span>{langMeta.nativeName}</span>
+                </button>
+              ))}
             </div>
           </div>
 
           <div className={styles.settingRow}>
             <div className={styles.settingLabel}>
-              <span className={styles.labelTitle}>
-                {language === 'en' ? 'Auto-rotate 3D Models' : 'Tự động xoay mô hình 3D'}
-              </span>
-              <span className={styles.labelSub}>
-                {language === 'en'
-                  ? 'Continuous smooth rotation for chemical structures'
-                  : 'Xoay tròn mượt mà cho nguyên tử & phân tử'}
-              </span>
+              <span className={styles.labelTitle}>{t('settings', 'autoRotateLabel')}</span>
+              <span className={styles.labelSub}>{t('settings', 'autoRotateSub')}</span>
             </div>
             <label className={styles.switch}>
               <input
@@ -304,9 +334,7 @@ export const SettingsScreen: React.FC = () => {
           </div>
 
           <div className={styles.settingLabel} style={{ marginTop: 8 }}>
-            <span className={styles.labelTitle}>
-              {language === 'en' ? 'Graphics Quality' : 'Chất lượng đồ họa 3D'}
-            </span>
+            <span className={styles.labelTitle}>{t('settings', 'graphicsQualityLabel')}</span>
           </div>
           <div className={styles.optionGrid}>
             {graphicsQualityOptions.map((opt) => (
@@ -327,17 +355,20 @@ export const SettingsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Section 5: Live Interactive Preview */}
+        {/* Section 6: Live Interactive Preview */}
         <div className={styles.previewCard}>
           <div className={styles.previewHeader}>
-            👁️ {language === 'en' ? 'Live Interactive Preview' : 'Xem Trước Trực Tiếp'}
+            👁️ {t('settings', 'previewSection')}
           </div>
           <div className={styles.previewBox}>
-            <div className={styles.previewBadge}>⚛️ H2O - Water Molecule</div>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+              <div className={styles.previewBadge}>
+                {getNavIcon('home', iconStyle)} {getNavIcon('periodic-table', iconStyle)} {getNavIcon('explorer', iconStyle)} {getNavIcon('virtual-lab', iconStyle)} {getNavIcon('lesson', iconStyle)} {getNavIcon('settings', iconStyle)}
+              </div>
+              <div className={styles.previewBadge}>⚛️ H2O - Water Molecule</div>
+            </div>
             <p className={styles.previewText}>
-              {language === 'en'
-                ? 'This live text reflects your selected theme, font family, and base font size in real time across the entire ChemApp platform.'
-                : 'Đoạn văn bản này thể hiện trực tiếp chủ đề, kiểu chữ và kích thước phông bạn chọn trên toàn bộ nền tảng ChemApp.'}
+              {t('settings', 'previewText')}
             </p>
           </div>
         </div>

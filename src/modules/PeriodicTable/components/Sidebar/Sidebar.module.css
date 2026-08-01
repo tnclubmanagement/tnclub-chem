@@ -90,6 +90,23 @@
   align-items: center;
 }
 
+/* ---- Bottom Group ---- */
+.bottomGroup {
+  margin-top: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.langWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 /* ---- Nav Item ---- */
 .navItem {
   position: relative;

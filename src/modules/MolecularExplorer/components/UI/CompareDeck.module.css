@@ -1,18 +1,18 @@
 .compareModal {
   position: absolute;
   inset: 20px 20px 20px 90px;
-  background: rgba(3, 8, 26, 0.92);
+  background: var(--bg-surface);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(0, 247, 255, 0.25);
+  border: 1px solid var(--glass-border-bright);
   border-radius: 24px;
   z-index: 50;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
   padding: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-  color: #fff;
+  box-shadow: var(--glass-shadow);
+  color: var(--text-primary);
 }
 
 .header {
@@ -20,23 +20,23 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--glass-border);
   padding-bottom: 16px;
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #00f7ff;
+  color: var(--neon-cyan);
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .closeBtn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 12px;
   cursor: pointer;
@@ -47,6 +47,7 @@
 .closeBtn:hover {
   background: rgba(239, 68, 68, 0.8);
   border-color: #ef4444;
+  color: #ffffff;
 }
 
 .grid {
@@ -57,8 +58,8 @@
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(0, 247, 255, 0.15);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 20px;
   display: flex;
@@ -75,12 +76,12 @@
 .formula {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #ff1adb;
+  color: var(--neon-magenta);
 }
 
 .name {
   font-size: 1.1rem;
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -88,24 +89,24 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-bg);
   border-radius: 10px;
   font-size: 0.95rem;
 }
 
 .specLabel {
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .specVal {
   font-weight: 700;
-  color: #00f7ff;
+  color: var(--neon-cyan);
 }
 
 .selectMol {
-  background: rgba(0, 247, 255, 0.1);
-  border: 1px solid rgba(0, 247, 255, 0.3);
-  color: #fff;
+  background: var(--neon-cyan-dim);
+  border: 1px solid var(--neon-cyan);
+  color: var(--text-primary);
   padding: 10px 14px;
   border-radius: 10px;
   font-size: 1rem;

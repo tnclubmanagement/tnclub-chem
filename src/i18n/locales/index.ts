@@ -10,6 +10,9 @@ import explorerEn from '../../modules/MolecularExplorer/i18n/en.json';
 import bondVi from '../../modules/BondModels/i18n/vi.json';
 import bondEn from '../../modules/BondModels/i18n/en.json';
 
+import virtualLabVi from '../../modules/VirtualLab/i18n/vi.json';
+import virtualLabEn from '../../modules/VirtualLab/i18n/en.json';
+
 import type { TranslationDictionary } from '../types';
 
 export const vi: TranslationDictionary = {
@@ -17,6 +20,7 @@ export const vi: TranslationDictionary = {
   ...periodicVi,
   ...explorerVi,
   ...bondVi,
+  ...virtualLabVi,
 };
 
 export const en: TranslationDictionary = {
@@ -24,4 +28,5 @@ export const en: TranslationDictionary = {
   ...periodicEn,
   ...explorerEn,
   ...bondEn,
+  ...virtualLabEn,
 };

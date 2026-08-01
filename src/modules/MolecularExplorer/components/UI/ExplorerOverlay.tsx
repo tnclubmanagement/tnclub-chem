@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
 import { useTranslation } from '../../../../i18n/useTranslation';
+import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
 import styles from './ExplorerOverlay.module.css';
 
 
@@ -146,6 +147,11 @@ export const ExplorerOverlay = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+        </div>
+
+        {/* Language Switcher */}
+        <div className={styles.topBarLangSwitch}>
+          <LanguageSwitcher />
         </div>
       </motion.div>
 
@@ -308,7 +314,7 @@ export const ExplorerOverlay = () => {
                 window.innerWidth > 1100 ? 'ew-resize' : 'ns-resize';
               e.preventDefault();
             }}
-            title="Kéo rê để thay đổi kích thước bảng mô tả"
+            title={language === 'en' ? 'Drag to resize info panel' : 'Kéo rê để thay đổi kích thước bảng mô tả'}
           >
             <div className={styles.resizerGrip} />
           </div>
@@ -319,7 +325,9 @@ export const ExplorerOverlay = () => {
               <h2 className={styles.nameVi}>
                 {language === 'en' ? selectedMolecule.name : selectedMolecule.nameVi || selectedMolecule.name}
               </h2>
-              <span className={styles.nameEn}>{selectedMolecule.name}</span>
+              {language !== 'en' && (
+                <span className={styles.nameEn}>{selectedMolecule.name}</span>
+              )}
             </div>
           </div>
 
@@ -385,6 +393,11 @@ export const ExplorerOverlay = () => {
             <h4 className={styles.sectionTitle}>
               ⚛️ {t('explorer', 'atomList')} ({selectedMolecule.atoms.length})
             </h4>
+            {isMeasureMode && (
+              <p className={styles.measureHelpText}>
+                {t('explorer', 'measureHelp')}
+              </p>
+            )}
             <div className={styles.atomsChipList}>
               {selectedMolecule.atoms.map((atom) => (
                 <button

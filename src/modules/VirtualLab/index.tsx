@@ -8,6 +8,7 @@ import { playSciFiSound } from '../PeriodicTable/utils/audio';
 import React from 'react';
 import { TheoryPanel } from './components/UI/TheoryPanel';
 import { MissionHUD } from './components/UI/MissionHUD';
+import { useTranslation } from '../../i18n/useTranslation';
 
 export const VirtualLab: React.FC = () => {
   const addReactant = useVirtualLabStore((state) => state.addReactant);
@@ -26,27 +27,33 @@ export const VirtualLab: React.FC = () => {
   const isAutoPlayVoice = useVirtualLabStore((state) => state.isAutoPlayVoice);
   const setIsAutoPlayVoice = useVirtualLabStore((state) => state.setIsAutoPlayVoice);
 
+  const { t, language, setLanguage } = useTranslation();
+
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const [isTheoryOpen, setIsTheoryOpen] = React.useState(false);
   const [voices, setVoices] = React.useState<SpeechSynthesisVoice[]>([]);
 
+  // Filter voices based on currently selected language (VI vs EN)
   React.useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       const loadVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices();
-        // Filter Vietnamese voices if available, else show all
-        const viVoices = availableVoices.filter(v => v.lang.includes('vi') || v.lang.includes('VI'));
-        if (viVoices.length > 0) {
-          setVoices(viVoices);
+        const available = window.speechSynthesis.getVoices();
+        let filtered: SpeechSynthesisVoice[] = [];
+        if (language === 'en') {
+          filtered = available.filter(v => v.lang.startsWith('en') || v.lang.includes('EN'));
         } else {
-          setVoices(availableVoices);
+          filtered = available.filter(v => v.lang.includes('vi') || v.lang.includes('VI'));
         }
+        if (filtered.length === 0) {
+          filtered = available;
+        }
+        setVoices(filtered);
       };
-      
+
       loadVoices();
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
-  }, []);
+  }, [language]);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -71,54 +78,54 @@ export const VirtualLab: React.FC = () => {
   const shakeClass = (isReacting && currentReaction?.effect === 'explosion') ? styles.screenShake : '';
 
   return (
-    <div 
+    <div
       className={`${styles.container} ${themeClass} ${shakeClass}`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
       <VirtualLabScene />
-      
+
       {/* Overlay UI */}
       <div className={styles.uiLayer}>
         <div className={styles.topBar}>
           <div className={styles.header}>
             <h1 className={styles.title}>
-              Virtual Chemistry Lab
+              {t('virtualLab', 'title')}
             </h1>
             <p className={styles.subtitle}>
-              Mô phỏng Phản ứng Hóa học Ảo 3D
+              {t('virtualLab', 'subtitle')}
             </p>
           </div>
-          
+
           {/* Top Actions */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} role="toolbar" aria-label="Các công cụ chính">
-            <button 
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} role="toolbar" aria-label={t('virtualLab', 'toolbarLabel')}>
+            <button
               className={`${styles.settingsBtn} ${useVirtualLabStore(s => s.isMissionModeActive) ? styles.active : ''}`}
               onClick={() => { playSciFiSound('click'); useVirtualLabStore.getState().toggleMissionMode(); }}
-              title="Bật/Tắt Chế độ Thử thách Gamification"
-              aria-label="Bật hoặc tắt chế độ thử thách"
+              title={t('virtualLab', 'challengeTitle')}
+              aria-label={t('virtualLab', 'challengeAriaLabel')}
               aria-pressed={useVirtualLabStore(s => s.isMissionModeActive)}
               style={useVirtualLabStore(s => s.isMissionModeActive) ? { backgroundColor: 'rgba(16, 185, 129, 0.2)', borderColor: '#10b981', color: '#10b981' } : {}}
             >
-              🎮 Thử thách
+              {t('virtualLab', 'challengeBtn')}
             </button>
-            <button 
+            <button
               className={styles.settingsBtn}
               onClick={() => { playSciFiSound('click'); setIsTheoryOpen(true); }}
-              title="Mở Thư viện Lý thuyết Hóa học"
-              aria-label="Mở thư viện lý thuyết hóa học"
+              title={t('virtualLab', 'theoryTitle')}
+              aria-label={t('virtualLab', 'theoryAriaLabel')}
               aria-expanded={isTheoryOpen}
             >
-              📚 Lý thuyết
+              {t('virtualLab', 'theoryBtn')}
             </button>
-            <button 
+            <button
               className={styles.settingsBtn}
               onClick={() => { playSciFiSound('click'); setIsSettingsOpen(true); }}
-              title="Mở bảng Cài đặt Ứng dụng"
-              aria-label="Mở cài đặt ứng dụng"
+              title={t('virtualLab', 'settingsTitle')}
+              aria-label={t('virtualLab', 'settingsAriaLabel')}
               aria-expanded={isSettingsOpen}
             >
-              ⚙️ Cài đặt
+              {t('virtualLab', 'settingsBtn')}
             </button>
           </div>
         </div>
@@ -130,21 +137,20 @@ export const VirtualLab: React.FC = () => {
 
         <div className={styles.mainLayout}>
           <ChemicalInventory />
-          
-          {/* Floating Reset Button near the Glass */}
-          <button
-            className={styles.floatingResetBtn}
-            onClick={() => { playSciFiSound('click'); resetBeaker(); }}
-            onMouseEnter={() => playSciFiSound('hover')}
-            disabled={isReacting || isPouring || reactants.length === 0}
-            title="Đổ hóa chất đi và làm sạch cốc thí nghiệm"
-            aria-label="Làm sạch cốc thí nghiệm"
-          >
-            <span style={{ fontSize: '1.2rem' }} aria-hidden="true">🔄</span> Làm Sạch Cốc
-          </button>
-          
           <ReactionHUD />
         </div>
+
+        {/* Floating Reset Button near the Glass - Placed under uiLayer for true 50vw center */}
+        <button
+          className={styles.floatingResetBtn}
+          onClick={() => { playSciFiSound('click'); resetBeaker(); }}
+          onMouseEnter={() => playSciFiSound('hover')}
+          disabled={isReacting || isPouring || reactants.length === 0}
+          title={t('virtualLab', 'cleanBeakerTitle')}
+          aria-label={t('virtualLab', 'cleanBeakerAriaLabel')}
+        >
+          <span style={{ fontSize: '1.2rem' }} aria-hidden="true">🔄</span> {t('virtualLab', 'cleanBeakerBtn')}
+        </button>
       </div>
 
       {/* Settings Modal */}
@@ -152,26 +158,47 @@ export const VirtualLab: React.FC = () => {
         <div className={styles.modalOverlay} onClick={() => setIsSettingsOpen(false)}>
           <div className={styles.settingsModal} onClick={e => e.stopPropagation()}>
             <div className={styles.settingsHeader}>
-              <h2 className={styles.glassTitle}>⚙️ Cài đặt Hệ thống</h2>
-              <button className={styles.closeBtn} onClick={() => setIsSettingsOpen(false)} aria-label="Đóng cài đặt">×</button>
+              <h2 className={styles.glassTitle}>{t('virtualLab', 'settingsModalTitle')}</h2>
+              <button className={styles.closeBtn} onClick={() => setIsSettingsOpen(false)} aria-label={t('virtualLab', 'settingsCloseAriaLabel')}>×</button>
             </div>
-            
+
             <div className={styles.settingsGrid}>
-              {/* Cột trái */}
+              {/* Left column */}
               <div className={styles.settingsCol}>
+                {/* Language Selection */}
                 <div className={styles.settingsSection}>
-                  <h3>🎨 Giao diện (Theme)</h3>
+                  <h3>{t('virtualLab', 'langSection')}</h3>
                   <div className={styles.themeSwitcherModal}>
-                    <button className={`${styles.themeBtn} ${theme === 'scifi' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('scifi'); }}>🪐 Sci-Fi</button>
-                    <button className={`${styles.themeBtn} ${theme === 'classic' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('classic'); }}>📖 Classic</button>
-                    <button className={`${styles.themeBtn} ${theme === 'realistic' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('realistic'); }}>🔬 Real Lab</button>
+                    <button
+                      className={`${styles.themeBtn} ${language === 'vi' ? styles.active : ''}`}
+                      onClick={() => { playSciFiSound('click'); setLanguage('vi'); setTtsVoiceURI(null); }}
+                    >
+                      🇻🇳 Tiếng Việt
+                    </button>
+                    <button
+                      className={`${styles.themeBtn} ${language === 'en' ? styles.active : ''}`}
+                      onClick={() => { playSciFiSound('click'); setLanguage('en'); setTtsVoiceURI(null); }}
+                    >
+                      🇬🇧 English
+                    </button>
                   </div>
                 </div>
 
+                {/* Theme Selection */}
                 <div className={styles.settingsSection}>
-                  <h3>🔊 Âm thanh (Sound)</h3>
+                  <h3>{t('virtualLab', 'themeSection')}</h3>
+                  <div className={styles.themeSwitcherModal}>
+                    <button className={`${styles.themeBtn} ${theme === 'scifi' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('scifi'); }}>{t('virtualLab', 'themeScifi')}</button>
+                    <button className={`${styles.themeBtn} ${theme === 'classic' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('classic'); }}>{t('virtualLab', 'themeClassic')}</button>
+                    <button className={`${styles.themeBtn} ${theme === 'realistic' ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTheme('realistic'); }}>{t('virtualLab', 'themeRealistic')}</button>
+                  </div>
+                </div>
+
+                {/* Sound Settings */}
+                <div className={styles.settingsSection}>
+                  <h3>{t('virtualLab', 'soundSection')}</h3>
                   <div className={styles.settingsRow}>
-                    <span>Tắt tất cả âm thanh:</span>
+                    <span>{t('virtualLab', 'muteAll')}</span>
                     <label className={styles.switch}>
                       <input type="checkbox" checked={isMuted} onChange={(e) => { setIsMuted(e.target.checked); playSciFiSound('click'); }} />
                       <span className={styles.slider}></span>
@@ -180,13 +207,14 @@ export const VirtualLab: React.FC = () => {
                 </div>
               </div>
 
-              {/* Cột phải */}
+              {/* Right column */}
               <div className={styles.settingsCol}>
+                {/* AI Voice Assistant */}
                 <div className={styles.settingsSection}>
-                  <h3>🤖 Trợ lý giọng nói (AI TTS)</h3>
-                  
+                  <h3>{t('virtualLab', 'ttsSection')}</h3>
+
                   <div className={styles.settingsRow} style={{ marginBottom: '20px' }}>
-                    <span>Tự động đọc Nhật ký:</span>
+                    <span>{t('virtualLab', 'autoReadLog')}</span>
                     <label className={styles.switch}>
                       <input type="checkbox" checked={isAutoPlayVoice} onChange={(e) => { setIsAutoPlayVoice(e.target.checked); playSciFiSound('click'); }} />
                       <span className={styles.slider}></span>
@@ -194,7 +222,7 @@ export const VirtualLab: React.FC = () => {
                   </div>
 
                   <div className={styles.settingsGroup}>
-                    <span className={styles.groupLabel}>Tốc độ đọc:</span>
+                    <span className={styles.groupLabel}>{t('virtualLab', 'readSpeed')}</span>
                     <div className={styles.themeSwitcherModal}>
                       <button className={`${styles.themeBtn} ${ttsSpeed === 0.75 ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTtsSpeed(0.75); }}>0.75x</button>
                       <button className={`${styles.themeBtn} ${ttsSpeed === 1.0 ? styles.active : ''}`} onClick={() => { playSciFiSound('click'); setTtsSpeed(1.0); }}>1.0x</button>
@@ -203,17 +231,16 @@ export const VirtualLab: React.FC = () => {
                   </div>
 
                   <div className={styles.settingsGroup} style={{ marginTop: '20px' }}>
-                    <span className={styles.groupLabel}>Giọng đọc (Voice):</span>
-                    {/* Modern UI Custom Select instead of native select */}
+                    <span className={styles.groupLabel}>{t('virtualLab', 'voiceSelect')}</span>
                     <div className={styles.customSelectWrapper}>
-                      <select 
+                      <select
                         className={styles.modernSelect}
-                        value={ttsVoiceURI || ''} 
+                        value={ttsVoiceURI || ''}
                         onChange={(e) => { setTtsVoiceURI(e.target.value); playSciFiSound('click'); }}
                       >
-                        <option value="">-- Giọng Mặc định --</option>
+                        <option value="">{t('virtualLab', 'defaultVoice')}</option>
                         {voices.map(v => (
-                          <option key={v.voiceURI} value={v.voiceURI}>{v.name}</option>
+                          <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang})</option>
                         ))}
                       </select>
                       <span className={styles.selectArrow}>▼</span>

@@ -1,332 +1,496 @@
 export interface Mission {
   id: string;
   title: string;
+  titleEn?: string;
   description: string;
+  descriptionEn?: string;
   hint: string;
+  hintEn?: string;
   targetReactionIds?: string[];
   targetEffect?: string;
   rewardText: string;
+  rewardTextEn?: string;
 }
 
 export const MISSIONS: Mission[] = [
   {
     id: 'm1',
     title: 'Khởi động Bùng nổ',
+    titleEn: 'Explosive Start',
     description: 'Thả một kim loại kiềm nhẹ nhất vào nước cất.',
+    descriptionEn: 'Drop a light alkali metal into distilled water.',
     hint: 'Gợi ý: Dùng Natri (Na) và Nước cất.',
+    hintEn: 'Hint: Use Sodium (Na) and Distilled Water.',
     targetReactionIds: ['react_na_h2o', 'react_h2o_na'],
-    rewardText: 'Bùm! Bạn đã thấy phản ứng mãnh liệt của Natri chưa?'
+    rewardText: 'Bùm! Bạn đã thấy phản ứng mãnh liệt của Natri chưa?',
+    rewardTextEn: 'Boom! Did you see Sodium’s intense reaction?'
   },
   {
     id: 'm2',
     title: 'Ngọn Lửa Tím',
+    titleEn: 'Purple Flame',
     description: 'Hòa Kali vào nước để tạo ra một ngọn lửa đặc trưng.',
+    descriptionEn: 'React Potassium with water to observe its signature flame.',
     hint: 'Gợi ý: Dùng Kali (K) và Nước cất.',
+    hintEn: 'Hint: Use Potassium (K) and Distilled Water.',
     targetReactionIds: ['react_k_h2o', 'react_h2o_k'],
-    rewardText: 'Tuyệt! Kali cháy trong nước với ngọn lửa màu tím nhạt.'
+    rewardText: 'Tuyệt! Kali cháy trong nước với ngọn lửa màu tím nhạt.',
+    rewardTextEn: 'Awesome! Potassium burns in water with a pale purple flame.'
   },
   {
     id: 'm3',
     title: 'Bọt Khí Sữa',
+    titleEn: 'Milky Bubbles',
     description: 'Cho Canxi phản ứng với nước để tạo dung dịch đục.',
+    descriptionEn: 'React Calcium with water to form a cloudy solution.',
     hint: 'Gợi ý: Dùng Canxi (Ca) và Nước cất.',
+    hintEn: 'Hint: Use Calcium (Ca) and Distilled Water.',
     targetReactionIds: ['react_ca_h2o', 'react_h2o_ca'],
-    rewardText: 'Đúng rồi! Canxi phản ứng êm dịu hơn và tạo ra Canxi hiđroxit.'
+    rewardText: 'Đúng rồi! Canxi phản ứng êm dịu hơn và tạo ra Canxi hiđroxit.',
+    rewardTextEn: 'Correct! Calcium reacts gently to produce Calcium Hydroxide.'
   },
   {
     id: 'm4',
     title: 'Thử nghiệm Axit 1',
+    titleEn: 'Acid Test 1',
     description: 'Tạo khí Hiđro từ Magiê và Axit clohydric.',
+    descriptionEn: 'Generate Hydrogen gas using Magnesium and Hydrochloric acid.',
     hint: 'Gợi ý: Dùng Magiê (Mg) và HCl.',
+    hintEn: 'Hint: Use Magnesium (Mg) and HCl.',
     targetReactionIds: ['react_mg_hcl', 'react_hcl_mg'],
-    rewardText: 'Bọt khí nổi lên rất nhanh!'
+    rewardText: 'Bọt khí nổi lên rất nhanh!',
+    rewardTextEn: 'Gas bubbles rise rapidly!'
   },
   {
     id: 'm5',
     title: 'Thử nghiệm Axit 2',
+    titleEn: 'Acid Test 2',
     description: 'Cho Sắt tác dụng với Axit clohydric.',
+    descriptionEn: 'React Iron with Hydrochloric acid.',
     hint: 'Gợi ý: Dùng Sắt (Fe) và HCl.',
+    hintEn: 'Hint: Use Iron (Fe) and HCl.',
     targetReactionIds: ['react_fe_hcl', 'react_hcl_fe'],
-    rewardText: 'Phản ứng sủi bọt từ từ tạo ra Sắt (II) clorua.'
+    rewardText: 'Phản ứng sủi bọt từ từ tạo ra Sắt (II) clorua.',
+    rewardTextEn: 'Effervescence steadily forms Iron(II) Chloride.'
   },
   {
     id: 'm6',
     title: 'Thử nghiệm Axit 3',
+    titleEn: 'Acid Test 3',
     description: 'Magiê và Axit Sunfuric.',
+    descriptionEn: 'Magnesium and Sulfuric Acid.',
     hint: 'Gợi ý: Dùng Mg và H2SO4.',
+    hintEn: 'Hint: Use Mg and H₂SO₄.',
     targetReactionIds: ['react_mg_h2so4', 'react_h2so4_mg'],
-    rewardText: 'Magiê phản ứng mạnh với Axit Sunfuric loãng.'
+    rewardText: 'Magiê phản ứng mạnh với Axit Sunfuric loãng.',
+    rewardTextEn: 'Magnesium reacts vigorously with dilute Sulfuric Acid.'
   },
   {
     id: 'm7',
     title: 'Thử nghiệm Axit 4',
+    titleEn: 'Acid Test 4',
     description: 'Sắt và Axit Sunfuric.',
+    descriptionEn: 'Iron and Sulfuric Acid.',
     hint: 'Gợi ý: Dùng Fe và H2SO4.',
+    hintEn: 'Hint: Use Fe and H₂SO₄.',
     targetReactionIds: ['react_fe_h2so4', 'react_h2so4_fe'],
-    rewardText: 'Rất tốt! Khí H2 lại được giải phóng.'
+    rewardText: 'Rất tốt! Khí H2 lại được giải phóng.',
+    rewardTextEn: 'Great job! H₂ gas is released once again.'
   },
   {
     id: 'm8',
     title: 'Sự Cảnh Báo Nguy Hiểm',
+    titleEn: 'Hazard Warning',
     description: 'Thả Natri vào Axit clohydric. Hãy cẩn thận!',
+    descriptionEn: 'Drop Sodium into Hydrochloric acid. Be careful!',
     hint: 'Gợi ý: Dùng Na và HCl.',
+    hintEn: 'Hint: Use Na and HCl.',
     targetReactionIds: ['react_na_hcl', 'react_hcl_na'],
-    rewardText: 'Phản ứng cực kỳ mãnh liệt và nguy hiểm!'
+    rewardText: 'Phản ứng cực kỳ mãnh liệt và nguy hiểm!',
+    rewardTextEn: 'Extremely violent and hazardous reaction!'
   },
   {
     id: 'm9',
     title: 'Vụ Nổ Kali',
+    titleEn: 'Potassium Blast',
     description: 'Thả Kali vào Axit clohydric.',
+    descriptionEn: 'Drop Potassium into Hydrochloric acid.',
     hint: 'Gợi ý: Dùng K và HCl.',
+    hintEn: 'Hint: Use K and HCl.',
     targetReactionIds: ['react_k_hcl', 'react_hcl_k'],
-    rewardText: 'Bạn không nên làm điều này trong phòng Lab thực tế!'
+    rewardText: 'Bạn không nên làm điều này trong phòng Lab thực tế!',
+    rewardTextEn: 'Do not try this in a real lab!'
   },
   {
     id: 'm10',
     title: 'Phản ứng Sôi Động',
+    titleEn: 'Vigorous Reaction',
     description: 'Canxi tác dụng với HCl.',
+    descriptionEn: 'Calcium reacting with HCl.',
     hint: 'Gợi ý: Dùng Ca và HCl.',
+    hintEn: 'Hint: Use Ca and HCl.',
     targetReactionIds: ['react_ca_hcl', 'react_hcl_ca'],
-    rewardText: 'Ca tan rất nhanh trong axit.'
+    rewardText: 'Ca tan rất nhanh trong axit.',
+    rewardTextEn: 'Ca dissolves rapidly in acid.'
   },
   {
     id: 'm11',
     title: 'Cực Kì Nguy Hiểm 1',
+    titleEn: 'Extreme Hazard 1',
     description: 'Natri trong Axit Sunfuric.',
+    descriptionEn: 'Sodium in Sulfuric Acid.',
     hint: 'Gợi ý: Dùng Na và H2SO4.',
+    hintEn: 'Hint: Use Na and H₂SO₄.',
     targetReactionIds: ['react_na_h2so4', 'react_h2so4_na'],
-    rewardText: 'Một vụ nổ kinh hoàng!'
+    rewardText: 'Một vụ nổ kinh hoàng!',
+    rewardTextEn: 'A massive explosion!'
   },
   {
     id: 'm12',
     title: 'Cực Kì Nguy Hiểm 2',
+    titleEn: 'Extreme Hazard 2',
     description: 'Kali trong Axit Sunfuric.',
+    descriptionEn: 'Potassium in Sulfuric Acid.',
     hint: 'Gợi ý: Dùng K và H2SO4.',
+    hintEn: 'Hint: Use K and H₂SO₄.',
     targetReactionIds: ['react_k_h2so4', 'react_h2so4_k'],
-    rewardText: 'Nổ bùm! Ảo diệu chưa?'
+    rewardText: 'Nổ bùm! Ảo diệu chưa?',
+    rewardTextEn: 'Kaboom! Mind-blowing right?'
   },
   {
     id: 'm13',
     title: 'Canxi và Sunfuric',
+    titleEn: 'Calcium and Sulfuric',
     description: 'Canxi trong Axit Sunfuric.',
+    descriptionEn: 'Calcium in Sulfuric Acid.',
     hint: 'Gợi ý: Dùng Ca và H2SO4.',
+    hintEn: 'Hint: Use Ca and H₂SO₄.',
     targetReactionIds: ['react_ca_h2so4', 'react_h2so4_ca'],
-    rewardText: 'Tạo ra kết tủa mỏng CaSO4 và khí H2.'
+    rewardText: 'Tạo ra kết tủa mỏng CaSO4 và khí H2.',
+    rewardTextEn: 'Forms thin CaSO₄ precipitate and H₂ gas.'
   },
   {
     id: 'm14',
     title: 'Trung hòa Cơ bản',
+    titleEn: 'Basic Neutralization',
     description: 'Trộn Natri hiđroxit và Axit clohydric.',
+    descriptionEn: 'Mix Sodium Hydroxide with Hydrochloric acid.',
     hint: 'Gợi ý: Dùng NaOH và HCl.',
+    hintEn: 'Hint: Use NaOH and HCl.',
     targetReactionIds: ['react_naoh_hcl', 'react_hcl_naoh'],
-    rewardText: 'Muối ăn và nước đã được tạo ra.'
+    rewardText: 'Muối ăn và nước đã được tạo ra.',
+    rewardTextEn: 'Table salt and water produced.'
   },
   {
     id: 'm15',
     title: 'Trung hòa Mạnh mẽ',
+    titleEn: 'Strong Neutralization',
     description: 'Natri hiđroxit và Axit Sunfuric.',
+    descriptionEn: 'Sodium Hydroxide and Sulfuric Acid.',
     hint: 'Gợi ý: Dùng NaOH và H2SO4.',
+    hintEn: 'Hint: Use NaOH and H₂SO₄.',
     targetReactionIds: ['react_naoh_h2so4', 'react_h2so4_naoh'],
-    rewardText: 'Tạo ra Natri Sunfat.'
+    rewardText: 'Tạo ra Natri Sunfat.',
+    rewardTextEn: 'Sodium Sulfate produced.'
   },
   {
     id: 'm16',
     title: 'Trung hòa Bari',
+    titleEn: 'Barium Neutralization',
     description: 'Bari hiđroxit và Axit clohydric.',
+    descriptionEn: 'Barium Hydroxide and Hydrochloric acid.',
     hint: 'Gợi ý: Dùng Ba(OH)2 và HCl.',
+    hintEn: 'Hint: Use Ba(OH)₂ and HCl.',
     targetReactionIds: ['react_ba_oh_2_hcl', 'react_hcl_ba_oh_2'],
-    rewardText: 'Dung dịch trở nên trung tính.'
+    rewardText: 'Dung dịch trở nên trung tính.',
+    rewardTextEn: 'Solution reaches neutral pH.'
   },
   {
     id: 'm17',
     title: 'Tủa Xanh 1',
+    titleEn: 'Blue Precipitate 1',
     description: 'Tạo kết tủa Đồng (II) hiđroxit từ Đồng sunfat và Natri hiđroxit.',
+    descriptionEn: 'Precipitate Copper(II) Hydroxide using Copper sulfate & Sodium hydroxide.',
     hint: 'Gợi ý: Dùng CuSO4 và NaOH.',
+    hintEn: 'Hint: Use CuSO₄ and NaOH.',
     targetReactionIds: ['react_cuso4_naoh', 'react_naoh_cuso4'],
-    rewardText: 'Đại dương xanh biếc đã hiện ra!'
+    rewardText: 'Đại dương xanh biếc đã hiện ra!',
+    rewardTextEn: 'A vivid blue precipitate appeared!'
   },
   {
     id: 'm18',
     title: 'Tủa Xanh 2',
+    titleEn: 'Blue Precipitate 2',
     description: 'Dùng Bari hiđroxit để kết tủa ion Đồng.',
+    descriptionEn: 'Use Barium Hydroxide to precipitate Copper ions.',
     hint: 'Gợi ý: Dùng CuSO4 và Ba(OH)2.',
+    hintEn: 'Hint: Use CuSO₄ and Ba(OH)₂.',
     targetReactionIds: ['react_cuso4_ba_oh_2', 'react_ba_oh_2_cuso4'],
-    rewardText: 'Tạo ra hai kết tủa cùng lúc: Cu(OH)2 và BaSO4!'
+    rewardText: 'Tạo ra hai kết tủa cùng lúc: Cu(OH)2 và BaSO4!',
+    rewardTextEn: 'Double precipitation: Cu(OH)₂ and BaSO₄ formed simultaneously!'
   },
   {
     id: 'm19',
     title: 'Bari Sunfat 1',
+    titleEn: 'Barium Sulfate 1',
     description: 'Dùng Bari Clorua để nhận biết Axit Sunfuric.',
+    descriptionEn: 'Detect Sulfuric Acid using Barium Chloride.',
     hint: 'Gợi ý: Dùng BaCl2 và H2SO4.',
+    hintEn: 'Hint: Use BaCl₂ and H₂SO₄.',
     targetReactionIds: ['react_bacl2_h2so4', 'react_h2so4_bacl2'],
-    rewardText: 'Kết tủa trắng BaSO4 không tan trong axit.'
+    rewardText: 'Kết tủa trắng BaSO4 không tan trong axit.',
+    rewardTextEn: 'White BaSO₄ precipitate insoluble in acid.'
   },
   {
     id: 'm20',
     title: 'Bari Sunfat 2',
+    titleEn: 'Barium Sulfate 2',
     description: 'Nhận biết muối Sunfat bằng Bari Clorua.',
+    descriptionEn: 'Detect Sulfate salts using Barium Chloride.',
     hint: 'Gợi ý: Dùng BaCl2 và Na2SO4.',
+    hintEn: 'Hint: Use BaCl₂ and Na₂SO₄.',
     targetReactionIds: ['react_bacl2_na2so4', 'react_na2so4_bacl2'],
-    rewardText: 'Kết tủa trắng xuất hiện tức thì.'
+    rewardText: 'Kết tủa trắng xuất hiện tức thì.',
+    rewardTextEn: 'White precipitate appears instantly.'
   },
   {
     id: 'm21',
     title: 'Bari Sunfat 3',
+    titleEn: 'Barium Sulfate 3',
     description: 'Bari Clorua và Kali Sunfat.',
+    descriptionEn: 'Barium Chloride and Potassium Sulfate.',
     hint: 'Gợi ý: Dùng BaCl2 và K2SO4.',
+    hintEn: 'Hint: Use BaCl₂ and K₂SO₄.',
     targetReactionIds: ['react_bacl2_k2so4', 'react_k2so4_bacl2'],
-    rewardText: 'Thêm một cách để tạo BaSO4.'
+    rewardText: 'Thêm một cách để tạo BaSO4.',
+    rewardTextEn: 'Another way to synthesize BaSO₄.'
   },
   {
     id: 'm22',
     title: 'Bari Sunfat 4',
+    titleEn: 'Barium Sulfate 4',
     description: 'Bari hiđroxit và Axit Sunfuric.',
+    descriptionEn: 'Barium Hydroxide and Sulfuric Acid.',
     hint: 'Gợi ý: Dùng Ba(OH)2 và H2SO4.',
+    hintEn: 'Hint: Use Ba(OH)₂ and H₂SO₄.',
     targetReactionIds: ['react_ba_oh_2_h2so4', 'react_h2so4_ba_oh_2'],
-    rewardText: 'Phản ứng vừa trung hòa vừa tạo kết tủa.'
+    rewardText: 'Phản ứng vừa trung hòa vừa tạo kết tủa.',
+    rewardTextEn: 'Neutralization and precipitation in one step.'
   },
   {
     id: 'm23',
     title: 'Bạc Clorua 1',
+    titleEn: 'Silver Chloride 1',
     description: 'Nhận biết muối Clorua.',
+    descriptionEn: 'Detect Chloride ions.',
     hint: 'Gợi ý: Dùng AgNO3 và NaCl.',
+    hintEn: 'Hint: Use AgNO₃ and NaCl.',
     targetReactionIds: ['react_agno3_nacl', 'react_nacl_agno3'],
-    rewardText: 'Kết tủa trắng AgCl lóa mắt.'
+    rewardText: 'Kết tủa trắng AgCl lóa mắt.',
+    rewardTextEn: 'Bright white AgCl precipitate.'
   },
   {
     id: 'm24',
     title: 'Bạc Clorua 2',
+    titleEn: 'Silver Chloride 2',
     description: 'Bạc nitrat và Axit clohydric.',
+    descriptionEn: 'Silver Nitrate and Hydrochloric Acid.',
     hint: 'Gợi ý: Dùng AgNO3 và HCl.',
+    hintEn: 'Hint: Use AgNO₃ and HCl.',
     targetReactionIds: ['react_agno3_hcl', 'react_hcl_agno3'],
-    rewardText: 'AgCl kết tủa từ dung dịch axit.'
+    rewardText: 'AgCl kết tủa từ dung dịch axit.',
+    rewardTextEn: 'AgCl precipitates from acidic solution.'
   },
   {
     id: 'm25',
     title: 'Bạc Clorua 3',
+    titleEn: 'Silver Chloride 3',
     description: 'Bạc nitrat và Bari Clorua.',
+    descriptionEn: 'Silver Nitrate and Barium Chloride.',
     hint: 'Gợi ý: Dùng AgNO3 và BaCl2.',
+    hintEn: 'Hint: Use AgNO₃ and BaCl₂.',
     targetReactionIds: ['react_agno3_bacl2', 'react_bacl2_agno3'],
-    rewardText: 'Hai kết tủa trắng đều có thể tạo ra từ Bari Clorua.'
+    rewardText: 'Hai kết tủa trắng đều có thể tạo ra từ Bari Clorua.',
+    rewardTextEn: 'AgCl precipitation via Barium Chloride.'
   },
   {
     id: 'm26',
     title: 'Nhận biết Halogen',
+    titleEn: 'Halide Detection',
     description: 'Thêm một phản ứng để kiểm tra tính chất của ion bạc.',
+    descriptionEn: 'Test Silver ion properties with halide solution.',
     hint: 'Gợi ý: Hãy trộn AgNO3 và NaCl.',
+    hintEn: 'Hint: Mix AgNO₃ and NaCl.',
     targetReactionIds: ['react_agno3_nacl', 'react_nacl_agno3'],
-    rewardText: 'Xuất sắc!'
+    rewardText: 'Xuất sắc!',
+    rewardTextEn: 'Excellent!'
   },
   {
     id: 'm27',
     title: 'Bí ẩn kết tủa',
+    titleEn: 'Precipitation Mystery',
     description: 'Thử trộn Đồng Sunfat và Bari Clorua.',
+    descriptionEn: 'Mix Copper Sulfate and Barium Chloride.',
     hint: 'Gợi ý: Dùng CuSO4 và BaCl2.',
+    hintEn: 'Hint: Use CuSO₄ and BaCl₂.',
     targetReactionIds: ['react_cuso4_bacl2', 'react_bacl2_cuso4'],
-    rewardText: 'Kết tủa BaSO4 và dung dịch CuCl2 màu xanh.'
+    rewardText: 'Kết tủa BaSO4 và dung dịch CuCl2 màu xanh.',
+    rewardTextEn: 'BaSO₄ precipitate with blue CuCl₂ solution.'
   },
   {
     id: 'm28',
     title: 'Làm sạch Bạc',
+    titleEn: 'Silver Purification',
     description: 'Sử dụng kết tủa để tinh chế bạc.',
+    descriptionEn: 'Use precipitation to purify silver.',
     hint: 'Gợi ý: Dùng AgNO3 và HCl.',
+    hintEn: 'Hint: Use AgNO₃ and HCl.',
     targetReactionIds: ['react_agno3_hcl', 'react_hcl_agno3'],
-    rewardText: 'Thu được Bạc clorua nguyên chất.'
+    rewardText: 'Thu được Bạc clorua nguyên chất.',
+    rewardTextEn: 'Pure Silver Chloride obtained.'
   },
   {
     id: 'm29',
     title: 'Sự hòa tan 1',
+    titleEn: 'Dissolution 1',
     description: 'Hòa tan muối ăn vào nước.',
+    descriptionEn: 'Dissolve table salt in water.',
     hint: 'Gợi ý: Dùng NaCl và Nước.',
+    hintEn: 'Hint: Use NaCl and Water.',
     targetReactionIds: ['dilute_nacl_h2o', 'dilute_h2o_nacl'],
-    rewardText: 'Muối đã tan hoàn toàn.'
+    rewardText: 'Muối đã tan hoàn toàn.',
+    rewardTextEn: 'Salt completely dissolved.'
   },
   {
     id: 'm30',
     title: 'Sự hòa tan 2',
+    titleEn: 'Dissolution 2',
     description: 'Hòa tan Đồng sunfat vào nước.',
+    descriptionEn: 'Dissolve Copper Sulfate in water.',
     hint: 'Gợi ý: Dùng CuSO4 và Nước.',
+    hintEn: 'Hint: Use CuSO₄ and Water.',
     targetReactionIds: ['dilute_cuso4_h2o', 'dilute_h2o_cuso4'],
-    rewardText: 'Dung dịch màu xanh ngọc lam.'
+    rewardText: 'Dung dịch màu xanh ngọc lam.',
+    rewardTextEn: 'Beautiful turquoise blue solution.'
   },
   {
     id: 'm31',
     title: 'Thuốc tím',
+    titleEn: 'Permanganate Solution',
     description: 'Tạo dung dịch Kali pemanganat.',
+    descriptionEn: 'Prepare Potassium Permanganate solution.',
     hint: 'Gợi ý: Dùng KMnO4 và Nước.',
+    hintEn: 'Hint: Use KMnO₄ and Water.',
     targetReactionIds: ['dilute_kmno4_h2o', 'dilute_h2o_kmno4'],
-    rewardText: 'Màu tím lịm tìm sim vô cùng đẹp mắt!'
+    rewardText: 'Màu tím lịm vô cùng đẹp mắt!',
+    rewardTextEn: 'Stunning deep purple solution!'
   },
   {
     id: 'm32',
     title: 'Pha loãng Axit 1',
+    titleEn: 'Acid Dilution 1',
     description: 'Pha loãng Axit clohydric.',
+    descriptionEn: 'Dilute Hydrochloric acid.',
     hint: 'Gợi ý: Dùng HCl và Nước.',
+    hintEn: 'Hint: Use HCl and Water.',
     targetReactionIds: ['dilute_hcl_h2o', 'dilute_h2o_hcl'],
-    rewardText: 'Nhớ nguyên tắc: Rót axit vào nước!'
+    rewardText: 'Nhớ nguyên tắc: Rót axit vào nước!',
+    rewardTextEn: 'Safety rule: Always add acid to water!'
   },
   {
     id: 'm33',
     title: 'Pha loãng Axit 2',
+    titleEn: 'Acid Dilution 2',
     description: 'Pha loãng Axit Sunfuric.',
+    descriptionEn: 'Dilute Sulfuric Acid.',
     hint: 'Gợi ý: Dùng H2SO4 và Nước.',
+    hintEn: 'Hint: Use H₂SO₄ and Water.',
     targetReactionIds: ['dilute_h2so4_h2o', 'dilute_h2o_h2so4'],
-    rewardText: 'Nhiệt lượng tỏa ra rất lớn.'
+    rewardText: 'Nhiệt lượng tỏa ra rất lớn.',
+    rewardTextEn: 'Extremely exothermic process.'
   },
   {
     id: 'm34',
     title: 'Dung dịch kiềm 1',
+    titleEn: 'Alkali Solution 1',
     description: 'Pha dung dịch Natri hiđroxit.',
+    descriptionEn: 'Prepare Sodium Hydroxide solution.',
     hint: 'Gợi ý: Dùng NaOH và Nước.',
+    hintEn: 'Hint: Use NaOH and Water.',
     targetReactionIds: ['dilute_naoh_h2o', 'dilute_h2o_naoh'],
-    rewardText: 'Dung dịch trong suốt có tính kiềm.'
+    rewardText: 'Dung dịch trong suốt có tính kiềm.',
+    rewardTextEn: 'Clear basic solution prepared.'
   },
   {
     id: 'm35',
     title: 'Dung dịch kiềm 2',
+    titleEn: 'Alkali Solution 2',
     description: 'Pha dung dịch Bari hiđroxit.',
+    descriptionEn: 'Prepare Barium Hydroxide solution.',
     hint: 'Gợi ý: Dùng Ba(OH)2 và Nước.',
+    hintEn: 'Hint: Use Ba(OH)₂ and Water.',
     targetReactionIds: ['dilute_ba_oh_2_h2o', 'dilute_h2o_ba_oh_2'],
-    rewardText: 'Nước vôi trong phiên bản Bari.'
+    rewardText: 'Nước vôi trong phiên bản Bari.',
+    rewardTextEn: 'Barium limewater variant created.'
   },
   {
     id: 'm36',
     title: 'Dung dịch Muối Bạc',
+    titleEn: 'Silver Salt Solution',
     description: 'Pha dung dịch Bạc nitrat.',
+    descriptionEn: 'Prepare Silver Nitrate solution.',
     hint: 'Gợi ý: Dùng AgNO3 và Nước.',
+    hintEn: 'Hint: Use AgNO₃ and Water.',
     targetReactionIds: ['dilute_agno3_h2o', 'dilute_h2o_agno3'],
-    rewardText: 'Cẩn thận dung dịch này dính tay sẽ làm đen da.'
+    rewardText: 'Cẩn thận dung dịch này dính tay sẽ làm đen da.',
+    rewardTextEn: 'Careful! Silver nitrate stains skin black.'
   },
   {
     id: 'm37',
     title: 'Muối Sunfat 1',
+    titleEn: 'Sulfate Salt 1',
     description: 'Pha dung dịch Natri Sunfat.',
+    descriptionEn: 'Prepare Sodium Sulfate solution.',
     hint: 'Gợi ý: Dùng Na2SO4 và Nước.',
+    hintEn: 'Hint: Use Na₂SO₄ and Water.',
     targetReactionIds: ['dilute_na2so4_h2o', 'dilute_h2o_na2so4'],
-    rewardText: 'Hoàn tất pha chế Na2SO4.'
+    rewardText: 'Hoàn tất pha chế Na2SO4.',
+    rewardTextEn: 'Na₂SO₄ solution ready.'
   },
   {
     id: 'm38',
     title: 'Muối Sunfat 2',
+    titleEn: 'Sulfate Salt 2',
     description: 'Pha dung dịch Kali Sunfat.',
+    descriptionEn: 'Prepare Potassium Sulfate solution.',
     hint: 'Gợi ý: Dùng K2SO4 và Nước.',
+    hintEn: 'Hint: Use K₂SO₄ and Water.',
     targetReactionIds: ['dilute_k2so4_h2o', 'dilute_h2o_k2so4'],
-    rewardText: 'Hoàn tất pha chế K2SO4.'
+    rewardText: 'Hoàn tất pha chế K2SO4.',
+    rewardTextEn: 'K₂SO₄ solution ready.'
   },
   {
     id: 'm39',
     title: 'Muối Bari',
+    titleEn: 'Barium Salt',
     description: 'Pha dung dịch Bari clorua.',
+    descriptionEn: 'Prepare Barium Chloride solution.',
     hint: 'Gợi ý: Dùng BaCl2 và Nước.',
+    hintEn: 'Hint: Use BaCl₂ and Water.',
     targetReactionIds: ['dilute_bacl2_h2o', 'dilute_h2o_bacl2'],
-    rewardText: 'Dung dịch không màu của Bari.'
+    rewardText: 'Dung dịch không màu của Bari.',
+    rewardTextEn: 'Clear Barium salt solution ready.'
   },
   {
     id: 'm40',
     title: 'Nghỉ ngơi',
+    titleEn: 'Relax',
     description: 'Thêm một chút muối ăn vào nước để thư giãn.',
+    descriptionEn: 'Add a little table salt to water and relax.',
     hint: 'Gợi ý: Dùng NaCl và Nước.',
+    hintEn: 'Hint: Use NaCl and Water.',
     targetReactionIds: ['dilute_nacl_h2o', 'dilute_h2o_nacl'],
-    rewardText: 'Đôi khi sự đơn giản lại là tuyệt vời nhất.'
+    rewardText: 'Đôi khi sự đơn giản lại là tuyệt vời nhất.',
+    rewardTextEn: 'Sometimes simplicity is best.'
   }
 ];

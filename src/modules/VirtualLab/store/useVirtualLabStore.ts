@@ -4,11 +4,13 @@ import { type Reaction } from '../data/reactions';
 import { ChemEngine } from '../services/ChemEngine';
 import { playSciFiSound } from '../../PeriodicTable/utils/audio';
 import { MISSIONS } from '../data/missions';
+import { useLanguageStore } from '../../../i18n/useTranslation';
 
 export interface LogEntry {
   id: number;
   equationHTML?: string;
   description: string;
+  descriptionEn?: string;
   type: 'reaction' | 'info' | 'warning' | 'mission';
 }
 
@@ -55,7 +57,7 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
   isMuted: false,
   ttsSpeed: 1.0,
   ttsVoiceURI: null,
-  isAutoPlayVoice: true, // Default to true as the user wants auto play
+  isAutoPlayVoice: true,
 
   isMissionModeActive: false,
   activeMissionIndex: 0,
@@ -65,7 +67,6 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     const { isMissionModeActive } = get();
     set({ 
       isMissionModeActive: !isMissionModeActive,
-      // Optional: reset missions when starting
       activeMissionIndex: 0,
       completedMissions: []
     });
@@ -91,21 +92,28 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     if (!mission || completedMissions.includes(mission.id)) return;
 
     playSciFiSound('success');
+    const rewardTextVi = mission.rewardText;
+    const rewardTextEn = mission.rewardTextEn || mission.rewardText;
     
     set({
       completedMissions: [...completedMissions, mission.id],
       reactionLog: [
-        { id: Date.now(), description: mission.rewardText, type: 'mission' },
+        { 
+          id: Date.now(), 
+          description: rewardTextVi, 
+          descriptionEn: rewardTextEn,
+          type: 'mission' 
+        },
         ...get().reactionLog
       ]
     });
 
     if (get().isAutoPlayVoice) {
       const m = await import('../utils/speech');
-      await m.speakText(mission.rewardText);
+      const lang = useLanguageStore.getState().language;
+      await m.speakText(lang === 'en' ? rewardTextEn : rewardTextVi);
     }
 
-    // Advance to next mission after a short delay
     setTimeout(() => {
       if (activeMissionIndex < MISSIONS.length - 1) {
         set({ activeMissionIndex: activeMissionIndex + 1 });
@@ -117,33 +125,37 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     const { reactants, isReacting, isPouring } = get();
     
     if (reactants.length >= 2 || isReacting || isPouring) return;
-    
     if (reactants.some(r => r.id === chemical.id)) return;
 
-    // Start pouring animation
     set({ isPouring: true, pouringChemical: chemical });
     
-    // Log intent
-    const pouringDesc = `Đang đổ ${chemical.name} vào cốc...`;
+    const pouringDescVi = `Đang đổ ${chemical.name} vào cốc...`;
+    const pouringDescEn = `Pouring ${chemical.nameEn || chemical.name} into beaker...`;
+
     set((state) => ({ 
       reactionLog: [
-        { id: Date.now(), description: pouringDesc, type: 'info' },
+        { 
+          id: Date.now(), 
+          description: pouringDescVi, 
+          descriptionEn: pouringDescEn,
+          type: 'info' 
+        },
         ...state.reactionLog
       ] 
     }));
 
-    // Start voice if auto play is enabled
+    const lang = useLanguageStore.getState().language;
+    const activePouringText = lang === 'en' ? pouringDescEn : pouringDescVi;
+
     const speechPromise = get().isAutoPlayVoice 
-      ? import('../utils/speech').then(m => m.speakText(pouringDesc)) 
+      ? import('../utils/speech').then(m => m.speakText(activePouringText)) 
       : Promise.resolve();
 
-    // Wait for both animation (3.2s) and speech to finish
     await Promise.all([
       new Promise(resolve => setTimeout(resolve, 3200)),
       speechPromise
     ]);
 
-    // If beaker was reset during animation, cancel logic
     if (get().reactants.length === 0 && get().pouringChemical?.id !== chemical.id && !get().isPouring) return;
 
     const currentReactants = get().reactants;
@@ -162,23 +174,28 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
         
         set((state) => ({ 
           reactionLog: [
-            { id: Date.now(), equationHTML: reaction.equationHTML, description: reaction.description, type: 'reaction' },
+            { 
+              id: Date.now(), 
+              equationHTML: reaction.equationHTML, 
+              description: reaction.description, 
+              descriptionEn: reaction.descriptionEn || reaction.description,
+              type: 'reaction' 
+            },
             ...state.reactionLog
           ] 
         }));
         
+        const activeReactionText = lang === 'en' ? (reaction.descriptionEn || reaction.description) : reaction.description;
+
         const reactionSpeechPromise = get().isAutoPlayVoice 
-          ? import('../utils/speech').then(m => m.speakText(reaction.description)) 
+          ? import('../utils/speech').then(m => m.speakText(activeReactionText)) 
           : Promise.resolve();
 
-        // Check mission
         const currentMission = MISSIONS[get().activeMissionIndex];
         if (get().isMissionModeActive && currentMission && currentMission.targetReactionIds && currentMission.targetReactionIds.includes(reaction.id)) {
-          // Await both the normal speech and then trigger mission completion which has its own speech
           reactionSpeechPromise.then(() => get().completeCurrentMission());
         }
 
-        // Stop the visual effects after 5 seconds OR when speech finishes
         await Promise.all([
           new Promise(resolve => setTimeout(resolve, 5000)),
           reactionSpeechPromise
@@ -187,31 +204,54 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
         set({ isReacting: false });
       } else {
         playSciFiSound('error');
-        const errorDesc = `Không có phản ứng xảy ra giữa ${newReactants[0].name} và ${newReactants[1].name}`;
+        const c1NameVi = newReactants[0].name;
+        const c1NameEn = newReactants[0].nameEn || newReactants[0].name;
+        const c2NameVi = newReactants[1].name;
+        const c2NameEn = newReactants[1].nameEn || newReactants[1].name;
+
+        const errorDescVi = `Không có phản ứng xảy ra giữa ${c1NameVi} và ${c2NameVi}`;
+        const errorDescEn = `No reaction occurs between ${c1NameEn} and ${c2NameEn}`;
+
         set((state) => ({ 
           reactionLog: [
-            { id: Date.now(), description: errorDesc, type: 'warning' },
+            { 
+              id: Date.now(), 
+              description: errorDescVi, 
+              descriptionEn: errorDescEn,
+              type: 'warning' 
+            },
             ...state.reactionLog
           ] 
         }));
         
         if (get().isAutoPlayVoice) {
           const m = await import('../utils/speech');
-          await m.speakText(errorDesc);
+          const activeErrorText = lang === 'en' ? errorDescEn : errorDescVi;
+          await m.speakText(activeErrorText);
         }
       }
     } else {
-      const successDesc = `Đã hoàn tất thêm ${chemical.name}. Hãy chọn thêm một chất nữa.`;
+      const chemNameVi = chemical.name;
+      const chemNameEn = chemical.nameEn || chemical.name;
+      const successDescVi = `Đã hoàn tất thêm ${chemNameVi}. Hãy chọn thêm một chất nữa.`;
+      const successDescEn = `Added ${chemNameEn}. Select one more chemical.`;
+
       set((state) => ({ 
         reactionLog: [
-          { id: Date.now(), description: successDesc, type: 'info' },
+          { 
+            id: Date.now(), 
+            description: successDescVi, 
+            descriptionEn: successDescEn,
+            type: 'info' 
+          },
           ...state.reactionLog
         ] 
       }));
       
       if (get().isAutoPlayVoice) {
         const m = await import('../utils/speech');
-        await m.speakText(successDesc);
+        const activeSuccessText = lang === 'en' ? successDescEn : successDescVi;
+        await m.speakText(activeSuccessText);
       }
     }
   },
@@ -246,15 +286,11 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
 
   runExample: async (chem1: Chemical, chem2: Chemical) => {
     const state = get();
-    // 1. Reset beaker first
     state.resetBeaker();
     
-    // 2. Add first chemical after a small delay
     await new Promise(res => setTimeout(res, 500));
     await get().addReactant(chem1);
     
-    // 3. Add second chemical (addReactant already waits for pouring and voice to finish)
-    // Add a tiny padding to let the beaker settle
     await new Promise(res => setTimeout(res, 300));
     await get().addReactant(chem2);
   }

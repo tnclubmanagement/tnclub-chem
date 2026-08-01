@@ -1,4 +1,5 @@
 import { useVirtualLabStore } from '../store/useVirtualLabStore';
+import { useLanguageStore } from '../../../i18n/useTranslation';
 
 // Preload voices
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -22,11 +23,13 @@ export const speakText = (text: string): Promise<void> => {
       return;
     }
 
+    const currentLang = useLanguageStore.getState().language;
+
     // Remove HTML tags for plain text reading
     const cleanText = text.replace(/<[^>]*>?/gm, '');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'vi-VN'; 
+    utterance.lang = currentLang === 'en' ? 'en-US' : 'vi-VN'; 
     utterance.rate = ttsSpeed || 1.0;
     utterance.pitch = 1.0;
     utterance.volume = 1.0;
@@ -41,11 +44,16 @@ export const speakText = (text: string): Promise<void> => {
       if (selectedVoice) {
         utterance.voice = selectedVoice;
       }
-    } else {
-      // Try to find a Vietnamese voice by default
-      const viVoice = voices.find(v => v.lang.includes('vi') || v.lang.includes('VI'));
-      if (viVoice) {
-        utterance.voice = viVoice;
+    }
+    
+    if (!utterance.voice) {
+      // Find default voice matching the current language
+      if (currentLang === 'en') {
+        const enVoice = voices.find(v => v.lang.startsWith('en') || v.lang.includes('EN'));
+        if (enVoice) utterance.voice = enVoice;
+      } else {
+        const viVoice = voices.find(v => v.lang.includes('vi') || v.lang.includes('VI'));
+        if (viVoice) utterance.voice = viVoice;
       }
     }
 

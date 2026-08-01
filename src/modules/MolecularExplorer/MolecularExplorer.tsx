@@ -2,7 +2,18 @@ import { MoleculeCanvas } from './components/3D/MoleculeCanvas';
 import { ExplorerOverlay } from './components/UI/ExplorerOverlay';
 import { CompareDeck } from './components/UI/CompareDeck';
 import { Suspense } from 'react';
+import { useTranslation } from '../../i18n/useTranslation';
 import styles from './MolecularExplorer.module.css';
+
+const LoadingFallback = () => {
+  const { language } = useTranslation();
+  return (
+    <div className={styles.loadingFallback}>
+      <div className={styles.loadingSpinner} />
+      <span>⬡ {language === 'en' ? 'Initializing 3D Engine...' : 'Khởi tạo Engine 3D...'}</span>
+    </div>
+  );
+};
 
 export const MolecularExplorer = () => {
   return (
@@ -11,14 +22,7 @@ export const MolecularExplorer = () => {
       <div className={styles.glowOrb1} />
       <div className={styles.glowOrb2} />
 
-      <Suspense
-        fallback={
-          <div className={styles.loadingFallback}>
-            <div className={styles.loadingSpinner} />
-            <span>⬡ Khởi tạo Engine 3D...</span>
-          </div>
-        }
-      >
+      <Suspense fallback={<LoadingFallback />}>
         <MoleculeCanvas />
       </Suspense>
 

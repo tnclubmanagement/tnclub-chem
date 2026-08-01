@@ -379,7 +379,7 @@ input:checked + .slider:before {
 
 .floatingResetBtn {
   position: absolute;
-  bottom: 0px;
+  bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

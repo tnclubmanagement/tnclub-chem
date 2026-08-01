@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../styles/VirtualLab.module.css';
 import { useVirtualLabStore } from '../../store/useVirtualLabStore';
 import { MISSIONS } from '../../data/missions';
+import { useTranslation } from '../../../../i18n/useTranslation';
 import confetti from 'canvas-confetti';
 
 export const MissionHUD: React.FC = () => {
   const activeMissionIndex = useVirtualLabStore(state => state.activeMissionIndex);
   const completedMissions = useVirtualLabStore(state => state.completedMissions);
+  const { t, language } = useTranslation();
   
   const currentMission = MISSIONS[activeMissionIndex];
   const isCompleted = currentMission && completedMissions.includes(currentMission.id);
   
   const [showHint, setShowHint] = useState(false);
 
-  // Trigger confetti when a new mission is completed
   useEffect(() => {
     if (isCompleted) {
       confetti({
@@ -28,20 +29,24 @@ export const MissionHUD: React.FC = () => {
 
   if (!currentMission) return null;
 
+  const missionTitle = language === 'en' ? (currentMission.titleEn || currentMission.title) : currentMission.title;
+  const missionDesc = language === 'en' ? (currentMission.descriptionEn || currentMission.description) : currentMission.description;
+  const missionHint = language === 'en' ? (currentMission.hintEn || currentMission.hint) : currentMission.hint;
+
   return (
     <div className={styles.missionHUD}>
       <div className={styles.missionHeader} style={{ justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span className={styles.missionIcon} aria-hidden="true">🎯</span>
-          <h3>Nhiệm vụ {activeMissionIndex + 1}/{MISSIONS.length}</h3>
+          <h3>{t('virtualLab', 'missionTitle')} {activeMissionIndex + 1}{t('virtualLab', 'missionOf')}{MISSIONS.length}</h3>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
             className={styles.navBtn} 
             onClick={() => useVirtualLabStore.getState().goToPreviousMission()}
             disabled={activeMissionIndex === 0}
-            title="Quay lại nhiệm vụ trước"
-            aria-label="Quay lại nhiệm vụ trước"
+            title={t('virtualLab', 'prevMissionTitle')}
+            aria-label={t('virtualLab', 'prevMissionAriaLabel')}
           >
             ◀
           </button>
@@ -49,8 +54,8 @@ export const MissionHUD: React.FC = () => {
             className={styles.navBtn} 
             onClick={() => useVirtualLabStore.getState().skipToNextMission()}
             disabled={activeMissionIndex === MISSIONS.length - 1}
-            title="Bỏ qua / Tới nhiệm vụ tiếp theo"
-            aria-label="Tới nhiệm vụ tiếp theo"
+            title={t('virtualLab', 'nextMissionTitle')}
+            aria-label={t('virtualLab', 'nextMissionAriaLabel')}
           >
             ▶
           </button>
@@ -58,8 +63,8 @@ export const MissionHUD: React.FC = () => {
       </div>
       
       <div className={`${styles.missionContent} ${isCompleted ? styles.missionCompleted : ''}`}>
-        <h4>{currentMission.title}</h4>
-        <p>{currentMission.description}</p>
+        <h4>{missionTitle}</h4>
+        <p>{missionDesc}</p>
         
         {!isCompleted && (
           <div className={styles.hintSection}>
@@ -68,17 +73,17 @@ export const MissionHUD: React.FC = () => {
               onClick={() => setShowHint(!showHint)}
               aria-expanded={showHint}
               aria-controls="mission-hint-text"
-              title="Xem gợi ý hoàn thành nhiệm vụ"
+              title={showHint ? t('virtualLab', 'hideHint') : t('virtualLab', 'showHint')}
             >
-              {showHint ? 'Ẩn gợi ý' : '💡 Xem gợi ý'}
+              {showHint ? t('virtualLab', 'hideHint') : t('virtualLab', 'showHint')}
             </button>
-            {showHint && <p id="mission-hint-text" className={styles.hintText} aria-live="polite">{currentMission.hint}</p>}
+            {showHint && <p id="mission-hint-text" className={styles.hintText} aria-live="polite">{missionHint}</p>}
           </div>
         )}
         
         {isCompleted && (
           <div className={styles.successBadge}>
-            <span className={styles.successIcon}>✓</span> Hoàn thành
+            <span className={styles.successIcon}>✓</span> {t('virtualLab', 'missionCompleted')}
           </div>
         )}
       </div>

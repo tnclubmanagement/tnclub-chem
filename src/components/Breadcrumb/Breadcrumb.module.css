@@ -6,17 +6,17 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  pointer-events: auto; /* it's on top of a pointer-events: none overlay */
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  pointer-events: auto;
 }
 
 .item {
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -24,16 +24,16 @@
 }
 
 .item:hover {
-  color: #38bdf8;
+  color: var(--neon-cyan);
 }
 
 .separator {
-  color: #475569;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
 .itemActive {
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 600;
 }

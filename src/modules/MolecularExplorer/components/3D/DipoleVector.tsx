@@ -8,10 +8,10 @@ interface DipoleVectorProps {
 }
 
 export const DipoleVector: React.FC<DipoleVectorProps> = ({ dipole }) => {
-  if (!dipole.isPolar || dipole.magnitude === 0) return null;
+  const isVisible = dipole.isPolar && dipole.magnitude !== 0;
 
-  const origin = useMemo(() => new THREE.Vector3(...dipole.origin), [dipole.origin]);
-  const vector = useMemo(() => new THREE.Vector3(...dipole.vector), [dipole.vector]);
+  const origin = useMemo(() => new THREE.Vector3(...(dipole.origin || [0, 0, 0])), [dipole.origin]);
+  const vector = useMemo(() => new THREE.Vector3(...(dipole.vector || [0, 0, 0])), [dipole.vector]);
   const dir = useMemo(() => vector.clone().normalize(), [vector]);
   const length = useMemo(() => Math.min(Math.max(vector.length() * 1.5, 1.2), 3.5), [vector]);
 
@@ -19,8 +19,10 @@ export const DipoleVector: React.FC<DipoleVectorProps> = ({ dipole }) => {
     return new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
   }, [dir]);
 
-  const posPos = useMemo(() => new THREE.Vector3(...dipole.positivePole), [dipole.positivePole]);
-  const negPos = useMemo(() => new THREE.Vector3(...dipole.negativePole), [dipole.negativePole]);
+  const posPos = useMemo(() => new THREE.Vector3(...(dipole.positivePole || [0, 0, 0])), [dipole.positivePole]);
+  const negPos = useMemo(() => new THREE.Vector3(...(dipole.negativePole || [0, 0, 0])), [dipole.negativePole]);
+
+  if (!isVisible) return null;
 
   return (
     <group>

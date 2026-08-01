@@ -1,10 +1,12 @@
 import React from 'react';
 import { useChemStore } from '../../modules/PeriodicTable';
 import { LESSONS } from '../../modules/PeriodicTable/data/lessons';
+import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Breadcrumb.module.css';
 
 export const Breadcrumb: React.FC = () => {
   const { activeView, activeLessonId, selectedElement, setActiveLessonId, closePanel } = useChemStore();
+  const { t, language } = useTranslation();
 
   const activeLesson = LESSONS.find(l => l.id === activeLessonId);
 
@@ -13,7 +15,7 @@ export const Breadcrumb: React.FC = () => {
       {activeView === 'periodic-table' && (
         <>
           <span className={!selectedElement ? styles.itemActive : styles.item} onClick={() => closePanel()}>
-            🔲 Bảng Tuần Hoàn
+            🔲 {t('nav', 'periodicTable')}
           </span>
           {selectedElement && (
             <>
@@ -29,13 +31,13 @@ export const Breadcrumb: React.FC = () => {
       {activeView === 'lesson' && (
         <>
           <span className={!activeLesson ? styles.itemActive : styles.item} onClick={() => setActiveLessonId(null)}>
-            📚 Thư viện Mô hình
+            📚 {t('nav', 'lessons')}
           </span>
           {activeLesson && (
             <>
               <span className={styles.separator}>/</span>
               <span className={styles.itemActive}>
-                {activeLesson.title}
+                {language === 'en' ? (activeLesson.titleEn || activeLesson.title) : activeLesson.title}
               </span>
             </>
           )}
@@ -44,7 +46,7 @@ export const Breadcrumb: React.FC = () => {
 
       {activeView === 'virtual-lab' && (
         <span className={styles.itemActive}>
-          🧪 Phòng Thí Nghiệm Ảo
+          🧪 {t('nav', 'virtualLab')}
         </span>
       )}
     </div>

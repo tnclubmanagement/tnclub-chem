@@ -9,7 +9,7 @@ interface ChemStoreState {
   activePeriod: number | null;
   isPanelOpen: boolean;
   activeTab: 'atom' | 'bond' | 'real';
-  activeView: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
+  activeView: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings';
   activeLessonId: string | null;
   
   // Actions
@@ -20,7 +20,7 @@ interface ChemStoreState {
   setActivePeriod: (period: number | null) => void;
   closePanel: () => void;
   setActiveTab: (tab: 'atom' | 'bond' | 'real') => void;
-  setActiveView: (view: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab') => void;
+  setActiveView: (view: 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings') => void;
   setActiveLessonId: (id: string | null) => void;
 
   quizModeActive: boolean;

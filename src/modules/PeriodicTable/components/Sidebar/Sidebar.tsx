@@ -5,11 +5,11 @@ import { useTranslation } from '../../../../i18n/useTranslation';
 import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
 import styles from './Sidebar.module.css';
 
-type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab';
+type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings';
 
 export const Sidebar: React.FC = () => {
   const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const navItems: Array<{
     view: ViewType;
@@ -21,6 +21,7 @@ export const Sidebar: React.FC = () => {
     { view: 'periodic-table', icon: '⚛',  label: t('nav', 'periodicTable'), accentColor: '#00f7ff' },
     { view: 'explorer',       icon: '⬡',  label: t('nav', 'explorer'),      accentColor: '#ff1adb' },
     { view: 'virtual-lab',    icon: '⚗',  label: t('nav', 'virtualLab'),    accentColor: '#00ff80' },
+    { view: 'settings',       icon: '⚙',  label: t('nav', 'settings'),      accentColor: '#e11d48' },
   ];
 
   return (
@@ -84,7 +85,7 @@ export const Sidebar: React.FC = () => {
                     setActiveView('lesson');
                   }}
                 >
-                  {lesson.title}
+                  {language === 'en' ? (lesson.titleEn || lesson.title) : lesson.title}
                 </button>
               ))}
             </nav>

@@ -8,10 +8,11 @@ interface MeasurementOverlay3DProps {
 }
 
 export const MeasurementOverlay3D: React.FC<MeasurementOverlay3DProps> = ({ selectedAtoms }) => {
-  if (selectedAtoms.length < 2) return null;
+  const hasAtoms = selectedAtoms.length >= 2;
+  const p1 = useMemo(() => (hasAtoms ? new THREE.Vector3(...selectedAtoms[0].position) : new THREE.Vector3()), [hasAtoms, selectedAtoms]);
+  const p2 = useMemo(() => (hasAtoms ? new THREE.Vector3(...selectedAtoms[1].position) : new THREE.Vector3()), [hasAtoms, selectedAtoms]);
 
-  const p1 = useMemo(() => new THREE.Vector3(...selectedAtoms[0].position), [selectedAtoms]);
-  const p2 = useMemo(() => new THREE.Vector3(...selectedAtoms[1].position), [selectedAtoms]);
+  if (!hasAtoms) return null;
 
   if (selectedAtoms.length === 2) {
     // Measure Distance between Atom 1 and Atom 2

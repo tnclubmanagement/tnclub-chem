@@ -8,6 +8,7 @@ export interface TranslationDictionary {
     virtualLab: string;
     lessons: string;
     lessonsFlyoutTitle: string;
+    settings: string;
   };
   home: {
     badge: string;

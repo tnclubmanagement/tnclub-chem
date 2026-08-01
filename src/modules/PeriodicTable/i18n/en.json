@@ -5,7 +5,8 @@
     "explorer": "3D Explorer",
     "virtualLab": "Virtual Lab",
     "lessons": "Lessons & Quizzes",
-    "lessonsFlyoutTitle": "Chemistry Lessons & Quizzes"
+    "lessonsFlyoutTitle": "Chemistry Lessons & Quizzes",
+    "settings": "Settings"
   },
   "periodicTable": {
     "title": "Periodic Table of Elements",

@@ -10,11 +10,11 @@
   pointer-events: auto;
 
   /* Glass panel */
-  background: rgba(5, 5, 18, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.6), inset -1px 0 0 rgba(255, 255, 255, 0.03);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 
   display: flex;
   flex-direction: column;
@@ -47,7 +47,7 @@
   font-size: 1.6rem;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 0 8px rgba(0, 247, 255, 0.5));
+  filter: drop-shadow(0 0 8px var(--neon-cyan));
   animation: neonPulse 3s ease-in-out infinite;
 }
 
@@ -56,28 +56,28 @@
   inset: -4px;
   border-radius: 50%;
   border: 1.5px solid transparent;
-  background: linear-gradient(#050512, #050512) padding-box,
+  background: linear-gradient(var(--bg-deep), var(--bg-deep)) padding-box,
               conic-gradient(
                 from 0deg,
-                #00f7ff,
-                #8f00ff,
-                #ff1adb,
-                #00ff80,
-                #00f7ff
+                var(--neon-cyan),
+                var(--neon-purple),
+                var(--neon-magenta),
+                var(--neon-green),
+                var(--neon-cyan)
               ) border-box;
   animation: spinSlow 6s linear infinite;
 }
 
 .logo:hover .logoRing {
   animation-duration: 2s;
-  box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+  box-shadow: 0 0 20px var(--neon-cyan-dim);
 }
 
 /* ---- Divider ---- */
 .divider {
   width: 36px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, var(--glass-border-bright), transparent);
   margin: 8px 0 16px;
 }
 
@@ -100,7 +100,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--glass-bg);
   border: 1px solid transparent;
   transition:
     background 0.25s var(--ease-smooth, ease),
@@ -108,7 +108,7 @@
     box-shadow 0.25s var(--ease-smooth, ease),
     transform 0.2s var(--ease-spring, ease);
   overflow: visible;
-  --item-color: #00f7ff;
+  --item-color: var(--neon-cyan);
 }
 
 .navItem:hover {
@@ -153,11 +153,11 @@
   pointer-events: none;
   transition: filter 0.2s ease, transform 0.2s ease;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text-secondary);
 }
 
 .navItem:hover .navIcon {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--item-color) 70%, transparent));
   transform: scale(1.1);
 }
@@ -173,19 +173,19 @@
   left: 62px;
   top: 50%;
   transform: translateY(-50%) translateX(-8px);
-  background: rgba(5, 5, 20, 0.92);
+  background: var(--bg-surface);
   backdrop-filter: blur(12px);
   padding: 7px 14px;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
   font-size: 0.82rem;
   font-weight: 500;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s, transform 0.2s;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--glass-border-bright);
+  box-shadow: var(--glass-shadow);
   z-index: 100;
 }
 
@@ -199,7 +199,7 @@
   height: 0;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
-  border-right: 5px solid rgba(255, 255, 255, 0.08);
+  border-right: 5px solid var(--glass-border-bright);
 }
 
 .navItem:not(.hasFlyout):hover .tooltip {
@@ -224,16 +224,13 @@
   top: 0;
   width: max-content;
   min-width: 240px;
-  background: rgba(5, 8, 25, 0.92);
+  background: var(--bg-surface);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 1.2rem;
-  box-shadow:
-    12px 12px 40px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(143, 0, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--glass-shadow);
   opacity: 0;
   pointer-events: none;
   transform: translateX(-12px);
@@ -248,14 +245,14 @@
 }
 
 .submenuFlyout h4 {
-  color: rgba(143, 0, 255, 0.8);
+  color: var(--neon-purple);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 0.8rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(143, 0, 255, 0.15);
-  font-family: 'JetBrains Mono', monospace;
+  border-bottom: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
 }
 
 .lessonsSubmenu {
@@ -269,7 +266,7 @@
 .lessonLink {
   background: transparent;
   border: none;
-  color: rgba(200, 210, 240, 0.75);
+  color: var(--text-secondary);
   padding: 7px 10px;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -277,17 +274,17 @@
   cursor: pointer;
   text-align: left;
   transition: all 0.2s;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
 }
 
 .lessonLink:hover {
-  background: rgba(143, 0, 255, 0.12);
-  color: rgba(255, 255, 255, 0.95);
+  background: var(--neon-purple-dim);
+  color: var(--text-primary);
   padding-left: 14px;
 }
 
 .lessonLink.activeLesson {
-  color: #8f00ff;
-  background: rgba(143, 0, 255, 0.15);
-  border-left: 2px solid #8f00ff;
+  color: var(--neon-purple);
+  background: var(--neon-purple-dim);
+  border-left: 2px solid var(--neon-purple);
 }

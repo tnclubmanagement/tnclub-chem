@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Cinzel:wght@400;600;700&family=Fira+Code:wght@400;500;600;700&display=swap');
 
 /* ============================================================
    DESIGN TOKENS — Neon Cyberpunk Glassmorphism System
@@ -56,6 +56,121 @@
 }
 
 /* ============================================================
+   DYNAMIC THEME & FONT CUSTOMIZATIONS
+   ============================================================ */
+
+/* Themes */
+:root[data-theme="cyber"] {
+  --bg-deep: #03040d;
+  --bg-space: #050510;
+  --bg-surface: #0a0b1a;
+  --glass-bg: rgba(255, 255, 255, 0.018);
+  --glass-bg-hover: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-border-bright: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --neon-cyan: hsl(183, 100%, 50%);
+  --neon-green: hsl(150, 100%, 50%);
+  --neon-magenta: hsl(310, 100%, 55%);
+  --neon-purple: hsl(272, 100%, 58%);
+  --text-primary: #f0f4ff;
+  --text-secondary: #8892b0;
+  --text-muted: rgba(136, 146, 176, 0.6);
+}
+
+:root[data-theme="neon"] {
+  --bg-deep: #02140e;
+  --bg-space: #041f17;
+  --bg-surface: #072b20;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-bg-hover: rgba(0, 255, 157, 0.05);
+  --glass-border: rgba(0, 255, 157, 0.12);
+  --glass-border-bright: rgba(0, 255, 157, 0.25);
+  --glass-shadow: 0 8px 32px rgba(0, 20, 14, 0.7);
+  --neon-cyan: #00ff9d;
+  --neon-green: #10b981;
+  --neon-magenta: #34d399;
+  --neon-purple: #059669;
+  --text-primary: #ecfdf5;
+  --text-secondary: #6ee7b7;
+  --text-muted: rgba(110, 231, 183, 0.6);
+}
+
+:root[data-theme="nebula"] {
+  --bg-deep: #0f051d;
+  --bg-space: #18092e;
+  --bg-surface: #220d40;
+  --glass-bg: rgba(255, 255, 255, 0.025);
+  --glass-bg-hover: rgba(217, 70, 239, 0.06);
+  --glass-border: rgba(217, 70, 239, 0.14);
+  --glass-border-bright: rgba(217, 70, 239, 0.3);
+  --glass-shadow: 0 8px 32px rgba(15, 5, 29, 0.8);
+  --neon-cyan: #d946ef;
+  --neon-green: #a855f7;
+  --neon-magenta: #f43f5e;
+  --neon-purple: #8b5cf6;
+  --text-primary: #faf5ff;
+  --text-secondary: #e9d5ff;
+  --text-muted: rgba(233, 213, 255, 0.6);
+}
+
+:root[data-theme="light"] {
+  --bg-deep: #f8fafc;
+  --bg-space: #f1f5f9;
+  --bg-surface: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg-hover: rgba(241, 245, 249, 0.95);
+  --glass-border: rgba(15, 23, 42, 0.12);
+  --glass-border-bright: rgba(15, 23, 42, 0.22);
+  --glass-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+  --neon-cyan: #0284c7;
+  --neon-cyan-dim: rgba(2, 132, 199, 0.12);
+  --neon-green: #059669;
+  --neon-green-dim: rgba(5, 150, 105, 0.12);
+  --neon-magenta: #c026d3;
+  --neon-purple: #7c3aed;
+  --neon-amber: #d97706;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+}
+
+/* Font Size Customizations */
+:root[data-font-size="small"] {
+  font-size: 14px;
+}
+:root[data-font-size="medium"] {
+  font-size: 16px;
+}
+:root[data-font-size="large"] {
+  font-size: 18px;
+}
+:root[data-font-size="xlarge"] {
+  font-size: 20px;
+}
+
+/* Font Family Customizations */
+:root[data-font-family="sans"] {
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+}
+
+:root[data-font-family="scifi"] {
+  --font-body: 'Space Grotesk', 'Orbitron', sans-serif;
+  --font-display: 'Orbitron', 'Space Grotesk', sans-serif;
+}
+
+:root[data-font-family="serif"] {
+  --font-body: 'Cinzel', Georgia, serif;
+  --font-display: 'Cinzel', Georgia, serif;
+}
+
+:root[data-font-family="mono"] {
+  --font-body: 'Fira Code', 'JetBrains Mono', monospace;
+  --font-display: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+/* ============================================================
    RESET & BASE
    ============================================================ */
 *, *::before, *::after {
@@ -73,6 +188,7 @@ html, body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {

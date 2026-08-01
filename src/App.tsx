@@ -3,6 +3,7 @@ import { PeriodicTableModule as PeriodicTable, ElementPanel, Sidebar, useChemSto
 import { LessonView } from './modules/BondModels';
 import { MolecularExplorer } from './modules/MolecularExplorer/MolecularExplorer';
 import { VirtualLab } from './modules/VirtualLab';
+import { SettingsScreen } from './modules/Settings';
 import { Breadcrumb } from './components/Breadcrumb/Breadcrumb';
 import { HomeScreen } from './modules/Home/HomeScreen';
 import { useUrlSync } from './hooks/useUrlSync';
@@ -36,6 +37,11 @@ function App() {
         {activeView === 'virtual-lab' && (
           <motion.div key="virtual-lab" style={{ position: 'absolute', inset: 0, zIndex: 1 }} {...PAGE_TRANSITION}>
             <VirtualLab />
+          </motion.div>
+        )}
+        {activeView === 'settings' && (
+          <motion.div key="settings" style={{ position: 'absolute', inset: 0, zIndex: 1 }} {...PAGE_TRANSITION}>
+            <SettingsScreen />
           </motion.div>
         )}
       </AnimatePresence>

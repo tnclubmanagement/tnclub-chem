@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useChemStore } from '../modules/PeriodicTable';
-import { ELEMENTS } from '../modules/PeriodicTable/data/elements';
+import { routeRegistry } from '../routes';
 
 export const useUrlSync = () => {
   const isInitializing = useRef(true);
@@ -9,30 +9,17 @@ export const useUrlSync = () => {
   useEffect(() => {
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
-      const view = params.get('view');
-      const lessonId = params.get('id');
-      const elSymbol = params.get('el');
-
+      const rawView = params.get('view');
       const store = useChemStore.getState();
 
-      if (view === 'lesson' && lessonId) {
-        store.setActiveLessonId(lessonId);
-      } else if (view === 'explorer') {
-        store.setActiveView('explorer');
-      } else if (view === 'periodic-table') {
-        store.setActiveView('periodic-table');
-        if (elSymbol) {
-          const el = ELEMENTS.find(e => e.symbol === elSymbol);
-          if (el) store.setSelectedElement(el);
-          else store.closePanel();
-        } else {
-          store.closePanel();
-        }
-      } else if (view === 'virtual-lab') {
-        store.setActiveView('virtual-lab');
-      } else {
-        // Default
-        store.setActiveView('home');
+      const route = routeRegistry.getRoute(rawView);
+
+      // Set active view once based on route configuration
+      store.setActiveView(route.view);
+
+      // Execute module-specific URL parser if defined
+      if (route.parseUrl) {
+        route.parseUrl(params, store);
       }
     };
 
@@ -53,14 +40,13 @@ export const useUrlSync = () => {
       const currentUrl = new URL(window.location.href);
       const newParams = new URLSearchParams();
 
-      // Set view
+      // Set view parameter
       newParams.set('view', state.activeView);
 
-      // Set view-specific params
-      if (state.activeView === 'lesson' && state.activeLessonId) {
-        newParams.set('id', state.activeLessonId);
-      } else if (state.activeView === 'periodic-table' && state.selectedElement) {
-        newParams.set('el', state.selectedElement.symbol);
+      // Execute active route's URL builder if defined
+      const activeRoute = routeRegistry.getRoute(state.activeView);
+      if (activeRoute?.buildUrl) {
+        activeRoute.buildUrl(newParams, state);
       }
 
       // Only push state if the search string actually changed

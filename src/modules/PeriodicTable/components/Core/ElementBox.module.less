@@ -1,0 +1,168 @@
+@import "../../../../styles/mixins.less";
+
+.elementBox { 
+  aspect-ratio: 1 / 1.1; 
+  background: @glass-bg; 
+  border: 1px solid @glass-border;
+  border-radius: @radius-sm; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  padding: 6px; 
+  cursor: pointer; 
+  transition: all 0.22s @ease-spring, background-color 0.5s ease;
+  position: relative; 
+  overflow: hidden; 
+
+  /* Shimmer sweep on hover */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      @glass-border-bright 50%,
+      transparent 100%
+    );
+    transition: left 0.4s @ease-spring;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  &:hover::after {
+    left: 120%;
+  }
+
+  &:hover, &.selected { 
+    transform: scale(1.42); 
+    z-index: 25; 
+    background: @glass-bg-hover;
+    border-color: currentColor;
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.5),
+      0 0 20px currentColor,
+      0 0 50px color-mix(in srgb, currentColor 40%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  &.dimmed { 
+    opacity: 0.1;
+    filter: grayscale(1) brightness(0.5);
+    pointer-events: none; 
+  }
+
+  .elZ { 
+    font-family: @font-mono; 
+    font-size: 0.68rem; 
+    font-weight: 700; 
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .elSymbol { 
+    font-family: @font-display; 
+    font-size: 1.15rem; 
+    font-weight: 800; 
+    line-height: 1; 
+    margin: 2px 0; 
+    text-align: center;
+    letter-spacing: -0.5px;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+
+  .elName { 
+    font-size: 0.52rem; 
+    font-weight: 600; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    text-align: center; 
+    opacity: 0.85;
+    letter-spacing: -0.2px;
+  }
+
+  /* Physical State Effects */
+  &.stateSolid {
+    border-style: solid;
+  }
+
+  &.stateLiquid {
+    border: 2px solid @neon-cyan;
+    animation: pulseGlow 2s ease-in-out infinite;
+
+    &::after { 
+      content: 'LỎNG'; 
+      position: absolute; 
+      top: -6px; 
+      right: -6px; 
+      background: @neon-cyan; 
+      color: #ffffff; 
+      font-family: @font-mono; 
+      font-size: 0.5rem; 
+      font-weight: 800; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+      z-index: 10; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3); 
+    }
+  }
+
+  &.stateGas { 
+    opacity: 1; 
+    border: 2px dashed @text-muted; 
+    background-color: @bg-surface !important; 
+
+    &::before { 
+      display: none !important; 
+    }
+
+    * { 
+      opacity: 0.4; 
+    }
+
+    &::after { 
+      content: 'KHÍ'; 
+      position: absolute; 
+      top: -6px; 
+      right: -6px; 
+      background: @bg-deep; 
+      color: @text-primary; 
+      font-family: @font-mono; 
+      font-size: 0.5rem; 
+      font-weight: 800; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+      border: 1px dashed @text-muted; 
+      z-index: 10; 
+      opacity: 1; 
+    }
+  }
+
+  &.stateUnknown { 
+    opacity: 0.15; 
+    filter: grayscale(1); 
+    border-style: dotted; 
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.8); }
+}
+
+/* Category Color Variants */
+.cat-alkali-metal { color: #ef4444; border-color: rgba(239,68,68,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(239,68,68,0.15), transparent); z-index: -1; } }
+.cat-alkaline-earth-metal { color: #f97316; border-color: rgba(249,115,22,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(249,115,22,0.15), transparent); z-index: -1; } }
+.cat-transition-metal { color: #eab308; border-color: rgba(234,179,8,0.2); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(234,179,8,0.1), transparent); z-index: -1; } }
+.cat-post-transition-metal { color: #22c55e; border-color: rgba(34,197,94,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(34,197,94,0.15), transparent); z-index: -1; } }
+.cat-metalloid { color: #06b6d4; border-color: rgba(6,182,212,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(6,182,212,0.15), transparent); z-index: -1; } }
+.cat-polyatomic-nonmetal { color: #3b82f6; border-color: rgba(59,130,246,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59,130,246,0.15), transparent); z-index: -1; } }
+.cat-diatomic-nonmetal { color: #8b5cf6; border-color: rgba(139,92,246,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(139,92,246,0.15), transparent); z-index: -1; } }
+.cat-noble-gas { color: #d946ef; border-color: rgba(217,70,239,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(217,70,239,0.15), transparent); z-index: -1; } }
+.cat-lanthanide { color: #f43f5e; border-color: rgba(244,63,94,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(244,63,94,0.15), transparent); z-index: -1; } }
+.cat-actinide { color: #f472b6; border-color: rgba(244,114,182,0.3); &::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(244,114,182,0.15), transparent); z-index: -1; } }
+.cat-unknown { color: @text-muted; border-color: @glass-border; }

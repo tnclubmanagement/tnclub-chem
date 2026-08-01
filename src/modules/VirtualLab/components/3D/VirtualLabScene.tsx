@@ -3,7 +3,7 @@ import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { Beaker3D } from './Beaker3D';
 import { ReactionEffects } from './ReactionEffects';
 import { PouringAnimation } from './PouringAnimation';
-import styles from '../../styles/VirtualLab.module.css';
+import styles from '../../styles/VirtualLab.module.less';
 
 export const VirtualLabScene = () => {
   return (

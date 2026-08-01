@@ -1,7 +1,7 @@
 import { VirtualLabScene } from './components/3D/VirtualLabScene';
 import { ChemicalInventory } from './components/UI/ChemicalInventory';
 import { ReactionHUD } from './components/UI/ReactionHUD';
-import styles from './styles/VirtualLab.module.css';
+import styles from './styles/VirtualLab.module.less';
 import { useVirtualLabStore } from './store/useVirtualLabStore';
 import { CHEMICALS } from './data/chemicals';
 import { playSciFiSound } from '../PeriodicTable/utils/audio';

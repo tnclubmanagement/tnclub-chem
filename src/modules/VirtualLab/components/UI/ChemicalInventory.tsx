@@ -3,7 +3,7 @@ import { AVAILABLE_CHEMICALS, CHEMICALS, type Chemical, type ChemicalGroup } fro
 import { useVirtualLabStore } from '../../store/useVirtualLabStore';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { FlaskIcon } from './FlaskIcon';
-import styles from '../../styles/VirtualLab.module.css';
+import styles from '../../styles/VirtualLab.module.less';
 import { speakText, stopSpeaking } from '../../utils/speech';
 import { useTranslation } from '../../../../i18n/useTranslation';
 

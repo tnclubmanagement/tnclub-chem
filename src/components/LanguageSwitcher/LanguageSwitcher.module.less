@@ -1,0 +1,55 @@
+@import "../../styles/mixins.less";
+
+.switcherContainer {
+  .flex-column(4px);
+  align-items: center;
+  .glass-panel(16px, @glass-bg, @glass-border, 12px);
+  padding: 4px;
+  pointer-events: auto;
+
+  &.horizontal {
+    flex-direction: row;
+  }
+}
+
+.langBtn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: @text-secondary;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-family: @font-mono;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s @ease-spring;
+  .flex-center();
+  gap: 4px;
+  line-height: 1;
+
+  &:hover {
+    color: @neon-cyan;
+    background: @neon-cyan-dim;
+    border-color: @glass-border-bright;
+  }
+
+  &.active {
+    background: @neon-cyan-dim !important;
+    color: @neon-cyan !important;
+    border-color: @neon-cyan !important;
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.25);
+  }
+}
+
+.langFlag {
+  font-size: 0.85rem;
+  line-height: 1;
+  display: inline-block;
+}
+
+.langText {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}

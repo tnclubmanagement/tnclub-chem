@@ -1,39 +1,37 @@
+@import "../../styles/mixins.less";
+
 .breadcrumbContainer {
   position: absolute;
   top: 1.5rem;
-  left: 90px; /* just to the right of the sidebar */
+  left: 90px;
   z-index: 100;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
+  .glass-panel(12px, @glass-bg, @glass-border, 8px);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
   pointer-events: auto;
 }
 
 .item {
-  color: var(--text-secondary);
+  color: @text-secondary;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
-}
 
-.item:hover {
-  color: var(--neon-cyan);
+  &:hover {
+    color: @neon-cyan;
+  }
 }
 
 .separator {
-  color: var(--text-muted);
+  color: @text-muted;
   font-size: 0.9rem;
 }
 
 .itemActive {
-  color: var(--text-primary);
+  color: @text-primary;
   font-size: 0.9rem;
   font-weight: 600;
 }

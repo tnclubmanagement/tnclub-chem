@@ -4,7 +4,7 @@ import { useChemStore } from '../PeriodicTable/store/useChemStore';
 import { useTranslation } from '../../i18n/useTranslation';
 import { Home3DPodsCanvas } from './components/Home3DPodsCanvas';
 import { FloatingElementsBackground } from './components/FloatingElementsBackground';
-import styles from './HomeScreen.module.css';
+import styles from './HomeScreen.module.less';
 
 export const HomeScreen: React.FC = () => {
   const setActiveView = useChemStore((s) => s.setActiveView);

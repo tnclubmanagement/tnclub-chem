@@ -2,7 +2,7 @@ import React from 'react';
 import { useChemStore } from '../../modules/PeriodicTable';
 import { LESSONS } from '../../modules/PeriodicTable/data/lessons';
 import { useTranslation } from '../../i18n/useTranslation';
-import styles from './Breadcrumb.module.css';
+import styles from './Breadcrumb.module.less';
 
 export const Breadcrumb: React.FC = () => {
   const { activeView, activeLessonId, selectedElement, setActiveLessonId, closePanel } = useChemStore();
@@ -44,9 +44,21 @@ export const Breadcrumb: React.FC = () => {
         </>
       )}
 
+      {activeView === 'explorer' && (
+        <span className={styles.itemActive}>
+          ⬡ {t('nav', 'explorer')}
+        </span>
+      )}
+
       {activeView === 'virtual-lab' && (
         <span className={styles.itemActive}>
           🧪 {t('nav', 'virtualLab')}
+        </span>
+      )}
+
+      {activeView === 'settings' && (
+        <span className={styles.itemActive}>
+          ⚙️ {t('nav', 'settings')}
         </span>
       )}
     </div>

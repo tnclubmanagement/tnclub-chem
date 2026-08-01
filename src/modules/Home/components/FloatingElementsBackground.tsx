@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './FloatingElementsBackground.module.css';
+import styles from './FloatingElementsBackground.module.less';
 
 interface ElementNode {
   number: number;
@@ -60,15 +60,25 @@ export const FloatingElementsBackground: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // Initialize Element Nodes
-    const nodes: ElementNode[] = RAW_ELEMENTS.map((el) => {
-      const radius = 34 + Math.random() * 8;
+    // Initialize Element Nodes based on screen size
+    const getScreenNodeCount = (screenWidth: number) => {
+      if (screenWidth < 640) return 5;   // Mobile
+      if (screenWidth < 1024) return 8;  // Tablet
+      return 12;                         // Desktop
+    };
+
+    const maxCount = getScreenNodeCount(width);
+    const selectedElements = RAW_ELEMENTS.slice(0, maxCount);
+
+    const nodes: ElementNode[] = selectedElements.map((el) => {
+      // Reduced radius: 18px to 24px (previously 34px to 42px)
+      const radius = width < 640 ? 16 + Math.random() * 4 : 20 + Math.random() * 5;
       return {
         ...el,
         x: radius + Math.random() * (width - radius * 2),
         y: radius + Math.random() * (height - radius * 2),
-        vx: (Math.random() - 0.5) * 1.8,
-        vy: (Math.random() - 0.5) * 1.8,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
         radius,
         mass: radius,
         pulse: 0,
@@ -220,16 +230,19 @@ export const FloatingElementsBackground: React.FC = () => {
         ctx.stroke();
 
         // Symbol Text
-        ctx.font = 'bold 16px "JetBrains Mono", monospace';
+        const symbolSize = Math.max(10, Math.round(n.radius * 0.55));
+        ctx.font = `bold ${symbolSize}px "JetBrains Mono", monospace`;
         ctx.fillStyle = n.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(n.symbol, 0, -4);
+        ctx.fillText(n.symbol, 0, n.radius > 20 ? -3 : 0);
 
-        // Atomic number
-        ctx.font = '500 10px "JetBrains Mono", monospace';
-        ctx.fillStyle = 'rgba(200, 220, 255, 0.7)';
-        ctx.fillText(`${n.number} • ${n.name}`, 0, 13);
+        // Atomic number (only show detail if radius is large enough)
+        if (n.radius > 20) {
+          ctx.font = '500 8px "JetBrains Mono", monospace';
+          ctx.fillStyle = 'rgba(200, 220, 255, 0.75)';
+          ctx.fillText(`${n.number}`, 0, n.radius * 0.45);
+        }
 
         ctx.restore();
       }

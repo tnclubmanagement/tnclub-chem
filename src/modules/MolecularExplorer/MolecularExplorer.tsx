@@ -3,7 +3,7 @@ import { ExplorerOverlay } from './components/UI/ExplorerOverlay';
 import { CompareDeck } from './components/UI/CompareDeck';
 import { Suspense } from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
-import styles from './MolecularExplorer.module.css';
+import styles from './MolecularExplorer.module.less';
 
 const LoadingFallback = () => {
   const { language } = useTranslation();

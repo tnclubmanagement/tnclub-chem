@@ -1,0 +1,250 @@
+/* ============================================================
+   LESS MIXINS & LAYOUT PATTERNS LIBRARY
+   ============================================================ */
+
+@import "./variables.less";
+
+// 1. Glassmorphism Panel
+.glass-panel(@blur: 20px, @bg: @glass-bg, @border: @glass-border, @radius: @radius-lg) {
+  background: @bg;
+  backdrop-filter: blur(@blur) saturate(160%);
+  -webkit-backdrop-filter: blur(@blur) saturate(160%);
+  border: 1px solid @border;
+  border-radius: @radius;
+  box-shadow: @glass-shadow;
+}
+
+// 2. Multi-Layer Neon Glow
+.neon-glow(@color: @neon-cyan, @opacity: 0.35) {
+  box-shadow:
+    0 0 8px color-mix(in srgb, @color 35%, transparent),
+    0 0 25px color-mix(in srgb, @color 15%, transparent);
+}
+
+// 3. Gradient Text
+.text-gradient(@start: @text-primary, @end: @neon-cyan) {
+  background: linear-gradient(135deg, @start 0%, @end 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// 4. Flexbox Layout Shortcuts
+.flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column(@gap: 12px) {
+  display: flex;
+  flex-direction: column;
+  gap: @gap;
+}
+
+// 5. Responsive Grid Layout
+.grid-responsive(@minWidth: 280px, @gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(@minWidth, 1fr));
+  gap: @gap;
+}
+
+// 6. Interactive Card Lift Hover Effect
+.card-hover-lift(@translateY: -4px, @borderColor: @neon-cyan) {
+  transition: all 0.25s @ease-spring;
+
+  &:hover {
+    transform: translateY(@translateY);
+    background: @glass-bg-hover;
+    border-color: @borderColor;
+    .neon-glow(@borderColor);
+  }
+}
+
+// 7. BUTTON PATTERN MIXINS
+.btn-base(@padding: 10px 18px, @radius: @radius-md) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: @padding;
+  border-radius: @radius;
+  font-family: @font-body;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid transparent;
+  transition: all 0.25s @ease-spring;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-primary(@color: @neon-cyan) {
+  .btn-base();
+  background: color-mix(in srgb, @color 14%, transparent);
+  border-color: color-mix(in srgb, @color 50%, transparent);
+  color: @color;
+
+  &:hover {
+    background: color-mix(in srgb, @color 28%, transparent);
+    border-color: @color;
+    transform: translateY(-2px);
+    .neon-glow(@color, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-secondary() {
+  .btn-base();
+  background: @glass-bg;
+  border-color: @glass-border;
+  color: @text-secondary;
+
+  &:hover {
+    background: @glass-bg-hover;
+    border-color: @glass-border-bright;
+    color: @text-primary;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-danger() {
+  .btn-base();
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-pill(@color: @neon-cyan) {
+  .btn-base(6px 14px, 999px);
+  font-size: 0.8rem;
+  background: @glass-bg;
+  border-color: @glass-border;
+  color: @text-secondary;
+
+  &:hover, &.active {
+    background: color-mix(in srgb, @color 14%, transparent);
+    border-color: @color;
+    color: @color;
+    .neon-glow(@color, 0.25);
+  }
+}
+
+.btn-icon(@size: 40px, @radius: 12px) {
+  width: @size;
+  height: @size;
+  padding: 0;
+  border-radius: @radius;
+  .flex-center();
+  background: @glass-bg;
+  border: 1px solid @glass-border;
+  color: @text-secondary;
+  cursor: pointer;
+  transition: all 0.25s @ease-spring;
+
+  &:hover {
+    background: @glass-bg-hover;
+    border-color: @neon-cyan;
+    color: @neon-cyan;
+    transform: scale(1.08);
+  }
+}
+
+// 8. TOOLTIP PATTERN MIXIN
+.tooltip-base(@position: right, @bg: @bg-surface, @color: @text-primary, @border: @glass-border-bright) {
+  position: absolute;
+  z-index: 100;
+  padding: 7px 14px;
+  border-radius: @radius-sm;
+  background: @bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: @color;
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-family: @font-body;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  border: 1px solid @border;
+  box-shadow: @glass-shadow;
+  transition: opacity 0.2s @ease-smooth, transform 0.2s @ease-spring;
+
+  & when (@position = right) {
+    left: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-8px);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 5px solid @border;
+    }
+  }
+
+  & when (@position = top) {
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid @border;
+    }
+  }
+}
+
+// 9. Custom Scrollbars
+.custom-scrollbar(@size: 5px, @thumbColor: rgba(255, 255, 255, 0.12)) {
+  &::-webkit-scrollbar {
+    width: @size;
+    height: @size;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: @thumbColor;
+    border-radius: 10px;
+
+    &:hover {
+      background: @neon-cyan;
+    }
+  }
+}

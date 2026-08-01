@@ -4,7 +4,7 @@ import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
 import { useTranslation } from '../../../../i18n/useTranslation';
 import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
-import styles from './ExplorerOverlay.module.css';
+import styles from './ExplorerOverlay.module.less';
 
 
 export const ExplorerOverlay = () => {

@@ -3,7 +3,7 @@ import { useChemStore } from '../../../PeriodicTable';
 import { LESSONS } from '../../../PeriodicTable/data/lessons';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { useTranslation } from '../../../../i18n/useTranslation';
-import styles from './LessonDashboard.module.css';
+import styles from './LessonDashboard.module.less';
 
 export const LessonDashboard: React.FC = () => {
   const { setActiveLessonId, soundEnabled } = useChemStore();

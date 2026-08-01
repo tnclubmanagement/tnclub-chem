@@ -11,7 +11,7 @@ import {
   getElementsByGroup,
   getElementsByPeriod,
 } from '../../utils/groupPeriodData';
-import styles from './ElementPanel.module.css';
+import styles from './ElementPanel.module.less';
 
 export const ElementPanel: React.FC = () => {
   const {

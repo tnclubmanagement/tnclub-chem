@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../../styles/VirtualLab.module.css';
+import styles from '../../styles/VirtualLab.module.less';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { speakText, stopSpeaking } from '../../utils/speech';
 import { THEORY_DATA } from '../../data/theory';

@@ -4,7 +4,7 @@ import { LESSONS } from '../../data/lessons';
 import { useTranslation } from '../../../../i18n/useTranslation';
 import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
 import { useSettingsStore, getNavIcon } from '../../../Settings/store/useSettingsStore';
-import styles from './Sidebar.module.css';
+import styles from './Sidebar.module.less';
 
 type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings';
 

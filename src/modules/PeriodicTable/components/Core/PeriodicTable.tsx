@@ -5,7 +5,7 @@ import { Controls } from './Controls';
 import { useChemStore } from '../../store/useChemStore';
 import { playSciFiSound } from '../../utils/audio';
 import { useTranslation } from '../../../../i18n/useTranslation';
-import styles from './PeriodicTable.module.css';
+import styles from './PeriodicTable.module.less';
 
 export const PeriodicTable: React.FC = () => {
   const { setActiveGroup, setActivePeriod, activeGroup, activePeriod, quizModeActive, setQuizModeActive, setQuizTargetZ, soundEnabled } = useChemStore();

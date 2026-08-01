@@ -2,7 +2,7 @@ import React from 'react';
 import type { ElementData } from '../../data/elements';
 import { useChemStore } from '../../store/useChemStore';
 import { playSciFiSound } from '../../utils/audio';
-import styles from './ElementBox.module.css';
+import styles from './ElementBox.module.less';
 
 interface ElementBoxProps {
   element: ElementData;

@@ -20,7 +20,7 @@ function App() {
   useUrlSync();
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: '#03040d' }}>
+    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-deep)' }}>
 
       {/* Animated view transitions */}
       <AnimatePresence mode="wait">

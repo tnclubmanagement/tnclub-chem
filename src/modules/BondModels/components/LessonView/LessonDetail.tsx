@@ -4,7 +4,7 @@ import { LESSONS } from '../../../PeriodicTable/data/lessons';
 import { BondModelVisualizer } from '../3D/BondModelVisualizer';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { useTranslation } from '../../../../i18n/useTranslation';
-import styles from './LessonDetail.module.css';
+import styles from './LessonDetail.module.less';
 
 export const LessonDetail: React.FC = () => {
   const { activeLessonId, setActiveLessonId, soundEnabled } = useChemStore();

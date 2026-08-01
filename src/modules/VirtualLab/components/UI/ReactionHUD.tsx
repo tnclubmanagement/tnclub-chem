@@ -2,7 +2,7 @@ import React from 'react';
 import { useVirtualLabStore } from '../../store/useVirtualLabStore';
 import { playSciFiSound } from '../../../PeriodicTable/utils/audio';
 import { motion, AnimatePresence } from 'framer-motion';
-import styles from '../../styles/VirtualLab.module.css';
+import styles from '../../styles/VirtualLab.module.less';
 import { useTranslation } from '../../../../i18n/useTranslation';
 import { speakText, stopSpeaking } from '../../utils/speech';
 

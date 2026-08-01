@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../../styles/VirtualLab.module.css';
+import styles from '../../styles/VirtualLab.module.less';
 import { useVirtualLabStore } from '../../store/useVirtualLabStore';
 import { MISSIONS } from '../../data/missions';
 import { useTranslation } from '../../../../i18n/useTranslation';

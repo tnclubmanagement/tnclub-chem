@@ -2,7 +2,7 @@ import React from 'react';
 import { useChemStore } from '../../store/useChemStore';
 import { playSciFiSound } from '../../utils/audio';
 import { useTranslation } from '../../../../i18n/useTranslation';
-import styles from './Controls.module.css';
+import styles from './Controls.module.less';
 
 export const Controls: React.FC = () => {
   const { temperature, setTemperature, heatmapEnabled, setHeatmapEnabled, soundEnabled, setSoundEnabled, quizModeActive, setQuizModeActive } = useChemStore();

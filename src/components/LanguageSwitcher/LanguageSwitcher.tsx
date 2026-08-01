@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from '../../i18n/useTranslation';
-import styles from './LanguageSwitcher.module.css';
+import styles from './LanguageSwitcher.module.less';
 
 interface LanguageSwitcherProps {
   horizontal?: boolean;

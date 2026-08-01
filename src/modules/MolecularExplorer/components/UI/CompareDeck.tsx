@@ -3,7 +3,7 @@ import { useExplorerStore } from '../../store/useExplorerStore';
 import { MOCK_MOLECULES } from '../../data/mockMolecules';
 import { calculateLonePairs, calculateDipoleMoment } from '../../services/vseprEngine';
 import { useTranslation } from '../../../../i18n/useTranslation';
-import styles from './CompareDeck.module.css';
+import styles from './CompareDeck.module.less';
 
 export const CompareDeck: React.FC = () => {
   const {

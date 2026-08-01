@@ -4,7 +4,7 @@ import type { FontSizeOption, FontFamilyOption, ThemeMode, GraphicsQuality, Icon
 import { useTranslation } from '../../../i18n/useTranslation';
 import { playSciFiSound } from '../../PeriodicTable/utils/audio';
 import { useChemStore } from '../../PeriodicTable/store/useChemStore';
-import styles from './SettingsScreen.module.css';
+import styles from './SettingsScreen.module.less';
 
 export const SettingsScreen: React.FC = () => {
   const { t, language, setLanguage, supportedLanguages } = useTranslation();

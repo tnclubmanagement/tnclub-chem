@@ -10,22 +10,18 @@ const ResponsivePodsGroup: React.FC = () => {
   const { t } = useTranslation();
   const { viewport } = useThree();
 
-  // Responsive spatial positions based on screen aspect/viewport width
-  const isNarrow = viewport.width < 6.8;
-  const isMobile = viewport.width < 5.0;
-
   const podsData = useMemo(() => {
-    const spreadX = isMobile ? 1.4 : isNarrow ? 1.7 : 2.0;
-    const spreadY = isMobile ? 1.5 : isNarrow ? 1.4 : 1.3;
+    // Dynamic X step based on viewport width, scaling up to 3.35 for full screen width
+    const stepX = Math.min(3.35, Math.max(1.5, viewport.width / 4.65));
 
-    return [
+    const pods = [
       {
         view: 'periodic-table' as const,
         title: t('home', 'featurePeriodicTitle'),
         desc: t('home', 'featurePeriodicDesc'),
         color: '#00f7ff',
         glow: 'rgba(0, 247, 255, 0.4)',
-        pos: [-spreadX, spreadY, 0] as [number, number, number],
+        index: 0,
       },
       {
         view: 'explorer' as const,
@@ -33,7 +29,7 @@ const ResponsivePodsGroup: React.FC = () => {
         desc: t('home', 'featureExplorerDesc'),
         color: '#ff1adb',
         glow: 'rgba(255, 26, 219, 0.4)',
-        pos: [spreadX, spreadY, 0] as [number, number, number],
+        index: 1,
       },
       {
         view: 'virtual-lab' as const,
@@ -41,7 +37,7 @@ const ResponsivePodsGroup: React.FC = () => {
         desc: t('home', 'featureLabDesc'),
         color: '#00ff80',
         glow: 'rgba(0, 255, 128, 0.4)',
-        pos: [-spreadX, -spreadY, 0] as [number, number, number],
+        index: 2,
       },
       {
         view: 'lesson' as const,
@@ -49,10 +45,32 @@ const ResponsivePodsGroup: React.FC = () => {
         desc: t('home', 'featureLessonsDesc'),
         color: '#a855f7',
         glow: 'rgba(168, 85, 247, 0.4)',
-        pos: [spreadX, -spreadY, 0] as [number, number, number],
+        index: 3,
+      },
+      {
+        view: 'academy' as const,
+        title: t('home', 'featureAcademyTitle'),
+        desc: t('home', 'featureAcademyDesc'),
+        color: '#eab308',
+        glow: 'rgba(234, 179, 8, 0.4)',
+        index: 4,
       },
     ];
-  }, [t, isNarrow, isMobile]);
+
+    return pods.map((pod) => {
+      // Map 5 pods (index 0..4) to horizontal positions -2, -1, 0, 1, 2
+      const indexOffset = pod.index - 2;
+      const posX = indexOffset * stepX;
+      // Curved 3D parabolic depth: center pod comes slightly forward, outer pods curve back
+      const posZ = Math.cos(indexOffset * 0.48) * 0.4 - 0.2;
+      const posY = 0.08 + Math.sin(Math.abs(indexOffset) * 0.35) * 0.06;
+
+      return {
+        ...pod,
+        pos: [posX, posY, posZ] as [number, number, number],
+      };
+    });
+  }, [t, viewport.width]);
 
   return (
     <>
@@ -82,7 +100,7 @@ const ResponsivePodsGroup: React.FC = () => {
 export const Home3DPodsCanvas: React.FC = () => {
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'visible' }}>
-      <Canvas camera={{ position: [0, 0, 8.2], fov: 46 }}>
+      <Canvas camera={{ position: [0, 0.25, 11.4], fov: 48 }}>
         <ResponsivePodsGroup />
       </Canvas>
     </div>

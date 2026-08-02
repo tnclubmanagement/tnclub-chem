@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { Atom3DIcon, Molecule3DIcon, LabFlask3DIcon, LessonBook3DIcon } from './Spatial3DIcons';
+import { Atom3DIcon, Molecule3DIcon, LabFlask3DIcon, LessonBook3DIcon, Academy3DIcon } from './Spatial3DIcons';
 
 interface Feature3DPodProps {
   position: [number, number, number];
@@ -10,7 +10,7 @@ interface Feature3DPodProps {
   desc: string;
   color: string;
   glow: string;
-  podType: 'periodic-table' | 'explorer' | 'virtual-lab' | 'lesson';
+  podType: 'periodic-table' | 'explorer' | 'virtual-lab' | 'lesson' | 'academy';
   onClick: () => void;
   ctaText: string;
   delayIndex: number;
@@ -33,10 +33,12 @@ export const Feature3DPod: React.FC<Feature3DPodProps> = ({
   useFrame((state, delta) => {
     if (!meshRef.current) return;
 
-    // Continuous 3D rotation of the pod outer geometry
+    // Adjust rotation speed for Academy pod to be smoother
+    const rotationSpeedY = podType === 'academy' ? (hovered ? 0.6 : 0.2) : (hovered ? 1.2 : 0.4);
+    const rotationSpeedX = podType === 'academy' ? (hovered ? 0.3 : 0.1) : (hovered ? 0.6 : 0.2);
     if (coreRef.current) {
-      coreRef.current.rotation.y += delta * (hovered ? 1.2 : 0.4);
-      coreRef.current.rotation.x += delta * (hovered ? 0.6 : 0.2);
+      coreRef.current.rotation.y += delta * rotationSpeedY;
+      coreRef.current.rotation.x += delta * rotationSpeedX;
     }
 
     // Hover Mouse Tilt & Zoom
@@ -79,6 +81,7 @@ export const Feature3DPod: React.FC<Feature3DPodProps> = ({
         {podType === 'explorer'       && <dodecahedronGeometry args={[0.88, 0]} />}
         {podType === 'virtual-lab'    && <cylinderGeometry args={[0.75, 0.75, 1.4, 8]} />}
         {podType === 'lesson'         && <icosahedronGeometry args={[0.92, 0]} />}
+        {podType === 'academy'        && <coneGeometry args={[0.6, 0.8, 32]} />}
 
         <meshPhysicalMaterial
           color={color}
@@ -100,6 +103,7 @@ export const Feature3DPod: React.FC<Feature3DPodProps> = ({
         {podType === 'explorer'       && <dodecahedronGeometry args={[0.88, 0]} />}
         {podType === 'virtual-lab'    && <cylinderGeometry args={[0.75, 0.75, 1.4, 8]} />}
         {podType === 'lesson'         && <icosahedronGeometry args={[0.92, 0]} />}
+        {podType === 'academy'        && <coneGeometry args={[0.6, 0.8, 32]} />}
 
         <meshBasicMaterial
           color={hovered ? '#ffffff' : color}
@@ -115,23 +119,25 @@ export const Feature3DPod: React.FC<Feature3DPodProps> = ({
         {podType === 'explorer'       && <Molecule3DIcon />}
         {podType === 'virtual-lab'    && <LabFlask3DIcon />}
         {podType === 'lesson'         && <LessonBook3DIcon />}
+        {podType === 'academy'        && <Academy3DIcon />}
       </group>
 
       {/* 3D Glass Tooltip Badge dán bên dưới khối */}
-      <Html position={[0, -1.35, 0.2]} transform distanceFactor={5.5} center>
+      <Html position={[0, -1.4, 0.25]} transform distanceFactor={5.6} center>
         <div style={{
-          width: '210px',
+          width: '215px',
           padding: '12px 14px',
-          background: hovered ? 'rgba(15, 23, 42, 0.92)' : 'rgba(15, 23, 42, 0.75)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: `1px solid ${hovered ? color : 'rgba(255, 255, 255, 0.12)'}`,
-          borderRadius: '16px',
+          background: hovered ? 'rgba(15, 23, 42, 0.94)' : 'rgba(15, 23, 42, 0.78)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: `1px solid ${hovered ? color : 'rgba(255, 255, 255, 0.15)'}`,
+          borderRadius: '18px',
           textAlign: 'center',
-          boxShadow: hovered ? `0 0 24px ${color}80, 0 10px 30px rgba(0,0,0,0.5)` : '0 4px 20px rgba(0,0,0,0.3)',
-          transition: 'all 0.3s ease',
+          boxShadow: hovered ? `0 0 28px ${color}90, 0 12px 36px rgba(0,0,0,0.6)` : '0 6px 24px rgba(0,0,0,0.35)',
+          transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           pointerEvents: 'none',
           userSelect: 'none',
+          cursor: 'pointer',
         }}>
           <h3 style={{
             margin: '0 0 4px 0',

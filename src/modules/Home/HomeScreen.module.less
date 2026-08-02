@@ -6,27 +6,26 @@
 .home {
   position: absolute;
   inset: 0;
-  display: grid;
-  /* [sidebar gap] [hero] [gap] [feature grid] */
-  grid-template-columns: 72px 1fr auto;
-  grid-template-rows: 1fr;
-  overflow: hidden;
+  padding-left: 72px; /* Space for sidebar */
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--bg-deep);
   color: var(--text-primary);
+  box-sizing: border-box;
 }
 
 /* Inner container that sits right of the sidebar */
 .contentArea {
-  grid-column: 2 / -1;
-  grid-row: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(24px, 4vw, 64px);
-  padding: clamp(24px, 4vh, 56px) clamp(24px, 4vw, 56px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  justify-content: flex-start;
+  gap: clamp(18px, 2.5vh, 32px);
+  padding: clamp(16px, 2.5vh, 36px) clamp(16px, 2vw, 32px);
+  box-sizing: border-box;
 }
 
 /* ================================================================
@@ -107,18 +106,18 @@
 }
 
 /* ================================================================
-   HERO SECTION (left column)
+   HERO SECTION (Top area)
    ================================================================ */
 .heroSection {
   position: relative;
   z-index: 3;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(16px, 2.5vh, 28px);
-  flex: 1 1 0;
-  min-width: 0;
-  max-width: 600px;
+  align-items: center;
+  text-align: center;
+  gap: clamp(12px, 1.8vh, 20px);
+  max-width: 840px;
+  width: 100%;
 }
 
 .badge {
@@ -151,14 +150,15 @@
 .heroTitle {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: clamp(6px, 1vw, 12px);
-  line-height: 0.9;
+  line-height: 0.95;
   font-family: var(--font-display);
   flex-wrap: wrap;
 }
 
 .titleLine1 {
-  font-size: clamp(3.2rem, 7vw, 8rem);
+  font-size: clamp(2.6rem, 5vw, 6rem);
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: clamp(-2px, -0.5vw, -4px);
@@ -166,7 +166,7 @@
 }
 
 .titleLine2 {
-  font-size: clamp(3.2rem, 7vw, 8rem);
+  font-size: clamp(2.6rem, 5vw, 6rem);
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: clamp(-2px, -0.5vw, -4px);
@@ -174,7 +174,7 @@
 }
 
 .titleAccent {
-  font-size: clamp(2rem, 4.5vw, 5rem);
+  font-size: clamp(1.7rem, 3.5vw, 4rem);
   font-weight: 900;
   background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 50%, var(--neon-purple) 100%);
   background-size: 200% 200%;
@@ -187,10 +187,11 @@
 }
 
 .heroDesc {
-  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
-  line-height: 1.7;
+  font-size: clamp(0.88rem, 1.25vw, 1.08rem);
+  line-height: 1.6;
   color: var(--text-secondary);
-  max-width: 480px;
+  max-width: 600px;
+  text-align: center;
 }
 
 /* ---- CTAs ---- */
@@ -198,6 +199,7 @@
   display: flex;
   gap: clamp(10px, 1.5vw, 16px);
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -269,16 +271,19 @@
 /* ---- Stats ---- */
 .statsRow {
   display: flex;
-  gap: clamp(16px, 3vw, 32px);
-  padding-top: clamp(16px, 2vh, 24px);
+  gap: clamp(20px, 4vw, 48px);
+  padding-top: clamp(12px, 1.5vh, 18px);
   border-top: 1px solid var(--glass-border);
   width: 100%;
+  max-width: 600px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 4px;
 }
 
@@ -300,17 +305,26 @@
 }
 
 /* ================================================================
-   FEATURE GRID (right column)
+   FULL-WIDTH 3D FEATURE STAGE (Redesigned Glass Container)
    ================================================================ */
 .featureGrid3D {
   position: relative;
   z-index: 3;
-  width: clamp(340px, 45vw, 620px);
-  height: clamp(420px, 55vh, 560px);
+  width: 100%;
+  max-width: 100%;
+  height: clamp(460px, 56vh, 600px);
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 6px;
+  background: radial-gradient(ellipse at 50% 65%, rgba(0, 247, 255, 0.06) 0%, rgba(15, 23, 42, 0.5) 65%, transparent 100%);
+  border: 1px solid var(--glass-border-bright);
+  border-radius: clamp(20px, 2.5vw, 32px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  overflow: hidden;
 }
 
 .featureGrid {
@@ -432,74 +446,38 @@
    RESPONSIVE BREAKPOINTS
    ================================================================ */
 
-/* Narrow viewport — stacked: hero above, cards below in a row */
 @media (max-width: 960px) {
   .home {
-    grid-template-columns: 72px 1fr;
-    grid-template-rows: 1fr;
+    padding-left: 60px;
   }
 
   .contentArea {
-    grid-column: 2;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(20px, 3vh, 36px) clamp(16px, 3vw, 28px);
-    gap: clamp(18px, 2.5vh, 28px);
-    overflow-y: auto;
-  }
-
-  .heroSection {
-    align-items: center;
-    text-align: center;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .heroTitle {
-    justify-content: center;
-  }
-
-  .heroCtas {
-    justify-content: center;
-  }
-
-  .statsRow {
-    justify-content: center;
-  }
-
-  .heroDesc {
-    text-align: center;
-    max-width: 520px;
+    padding: clamp(16px, 2.5vh, 32px) clamp(16px, 2.5vw, 24px);
+    gap: clamp(16px, 2vh, 24px);
   }
 
   .featureGrid3D {
-    width: 100%;
-    max-width: 580px;
-    height: clamp(380px, 45vh, 480px);
-    overflow: visible;
+    height: clamp(340px, 40vh, 420px);
   }
 }
 
-/* Very narrow — 2x2 grid for feature cards */
 @media (max-width: 720px) {
+  .home {
+    padding-left: 0;
+    padding-bottom: 60px;
+  }
+
   .contentArea {
     padding: 16px 12px;
     gap: 16px;
   }
 
-  .featureGrid {
-    grid-template-columns: repeat(2, 1fr);
-    width: 100%;
-    max-width: 100%;
-  }
-
   .titleLine1, .titleLine2 {
-    font-size: clamp(2.5rem, 10vw, 4rem);
+    font-size: clamp(2.2rem, 9vw, 3.6rem);
   }
 
   .titleAccent {
-    font-size: clamp(1.6rem, 7vw, 2.5rem);
+    font-size: clamp(1.5rem, 6.5vw, 2.2rem);
   }
 
   .particle {

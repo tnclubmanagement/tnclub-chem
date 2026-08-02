@@ -143,3 +143,60 @@ export const LessonBook3DIcon: React.FC = () => {
     </group>
   );
 };
+
+// 5. Academy 3D Icon (Graduation cap with golden tassel)
+export const Academy3DIcon: React.FC = () => {
+  const groupRef = useRef<THREE.Group>(null);
+  const tasselRef = useRef<THREE.Mesh>(null);
+
+  useFrame((_, delta) => {
+    if (groupRef.current) groupRef.current.rotation.y += delta * 0.4;
+    if (tasselRef.current) {
+      tasselRef.current.rotation.y += delta * 2.5;
+    }
+  });
+
+  return (
+    <group ref={groupRef} scale={[0.45, 0.45, 0.45]}>
+      {/* Graduation cap base (flat board) */}
+      <mesh position={[0, 0.3, 0]}>
+        <boxGeometry args={[1.2, 0.02, 1.2]} />
+        <meshPhysicalMaterial
+          color="#eab308"
+          metalness={0.9}
+          roughness={0.2}
+          clearcoat={1}
+        />
+      </mesh>
+
+      {/* Cap peak */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+        <coneGeometry args={[0.6, 0.8, 32]} />
+        <meshPhysicalMaterial
+          color="#eab308"
+          metalness={0.9}
+          roughness={0.2}
+          clearcoat={1}
+        />
+      </mesh>
+
+      {/* Golden tassel */}
+      <mesh ref={tasselRef} position={[0, -0.2, 0.4]}>
+        <cylinderGeometry args={[0.04, 0.04, 0.6, 16]} />
+        <meshPhysicalMaterial
+          color="#fbbf24"
+          metalness={0.8}
+          roughness={0.1}
+          transmission={0.3}
+        />
+        {/* Tassel ball */}
+        <mesh position={[0, -0.35, 0]}>
+          <sphereGeometry args={[0.07, 16, 16]} />
+          <meshPhysicalMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.5} />
+        </mesh>
+      </mesh>
+    </group>
+  );
+};
+
+

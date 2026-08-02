@@ -6,7 +6,7 @@ import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/Langua
 import { useSettingsStore, getNavIcon } from '../../../Settings/store/useSettingsStore';
 import styles from './Sidebar.module.less';
 
-type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'settings';
+type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'academy' | 'settings';
 
 export const Sidebar: React.FC = () => {
   const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
@@ -22,6 +22,7 @@ export const Sidebar: React.FC = () => {
     { view: 'periodic-table', label: t('nav', 'periodicTable'), accentColor: '#00f7ff' },
     { view: 'explorer',       label: t('nav', 'explorer'),      accentColor: '#ff1adb' },
     { view: 'virtual-lab',    label: t('nav', 'virtualLab'),    accentColor: '#00ff80' },
+    { view: 'academy',        label: t('nav', 'academy'),       accentColor: '#eab308' },
   ];
 
   return (

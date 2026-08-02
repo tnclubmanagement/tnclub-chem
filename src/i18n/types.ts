@@ -18,6 +18,7 @@ export interface TranslationDictionary {
     periodicTable: string;
     explorer: string;
     virtualLab: string;
+    academy: string;
     lessons: string;
     lessonsFlyoutTitle: string;
     settings: string;
@@ -92,6 +93,8 @@ export interface TranslationDictionary {
     featureLabDesc: string;
     featureLessonsTitle: string;
     featureLessonsDesc: string;
+    featureAcademyTitle: string;
+    featureAcademyDesc: string;
     cardCta: string;
   };
   explorer: {

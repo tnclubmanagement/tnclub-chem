@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AcademyScreen.module.less';
 import { ACADEMY_UNITS } from './data/academyData';
 import type { AcademyTopic } from './data/academyData';
@@ -6,36 +6,110 @@ import { AtomicOrbitalViewer } from './components/AtomicOrbitalViewer';
 import { PhScaleInteractive } from './components/PhScaleInteractive';
 import { useTranslation } from '../../i18n/useTranslation';
 import { playSciFiSound } from '../PeriodicTable/utils/audio';
+import { speakText, stopSpeaking } from '../VirtualLab/utils/speech';
 
 export const AcademyScreen: React.FC = () => {
   const { language } = useTranslation();
+  const [activeCategory, setActiveCategory] = useState<'all' | 'foundation' | 'lifehack' | 'patent'>('all');
   const [selectedTopic, setSelectedTopic] = useState<AcademyTopic>(ACADEMY_UNITS[0].topics[0]);
   const [userAnswers, setUserAnswers] = useState<Record<number, number>>({});
+  const [isReading, setIsReading] = useState(false);
 
   const isEn = language === 'en';
+
+  // Stop speaking when topic changes or unmounts
+  useEffect(() => {
+    stopSpeaking();
+    setIsReading(false);
+    return () => {
+      stopSpeaking();
+    };
+  }, [selectedTopic.id, language]);
+
+  const handleToggleReadArticle = async () => {
+    playSciFiSound('click');
+    if (isReading) {
+      stopSpeaking();
+      setIsReading(false);
+    } else {
+      setIsReading(true);
+      const title = isEn ? selectedTopic.titleEn : selectedTopic.title;
+      const summary = isEn ? selectedTopic.summaryEn : selectedTopic.summary;
+      const sectionsText = selectedTopic.contentSections
+        .map((sec) => {
+          const heading = isEn ? sec.headingEn : sec.heading;
+          const body = isEn ? sec.bodyEn : sec.body;
+          const takeaway = sec.keyTakeaway ? (isEn ? sec.keyTakeawayEn : sec.keyTakeaway) : '';
+          return `${heading}. ${body}. ${takeaway ? `Ghi nhớ: ${takeaway}` : ''}`;
+        })
+        .join('. ');
+
+      const fullText = `${title}. ${summary}. ${sectionsText}`;
+
+      await speakText(fullText);
+      setIsReading(false);
+    }
+  };
 
   const handleOptionSelect = (qIdx: number, optIdx: number) => {
     playSciFiSound('click');
     setUserAnswers(prev => ({ ...prev, [qIdx]: optIdx }));
   };
 
+  const filteredUnits = ACADEMY_UNITS.map(unit => {
+    if (activeCategory === 'all') return unit;
+    const topics = unit.topics.filter(t => {
+      if (activeCategory === 'foundation') return !t.category || t.category === 'foundation';
+      return t.category === activeCategory;
+    });
+    return { ...unit, topics };
+  }).filter(unit => unit.topics.length > 0);
+
   return (
     <div className={styles.academyScreen}>
       {/* Module Title Header */}
       <div className={styles.header}>
         <span className={styles.badge}>🎓 CHEMISTRY ACADEMY</span>
-        <h1>{isEn ? 'Foundational Chemistry Academy' : 'Học Viện Kiến Thức Hóa Học Nền Tảng'}</h1>
+        <h1>{isEn ? 'Foundational Chemistry & Innovation Academy' : 'Học Viện Kiến Thức Hóa Học Nền Tảng & Phát Minh'}</h1>
         <p>
           {isEn
-            ? 'Master fundamental chemistry concepts through interactive 3D visualizers and instant quizzes.'
-            : 'Hệ thống lý thuyết cốt lõi qua mô phỏng 3D sinh động và bài tập củng cố kiến thức.'}
+            ? 'Master chemistry fundamentals, life hacks, and world-changing patent inventions with interactive 3D simulations.'
+            : 'Hệ thống lý thuyết cốt lõi, tuyệt chiêu mẹo vặt cuộc sống và bằng sáng chế phát minh qua mô phỏng 3D sinh động.'}
         </p>
       </div>
 
       <div className={styles.contentLayout}>
         {/* Sidebar Topics Navigation */}
         <aside className={styles.sidebarTree}>
-          {ACADEMY_UNITS.map(unit => (
+          {/* Category Filter Tabs */}
+          <div className={styles.categoryFilterBar}>
+            <button
+              className={`${styles.categoryTabBtn} ${activeCategory === 'all' ? styles.activeCategory : ''}`}
+              onClick={() => setActiveCategory('all')}
+            >
+              <span>🌐</span> {isEn ? 'All' : 'Tất Cả'}
+            </button>
+            <button
+              className={`${styles.categoryTabBtn} ${activeCategory === 'foundation' ? styles.activeCategory : ''}`}
+              onClick={() => setActiveCategory('foundation')}
+            >
+              <span>🎓</span> {isEn ? 'Theory' : 'Nền Tảng'}
+            </button>
+            <button
+              className={`${styles.categoryTabBtn} ${activeCategory === 'lifehack' ? styles.activeCategory : ''}`}
+              onClick={() => setActiveCategory('lifehack')}
+            >
+              <span>💡</span> {isEn ? 'Life Hacks' : 'Mẹo Vặt'}
+            </button>
+            <button
+              className={`${styles.categoryTabBtn} ${activeCategory === 'patent' ? styles.activeCategory : ''}`}
+              onClick={() => setActiveCategory('patent')}
+            >
+              <span>⚡</span> {isEn ? 'Patents' : 'Bằng Sáng Chế'}
+            </button>
+          </div>
+
+          {filteredUnits.map(unit => (
             <div key={unit.id} className={styles.unitGroup}>
               <div className={styles.unitTitle}>{isEn ? unit.titleEn : unit.title}</div>
               <div className={styles.topicList}>
@@ -70,6 +144,34 @@ export const AcademyScreen: React.FC = () => {
             <div className={styles.articleMeta}>
               <span className={styles.levelBadge}>{selectedTopic.level}</span>
               <span className={styles.timeBadge}>⏱️ {selectedTopic.readTime}</span>
+              {selectedTopic.author && (
+                <span className={styles.authorBadge}>
+                  ✍️ {isEn ? (selectedTopic.authorEn || selectedTopic.author) : selectedTopic.author}
+                </span>
+              )}
+              {selectedTopic.releaseDate && (
+                <span className={styles.dateBadge}>
+                  📅 {selectedTopic.releaseDate}
+                </span>
+              )}
+
+              {/* Text-To-Speech Audio Reader Button */}
+              <button
+                className={`${styles.audioReaderBtn} ${isReading ? styles.reading : ''}`}
+                onClick={handleToggleReadArticle}
+                title={isReading ? (isEn ? 'Stop Reading' : 'Dừng đọc bài') : (isEn ? 'Listen to Article' : 'Đọc bài phát âm')}
+              >
+                {isReading ? (
+                  <>
+                    <span className={styles.pulseDot} />
+                    <span>⏸️ {isEn ? 'Stop' : 'Dừng đọc'}</span>
+                  </>
+                ) : (
+                  <>
+                    <span>🔊 {isEn ? 'Listen' : 'Đọc bài'}</span>
+                  </>
+                )}
+              </button>
             </div>
             <h2>{isEn ? selectedTopic.titleEn : selectedTopic.title}</h2>
             <p className={styles.subtitle}>{isEn ? selectedTopic.subtitleEn : selectedTopic.subtitle}</p>

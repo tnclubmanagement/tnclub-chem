@@ -50,6 +50,10 @@ routeRegistry.register({
 });
 
 routeRegistry.register({
+  view: 'academy',
+});
+
+routeRegistry.register({
   view: 'settings',
 });
 

@@ -3,15 +3,22 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import type { ElementData } from '../../data/elements';
 import { BohrModel } from './BohrModel';
+import { useCanvasPerformanceProps } from '../../../../hooks/useCanvasPerformanceProps';
+import { CanvasPlayPauseButton } from '../../../../components/CanvasControls/CanvasPlayPauseButton';
+import { useSettingsStore } from '../../../Settings/store/useSettingsStore';
 
 interface AtomVisualizerProps {
   element: ElementData;
 }
 
 export const AtomVisualizer: React.FC<AtomVisualizerProps> = ({ element }) => {
+  const canvasProps = useCanvasPerformanceProps();
+  const { autoRotate3D } = useSettingsStore();
+
   return (
-    <div style={{ width: '100%', height: '100%', cursor: 'grab' }}>
-      <Canvas camera={{ position: [0, 2, 8], fov: 45 }}>
+    <div style={{ width: '100%', height: '100%', cursor: 'grab', position: 'relative' }}>
+      <CanvasPlayPauseButton />
+      <Canvas camera={{ position: [0, 2, 8], fov: 45 }} {...canvasProps}>
         <color attach="background" args={['#0f172a']} />
         
         {/* Basic Lighting */}
@@ -40,7 +47,7 @@ export const AtomVisualizer: React.FC<AtomVisualizerProps> = ({ element }) => {
           enableZoom={true}
           minDistance={3}
           maxDistance={20}
-          autoRotate
+          autoRotate={autoRotate3D}
           autoRotateSpeed={0.5}
         />
       </Canvas>

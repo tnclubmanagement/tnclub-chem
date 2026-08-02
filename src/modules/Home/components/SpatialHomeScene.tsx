@@ -5,7 +5,10 @@ import { Spatial3DCard } from './Spatial3DCard';
 import { useChemStore } from '../../PeriodicTable/store/useChemStore';
 import { useTranslation } from '../../../i18n/useTranslation';
 
+import { useCanvasPerformanceProps } from '../../../hooks/useCanvasPerformanceProps';
+
 export const SpatialHomeScene: React.FC = () => {
+  const canvasProps = useCanvasPerformanceProps();
   const setActiveView = useChemStore((s) => s.setActiveView);
   const { t } = useTranslation();
 
@@ -57,8 +60,8 @@ export const SpatialHomeScene: React.FC = () => {
   ];
 
   return (
-    <div style={{ position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none' }}>
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+    <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+      <Canvas camera={{ position: [0, 1.2, 7.5], fov: 50 }} {...canvasProps}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[10, 15, 10]} intensity={1.8} castShadow />
         <pointLight position={[-10, -5, -5]} color="#00f7ff" intensity={1.5} />

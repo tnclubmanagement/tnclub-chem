@@ -3,15 +3,22 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import type { ElementData } from '../../data/elements';
 import { LatticeModel } from './LatticeModel';
+import { useCanvasPerformanceProps } from '../../../../hooks/useCanvasPerformanceProps';
+import { CanvasPlayPauseButton } from '../../../../components/CanvasControls/CanvasPlayPauseButton';
+import { useSettingsStore } from '../../../Settings/store/useSettingsStore';
 
 interface BondVisualizerProps {
   element: ElementData;
 }
 
 export const BondVisualizer: React.FC<BondVisualizerProps> = ({ element }) => {
+  const canvasProps = useCanvasPerformanceProps();
+  const { autoRotate3D } = useSettingsStore();
+
   return (
-    <div style={{ width: '100%', height: '100%', cursor: 'grab' }}>
-      <Canvas camera={{ position: [0, 2, 6], fov: 45 }}>
+    <div style={{ width: '100%', height: '100%', cursor: 'grab', position: 'relative' }}>
+      <CanvasPlayPauseButton />
+      <Canvas camera={{ position: [0, 2, 6], fov: 45 }} {...canvasProps}>
         <color attach="background" args={['#0f172a']} />
         
         {/* Basic Lighting */}
@@ -38,7 +45,7 @@ export const BondVisualizer: React.FC<BondVisualizerProps> = ({ element }) => {
           enableZoom={true}
           minDistance={2}
           maxDistance={15}
-          autoRotate
+          autoRotate={autoRotate3D}
           autoRotateSpeed={1.0}
         />
       </Canvas>

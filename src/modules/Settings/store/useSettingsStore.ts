@@ -59,6 +59,8 @@ export interface SettingsState {
   soundVolume: number;
   autoRotate3D: boolean;
   graphicsQuality: GraphicsQuality;
+  ttsVoiceURI: string | null;
+  ttsSpeed: number;
 
   setFontSize: (size: FontSizeOption) => void;
   setFontFamily: (family: FontFamilyOption) => void;
@@ -68,6 +70,8 @@ export interface SettingsState {
   setSoundVolume: (volume: number) => void;
   setAutoRotate3D: (autoRotate: boolean) => void;
   setGraphicsQuality: (quality: GraphicsQuality) => void;
+  setTtsVoiceURI: (voiceURI: string | null) => void;
+  setTtsSpeed: (speed: number) => void;
   resetDefaults: () => void;
 }
 
@@ -82,6 +86,8 @@ const DEFAULT_SETTINGS = {
   soundVolume: 80,
   autoRotate3D: true,
   graphicsQuality: 'high' as GraphicsQuality,
+  ttsVoiceURI: null as string | null,
+  ttsSpeed: 1.0,
 };
 
 const loadInitialSettings = () => {
@@ -165,6 +171,16 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setGraphicsQuality: (graphicsQuality) => {
     set({ graphicsQuality });
     saveSettings({ ...get(), graphicsQuality });
+  },
+
+  setTtsVoiceURI: (ttsVoiceURI) => {
+    set({ ttsVoiceURI });
+    saveSettings({ ...get(), ttsVoiceURI });
+  },
+
+  setTtsSpeed: (ttsSpeed) => {
+    set({ ttsSpeed });
+    saveSettings({ ...get(), ttsSpeed });
   },
 
   resetDefaults: () => {

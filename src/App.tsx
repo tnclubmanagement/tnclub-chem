@@ -6,14 +6,15 @@ import { VirtualLab } from './modules/VirtualLab';
 import { AcademyScreen } from './modules/Academy/AcademyScreen';
 import { SettingsScreen } from './modules/Settings';
 import { Breadcrumb } from './components/Breadcrumb/Breadcrumb';
+import { GlobalSearchModal } from './components/GlobalSearch';
 import { HomeScreen } from './modules/Home/HomeScreen';
 import { useUrlSync } from './hooks/useUrlSync';
 import './App.css';
 
 const PAGE_TRANSITION = {
-  initial: { opacity: 0, scale: 0.97, filter: 'blur(6px)' },
-  animate: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const } },
-  exit:    { opacity: 0, scale: 1.02, filter: 'blur(4px)', transition: { duration: 0.25, ease: [0.4, 0, 1, 1] as const } },
+  initial: { opacity: 0, scale: 0.98 },
+  animate: { opacity: 1, scale: 1, transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] as const } },
+  exit:    { opacity: 0, scale: 1.01, transition: { duration: 0.18, ease: [0.4, 0, 1, 1] as const } },
 };
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-deep)' }}>
+      {/* Global Search Modal Command Palette */}
+      <GlobalSearchModal />
 
       {/* Animated view transitions */}
       <AnimatePresence mode="wait">

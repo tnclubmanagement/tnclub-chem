@@ -263,3 +263,119 @@ input:checked + .slider {
   color: @text-primary;
   line-height: 1.5;
 }
+
+/* Smart Voice Control UI */
+.voiceControlRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.voiceSelect {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  background: rgba(10, 15, 30, 0.95);
+  color: @text-primary;
+  border: 1px solid rgba(0, 247, 255, 0.3);
+  border-radius: @radius-md;
+  padding: 9px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 0 10px rgba(0, 247, 255, 0.05);
+
+  &:focus {
+    border-color: @neon-cyan;
+    box-shadow: 0 0 16px rgba(0, 247, 255, 0.3);
+  }
+
+  optgroup {
+    background: #0b1329;
+    color: @neon-cyan;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  option {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 8px;
+  }
+}
+
+.navArrowBtn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: @radius-md;
+  background: rgba(0, 247, 255, 0.1);
+  border: 1px solid rgba(0, 247, 255, 0.35);
+  color: @neon-cyan;
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+
+  &:hover {
+    background: @neon-cyan;
+    color: #000000;
+    box-shadow: 0 0 16px rgba(0, 247, 255, 0.4);
+    transform: scale(1.08);
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+.testVoiceBtn {
+  padding: 8px 14px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: @radius-md;
+  background: rgba(0, 247, 255, 0.15);
+  border: 1px solid @neon-cyan;
+  color: #00f7ff;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: @neon-cyan;
+    color: #000000;
+    box-shadow: 0 0 16px rgba(0, 247, 255, 0.5);
+  }
+
+  &.testing {
+    background: rgba(234, 179, 8, 0.25);
+    border-color: #facc15;
+    color: #facc15;
+    animation: voicePulse 1.5s infinite ease-in-out;
+  }
+}
+
+@keyframes voicePulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(234, 179, 8, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(234, 179, 8, 0.7);
+  }
+}

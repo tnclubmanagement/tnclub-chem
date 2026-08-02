@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSettingsStore, getNavIcon } from '../store/useSettingsStore';
 import type { FontSizeOption, FontFamilyOption, ThemeMode, GraphicsQuality, IconStyleOption } from '../store/useSettingsStore';
 import { useTranslation } from '../../../i18n/useTranslation';
 import { playSciFiSound } from '../../PeriodicTable/utils/audio';
 import { useChemStore } from '../../PeriodicTable/store/useChemStore';
+import { speakText, stopSpeaking } from '../../VirtualLab/utils/speech';
 import styles from './SettingsScreen.module.less';
 
 export const SettingsScreen: React.FC = () => {
   const { t, language, setLanguage, supportedLanguages } = useTranslation();
   const { soundEnabled } = useChemStore();
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [isTestingVoice, setIsTestingVoice] = useState(false);
 
   const {
     fontSize,
@@ -19,6 +22,8 @@ export const SettingsScreen: React.FC = () => {
     soundVolume,
     autoRotate3D,
     graphicsQuality,
+    ttsVoiceURI,
+    ttsSpeed,
     setFontSize,
     setFontFamily,
     setTheme,
@@ -27,8 +32,85 @@ export const SettingsScreen: React.FC = () => {
     setSoundVolume,
     setAutoRotate3D,
     setGraphicsQuality,
+    setTtsVoiceURI,
+    setTtsSpeed,
     resetDefaults,
   } = useSettingsStore();
+
+  const isEn = language === 'en';
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      const updateVoices = () => {
+        const available = window.speechSynthesis.getVoices();
+        setVoices(available);
+      };
+      updateVoices();
+      window.speechSynthesis.onvoiceschanged = updateVoices;
+    }
+  }, []);
+
+  // Smart voice filtering: Keep only Vietnamese and English voices
+  const viVoices = React.useMemo(() => {
+    return voices.filter(
+      (v) => v.lang.toLowerCase().includes('vi') || v.name.toLowerCase().includes('vietnamese')
+    );
+  }, [voices]);
+
+  const enVoices = React.useMemo(() => {
+    return voices.filter(
+      (v) => v.lang.toLowerCase().includes('en') || v.name.toLowerCase().includes('english')
+    );
+  }, [voices]);
+
+  const allVoiceOptions = React.useMemo(() => {
+    const list: Array<{ voiceURI: string; name: string }> = [
+      { voiceURI: '', name: isEn ? '🌐 System Default Voice' : '🌐 Mặc định theo hệ thống' },
+    ];
+    viVoices.forEach((v) => list.push({ voiceURI: v.voiceURI, name: `🇻🇳 ${v.name}` }));
+    enVoices.forEach((v) => list.push({ voiceURI: v.voiceURI, name: `🇺🇸 ${v.name}` }));
+    return list;
+  }, [viVoices, enVoices, isEn]);
+
+  const currentIndex = React.useMemo(() => {
+    if (!ttsVoiceURI) return 0;
+    const idx = allVoiceOptions.findIndex((v) => v.voiceURI === ttsVoiceURI);
+    return idx >= 0 ? idx : 0;
+  }, [allVoiceOptions, ttsVoiceURI]);
+
+  const triggerVoiceSample = async () => {
+    stopSpeaking();
+    setIsTestingVoice(true);
+    const sampleMsg = isEn ? 'Testing voice sample.' : 'Thử giọng đọc phát âm.';
+    await speakText(sampleMsg);
+    setIsTestingVoice(false);
+  };
+
+  const handlePrevVoice = () => {
+    playSciFiSound('click', soundEnabled);
+    const nextIdx = (currentIndex - 1 + allVoiceOptions.length) % allVoiceOptions.length;
+    const target = allVoiceOptions[nextIdx];
+    setTtsVoiceURI(target.voiceURI || null);
+    triggerVoiceSample();
+  };
+
+  const handleNextVoice = () => {
+    playSciFiSound('click', soundEnabled);
+    const nextIdx = (currentIndex + 1) % allVoiceOptions.length;
+    const target = allVoiceOptions[nextIdx];
+    setTtsVoiceURI(target.voiceURI || null);
+    triggerVoiceSample();
+  };
+
+  const handleTestVoice = async () => {
+    playSciFiSound('click', soundEnabled);
+    if (isTestingVoice) {
+      stopSpeaking();
+      setIsTestingVoice(false);
+    } else {
+      triggerVoiceSample();
+    }
+  };
 
   const triggerSound = () => playSciFiSound('click', soundEnabled);
 
@@ -268,22 +350,112 @@ export const SettingsScreen: React.FC = () => {
           </div>
 
           {soundOn && (
-            <div className={styles.settingRow}>
-              <div className={styles.settingLabel} style={{ width: '100%' }}>
-                <span className={styles.labelTitle}>{t('settings', 'masterVolumeLabel')}</span>
-                <div className={styles.rangeWrapper} style={{ marginTop: 8 }}>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={soundVolume}
-                    className={styles.rangeInput}
-                    onChange={(e) => setSoundVolume(Number(e.target.value))}
-                  />
-                  <span className={styles.rangeValue}>{soundVolume}%</span>
+            <>
+              <div className={styles.settingRow}>
+                <div className={styles.settingLabel} style={{ width: '100%' }}>
+                  <span className={styles.labelTitle}>{t('settings', 'masterVolumeLabel')}</span>
+                  <div className={styles.rangeWrapper} style={{ marginTop: 8 }}>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={soundVolume}
+                      className={styles.rangeInput}
+                      onChange={(e) => setSoundVolume(Number(e.target.value))}
+                    />
+                    <span className={styles.rangeValue}>{soundVolume}%</span>
+                  </div>
                 </div>
               </div>
-            </div>
+
+              {/* TTS Voice Selection & Reading Speed */}
+              <div className={styles.settingRow} style={{ flexDirection: 'column', alignItems: 'stretch', marginTop: 12, borderTop: '1px dashed rgba(255, 255, 255, 0.1)', paddingTop: 12 }}>
+                <div className={styles.settingLabel} style={{ marginBottom: 6 }}>
+                  <span className={styles.labelTitle}>🗣️ {isEn ? 'Speech Synthesis Voice (TTS)' : 'Giọng đọc phát âm (Text-To-Speech)'}</span>
+                  <span className={styles.labelSub}>
+                    {isEn ? 'Smart filtered voices with quick-cycle arrow buttons' : 'Đã lọc giọng đọc Việt/Anh chuẩn & nút mũi tên ◀ ▶ chuyển giọng đọc thử nhanh'}
+                  </span>
+                </div>
+
+                <div className={styles.voiceControlRow}>
+                  {/* Previous Voice Arrow */}
+                  <button
+                    className={styles.navArrowBtn}
+                    onClick={handlePrevVoice}
+                    title={isEn ? 'Previous Voice & Test' : 'Giọng đọc trước & Thử giọng'}
+                  >
+                    ◀
+                  </button>
+
+                  {/* Smart Dropdown */}
+                  <select
+                    className={styles.voiceSelect}
+                    value={ttsVoiceURI || ''}
+                    onChange={(e) => {
+                      setTtsVoiceURI(e.target.value || null);
+                      triggerVoiceSample();
+                    }}
+                  >
+                    <option value="">{isEn ? '🌐 System Default Voice' : '🌐 Mặc định theo hệ thống'}</option>
+
+                    {viVoices.length > 0 && (
+                      <optgroup label={isEn ? '🇻🇳 Vietnamese Voices' : '🇻🇳 Giọng Tiếng Việt'}>
+                        {viVoices.map((v) => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            🇻🇳 {v.name} ({v.lang})
+                          </option>
+                        ))}
+                      </optgroup>
+                    )}
+
+                    {enVoices.length > 0 && (
+                      <optgroup label={isEn ? '🇺🇸 English Voices' : '🇺🇸 Giọng Tiếng Anh'}>
+                        {enVoices.map((v) => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            🇺🇸 {v.name} ({v.lang})
+                          </option>
+                        ))}
+                      </optgroup>
+                    )}
+                  </select>
+
+                  {/* Next Voice Arrow */}
+                  <button
+                    className={styles.navArrowBtn}
+                    onClick={handleNextVoice}
+                    title={isEn ? 'Next Voice & Test' : 'Giọng đọc kế tiếp & Thử giọng'}
+                  >
+                    ▶
+                  </button>
+
+                  {/* Test Voice Button */}
+                  <button
+                    className={`${styles.testVoiceBtn} ${isTestingVoice ? styles.testing : ''}`}
+                    onClick={handleTestVoice}
+                  >
+                    {isTestingVoice ? '⏹️ Dừng' : '▶️ Thử'}
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.settingRow} style={{ marginTop: 12 }}>
+                <div className={styles.settingLabel} style={{ width: '100%' }}>
+                  <span className={styles.labelTitle}>⏩ {isEn ? 'Reading Speed' : 'Tốc độ đọc phát âm'}</span>
+                  <div className={styles.rangeWrapper} style={{ marginTop: 8 }}>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2.0"
+                      step="0.1"
+                      value={ttsSpeed}
+                      className={styles.rangeInput}
+                      onChange={(e) => setTtsSpeed(Number(e.target.value))}
+                    />
+                    <span className={styles.rangeValue}>{ttsSpeed.toFixed(1)}x</span>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
         </div>
 

@@ -10,11 +10,15 @@ import { DipoleVector } from './DipoleVector';
 import { MeasurementOverlay3D } from './MeasurementOverlay3D';
 import { calculateLonePairs, calculateDipoleMoment, calculateOrbitals } from '../../services/vseprEngine';
 import { useMemo, Suspense } from 'react';
+import { useCanvasPerformanceProps } from '../../../../hooks/useCanvasPerformanceProps';
+import { CanvasPlayPauseButton } from '../../../../components/CanvasControls/CanvasPlayPauseButton';
 
 export const MoleculeCanvas = () => {
+  const canvasProps = useCanvasPerformanceProps();
   const {
     selectedMolecule,
     isAutoRotate,
+    toggleAutoRotate,
     explodeRadius,
     renderMode,
     showLonePairs,
@@ -111,7 +115,12 @@ export const MoleculeCanvas = () => {
   }, [selectedMeasureAtomIds, explodedAtoms]);
 
   return (
-    <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <CanvasPlayPauseButton
+        isPaused={!isAutoRotate}
+        onToggle={toggleAutoRotate}
+      />
+      <Canvas camera={{ position: [0, 0, 8], fov: 45 }} {...canvasProps}>
       {/* Lighting and Environment */}
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1.5} castShadow />
@@ -173,5 +182,6 @@ export const MoleculeCanvas = () => {
         dampingFactor={0.05}
       />
     </Canvas>
+    </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useVirtualLabStore } from '../store/useVirtualLabStore';
 import { useLanguageStore } from '../../../i18n/useTranslation';
+import { useSettingsStore } from '../../Settings/store/useSettingsStore';
 
 // Preload voices
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -17,7 +18,13 @@ export const speakText = (text: string): Promise<void> => {
       return;
     }
     
-    const { ttsSpeed, isMuted, ttsVoiceURI } = useVirtualLabStore.getState();
+    const settings = useSettingsStore.getState();
+    const labState = useVirtualLabStore.getState();
+
+    const ttsSpeed = settings.ttsSpeed || labState.ttsSpeed || 1.0;
+    const ttsVoiceURI = settings.ttsVoiceURI || labState.ttsVoiceURI;
+    const isMuted = labState.isMuted || !settings.soundEnabled;
+
     if (isMuted) {
       resolve();
       return;

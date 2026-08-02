@@ -4,6 +4,7 @@ import { Sphere, Torus, Instance, Instances } from '@react-three/drei';
 import * as THREE from 'three';
 import type { ElementData } from '../../data/elements';
 import { getElectronShells } from '../../utils/electronConfig';
+import { useSettingsStore } from '../../../Settings/store/useSettingsStore';
 
 interface BohrModelProps {
   element: ElementData;
@@ -62,9 +63,10 @@ const Nucleus: React.FC<{ z: number }> = ({ z }) => {
 
 const ElectronShell: React.FC<{ radius: number; count: number; speed: number; angleOffset: number }> = ({ radius, count, speed, angleOffset }) => {
   const groupRef = useRef<THREE.Group>(null);
+  const autoRotate3D = useSettingsStore((s) => s.autoRotate3D);
 
   useFrame((state, delta) => {
-    if (groupRef.current) {
+    if (groupRef.current && autoRotate3D) {
       groupRef.current.rotation.y += speed * delta;
       groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * speed * 0.2) * 0.1;
     }

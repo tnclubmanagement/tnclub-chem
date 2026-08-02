@@ -3,12 +3,19 @@ import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { Beaker3D } from './Beaker3D';
 import { ReactionEffects } from './ReactionEffects';
 import { PouringAnimation } from './PouringAnimation';
+import { useCanvasPerformanceProps } from '../../../../hooks/useCanvasPerformanceProps';
+import { CanvasPlayPauseButton } from '../../../../components/CanvasControls/CanvasPlayPauseButton';
+import { useSettingsStore } from '../../../Settings/store/useSettingsStore';
 import styles from '../../styles/VirtualLab.module.less';
 
 export const VirtualLabScene = () => {
+  const canvasProps = useCanvasPerformanceProps();
+  const { autoRotate3D } = useSettingsStore();
+
   return (
-    <div className={styles.sceneContainer}>
-      <Canvas camera={{ position: [0, 1.5, 9], fov: 45 }}>
+    <div className={styles.sceneContainer} style={{ position: 'relative' }}>
+      <CanvasPlayPauseButton />
+      <Canvas camera={{ position: [0, 1.5, 9], fov: 45 }} {...canvasProps}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         
@@ -35,6 +42,8 @@ export const VirtualLabScene = () => {
           maxPolarAngle={Math.PI / 2}
           minDistance={4}
           maxDistance={12}
+          autoRotate={autoRotate3D}
+          autoRotateSpeed={0.5}
         />
       </Canvas>
     </div>

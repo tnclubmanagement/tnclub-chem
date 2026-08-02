@@ -4,6 +4,7 @@ import { Environment } from '@react-three/drei';
 import { Feature3DPod } from './Feature3DPod';
 import { useChemStore } from '../../PeriodicTable/store/useChemStore';
 import { useTranslation } from '../../../i18n/useTranslation';
+import { useCanvasPerformanceProps } from '../../../hooks/useCanvasPerformanceProps';
 
 const ResponsivePodsGroup: React.FC = () => {
   const setActiveView = useChemStore((s) => s.setActiveView);
@@ -98,9 +99,11 @@ const ResponsivePodsGroup: React.FC = () => {
 };
 
 export const Home3DPodsCanvas: React.FC = () => {
+  const canvasProps = useCanvasPerformanceProps();
+
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'visible' }}>
-      <Canvas camera={{ position: [0, 0.25, 11.4], fov: 48 }}>
+      <Canvas camera={{ position: [0, 0.25, 11.4], fov: 48 }} {...canvasProps}>
         <ResponsivePodsGroup />
       </Canvas>
     </div>

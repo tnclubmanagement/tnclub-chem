@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { PeriodicTableModule as PeriodicTable, ElementPanel, Sidebar, useChemStore } from './modules/PeriodicTable';
-import { LessonView } from './modules/BondModels';
+
 import { MolecularExplorer } from './modules/MolecularExplorer/MolecularExplorer';
 import { VirtualLab } from './modules/VirtualLab';
 import { AcademyScreen } from './modules/Academy/AcademyScreen';
@@ -60,7 +60,7 @@ function App() {
         <Sidebar />
         {activeView !== 'home' && <Breadcrumb />}
         {activeView === 'periodic-table' && <PeriodicTable />}
-        {activeView === 'lesson'         && <LessonView />}
+
         {activeView === 'periodic-table' && <ElementPanel />}
       </div>
     </div>

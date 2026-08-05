@@ -139,8 +139,8 @@ export const GlobalSearchModal: React.FC = () => {
                 className={styles.searchInput}
                 placeholder={
                   language === 'en'
-                    ? 'Search elements (Fe), molecules (H2O), lab reactions, lessons...'
-                    : 'Tra cứu nguyên tố (Fe), phân tử (H2O), phản ứng hóa học, bài học...'
+                    ? 'Search elements (Fe), molecules (H2O), lab reactions, academy topics...'
+                    : 'Tra cứu nguyên tố (Fe), phân tử (H2O), phản ứng hóa học, học viện...'
                 }
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}

@@ -4,13 +4,14 @@ import { ACADEMY_UNITS } from './data/academyData';
 import type { AcademyTopic } from './data/academyData';
 import { AtomicOrbitalViewer } from './components/AtomicOrbitalViewer';
 import { PhScaleInteractive } from './components/PhScaleInteractive';
+import { AcademyMoleculeViewer } from './components/AcademyMoleculeViewer';
 import { useTranslation } from '../../i18n/useTranslation';
 import { playSciFiSound } from '../PeriodicTable/utils/audio';
 import { speakText, stopSpeaking } from '../VirtualLab/utils/speech';
 
 export const AcademyScreen: React.FC = () => {
   const { language } = useTranslation();
-  const [activeCategory, setActiveCategory] = useState<'all' | 'foundation' | 'lifehack' | 'patent'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'foundation' | 'lesson' | 'lifehack' | 'patent'>('all');
   const [selectedTopic, setSelectedTopic] = useState<AcademyTopic>(ACADEMY_UNITS[0].topics[0]);
   const [userAnswers, setUserAnswers] = useState<Record<number, number>>({});
   const [isReading, setIsReading] = useState(false);
@@ -70,7 +71,7 @@ export const AcademyScreen: React.FC = () => {
       {/* Module Title Header */}
       <div className={styles.header}>
         <span className={styles.badge}>🎓 CHEMISTRY ACADEMY</span>
-        <h1>{isEn ? 'Foundational Chemistry & Innovation Academy' : 'Học Viện Kiến Thức Hóa Học Nền Tảng & Phát Minh'}</h1>
+        <h1>{isEn ? 'Chemistry Academy' : 'Học Viện Hóa Học'}</h1>
         <p>
           {isEn
             ? 'Master chemistry fundamentals, life hacks, and world-changing patent inventions with interactive 3D simulations.'
@@ -94,6 +95,12 @@ export const AcademyScreen: React.FC = () => {
               onClick={() => setActiveCategory('foundation')}
             >
               <span>🎓</span> {isEn ? 'Theory' : 'Nền Tảng'}
+            </button>
+            <button
+              className={`${styles.categoryTabBtn} ${activeCategory === 'lesson' ? styles.activeCategory : ''}`}
+              onClick={() => setActiveCategory('lesson')}
+            >
+              <span>📚</span> {isEn ? 'Lessons' : 'Bài Học'}
             </button>
             <button
               className={`${styles.categoryTabBtn} ${activeCategory === 'lifehack' ? styles.activeCategory : ''}`}
@@ -185,6 +192,7 @@ export const AcademyScreen: React.FC = () => {
           {/* Interactive Widget Injection */}
           {selectedTopic.interactiveWidget === 'orbital-3d' && <AtomicOrbitalViewer />}
           {selectedTopic.interactiveWidget === 'ph-meter' && <PhScaleInteractive />}
+          {selectedTopic.interactiveWidget === 'molecule-3d' && <AcademyMoleculeViewer moleculeId={selectedTopic.id} />}
 
           {/* Content Sections */}
           {selectedTopic.contentSections.map((sec, idx) => (

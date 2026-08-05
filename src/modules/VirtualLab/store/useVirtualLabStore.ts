@@ -24,7 +24,8 @@ interface VirtualLabState {
   theme: 'scifi' | 'classic' | 'realistic';
   isMuted: boolean;
   ttsSpeed: number;
-  ttsVoiceURI: string | null;
+  ttsVoiceURI_EN: string | null;
+  ttsVoiceURI_VI: string | null;
   isAutoPlayVoice: boolean;
   addReactant: (chemical: Chemical) => Promise<void>;
   resetBeaker: () => void;
@@ -32,7 +33,8 @@ interface VirtualLabState {
   setTheme: (theme: 'scifi' | 'classic' | 'realistic') => void;
   setIsMuted: (isMuted: boolean) => void;
   setTtsSpeed: (speed: number) => void;
-  setTtsVoiceURI: (uri: string | null) => void;
+  setTtsVoiceURI_EN: (uri: string | null) => void;
+  setTtsVoiceURI_VI: (uri: string | null) => void;
   setIsAutoPlayVoice: (isAutoPlay: boolean) => void;
   runExample: (chem1: Chemical, chem2: Chemical) => Promise<void>;
   
@@ -56,7 +58,8 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
   theme: 'scifi',
   isMuted: false,
   ttsSpeed: 1.0,
-  ttsVoiceURI: null,
+  ttsVoiceURI_EN: null,
+  ttsVoiceURI_VI: null,
   isAutoPlayVoice: true,
 
   isMissionModeActive: false,
@@ -272,17 +275,10 @@ export const useVirtualLabStore = create<VirtualLabState>((set, get) => ({
     set({ isMuted });
   },
 
-  setTtsSpeed: (ttsSpeed) => {
-    set({ ttsSpeed });
-  },
-
-  setTtsVoiceURI: (ttsVoiceURI) => {
-    set({ ttsVoiceURI });
-  },
-
-  setIsAutoPlayVoice: (isAutoPlayVoice) => {
-    set({ isAutoPlayVoice });
-  },
+  setTtsSpeed: (speed) => set({ ttsSpeed: speed }),
+  setTtsVoiceURI_EN: (uri) => set({ ttsVoiceURI_EN: uri }),
+  setTtsVoiceURI_VI: (uri) => set({ ttsVoiceURI_VI: uri }),
+  setIsAutoPlayVoice: (isAutoPlay) => set({ isAutoPlayVoice: isAutoPlay }),
 
   runExample: async (chem1: Chemical, chem2: Chemical) => {
     const state = get();

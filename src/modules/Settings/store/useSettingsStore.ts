@@ -59,7 +59,8 @@ export interface SettingsState {
   soundVolume: number;
   autoRotate3D: boolean;
   graphicsQuality: GraphicsQuality;
-  ttsVoiceURI: string | null;
+  ttsVoiceURI_EN: string | null;
+  ttsVoiceURI_VI: string | null;
   ttsSpeed: number;
 
   setFontSize: (size: FontSizeOption) => void;
@@ -70,7 +71,8 @@ export interface SettingsState {
   setSoundVolume: (volume: number) => void;
   setAutoRotate3D: (autoRotate: boolean) => void;
   setGraphicsQuality: (quality: GraphicsQuality) => void;
-  setTtsVoiceURI: (voiceURI: string | null) => void;
+  setTtsVoiceURI_EN: (voiceURI: string | null) => void;
+  setTtsVoiceURI_VI: (voiceURI: string | null) => void;
   setTtsSpeed: (speed: number) => void;
   resetDefaults: () => void;
 }
@@ -86,7 +88,8 @@ const DEFAULT_SETTINGS = {
   soundVolume: 80,
   autoRotate3D: true,
   graphicsQuality: 'high' as GraphicsQuality,
-  ttsVoiceURI: null as string | null,
+  ttsVoiceURI_EN: null as string | null,
+  ttsVoiceURI_VI: null as string | null,
   ttsSpeed: 1.0,
 };
 
@@ -173,9 +176,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     saveSettings({ ...get(), graphicsQuality });
   },
 
-  setTtsVoiceURI: (ttsVoiceURI) => {
-    set({ ttsVoiceURI });
-    saveSettings({ ...get(), ttsVoiceURI });
+  setTtsVoiceURI_EN: (ttsVoiceURI_EN) => {
+    set({ ttsVoiceURI_EN });
+    saveSettings({ ...get(), ttsVoiceURI_EN });
+  },
+
+  setTtsVoiceURI_VI: (ttsVoiceURI_VI) => {
+    set({ ttsVoiceURI_VI });
+    saveSettings({ ...get(), ttsVoiceURI_VI });
   },
 
   setTtsSpeed: (ttsSpeed) => {

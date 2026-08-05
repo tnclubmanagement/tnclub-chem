@@ -5,7 +5,6 @@ import { CHEMICALS } from '../../modules/VirtualLab/data/chemicals';
 import { REACTIONS } from '../../modules/VirtualLab/data/reactions';
 import { MISSIONS } from '../../modules/VirtualLab/data/missions';
 import { THEORY_DATA, type TheoryTopic } from '../../modules/VirtualLab/data/theory';
-import { LESSONS } from '../../modules/PeriodicTable/data/lessons';
 import { ACADEMY_UNITS } from '../../modules/Academy/data/academyData';
 import { useChemStore } from '../../modules/PeriodicTable/store/useChemStore';
 import { useExplorerStore } from '../../modules/MolecularExplorer/store/useExplorerStore';
@@ -241,26 +240,7 @@ export function getAllSearchableItems(): SearchableItem[] {
     });
   });
 
-  // 5. Lessons & Academy
-  (LESSONS || []).forEach((lesson) => {
-    if (!lesson) return;
-    items.push({
-      id: `lesson-${lesson.id}`,
-      title: `Bài học: ${lesson.title || ''}`,
-      titleEn: `Lesson: ${lesson.titleEn || lesson.title || ''}`,
-      subtitle: lesson.theory?.description || '',
-      subtitleEn: lesson.theoryEn?.description || lesson.theory?.description || '',
-      category: 'lesson',
-      tags: ['bai hoc', 'lesson', lesson.title || '', lesson.titleEn || '', lesson.theory?.description || ''],
-      icon: '📘',
-      badge: 'Bài học',
-      accentColor: '#8f00ff',
-      onSelect: () => {
-        getChemStore().setActiveLessonId(lesson.id);
-        getChemStore().setActiveView('lesson');
-      },
-    });
-  });
+  // 5. Academy
 
   (ACADEMY_UNITS || []).forEach((unit) => {
     if (!unit || !unit.topics) return;

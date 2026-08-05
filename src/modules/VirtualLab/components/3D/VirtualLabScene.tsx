@@ -13,15 +13,15 @@ export const VirtualLabScene = () => {
   const { autoRotate3D } = useSettingsStore();
 
   return (
-    <div className={styles.sceneContainer} style={{ position: 'relative' }}>
+    <div className={styles.sceneContainer}>
       <CanvasPlayPauseButton />
-      <Canvas camera={{ position: [0, 1.5, 9], fov: 45 }} {...canvasProps}>
+      <Canvas camera={{ position: [0, 1.0, 6.5], fov: 45 }} {...canvasProps}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         
         <Environment preset="city" />
 
-        <group position={[0, -0.5, 0]}>
+        <group position={[0, 1.0, 0]}>
           <Beaker3D />
           <ReactionEffects />
           <PouringAnimation />

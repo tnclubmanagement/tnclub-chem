@@ -22,8 +22,10 @@ export const VirtualLab: React.FC = () => {
   const setIsMuted = useVirtualLabStore((state) => state.setIsMuted);
   const ttsSpeed = useVirtualLabStore((state) => state.ttsSpeed);
   const setTtsSpeed = useVirtualLabStore((state) => state.setTtsSpeed);
-  const ttsVoiceURI = useVirtualLabStore((state) => state.ttsVoiceURI);
-  const setTtsVoiceURI = useVirtualLabStore((state) => state.setTtsVoiceURI);
+  const ttsVoiceURI_EN = useVirtualLabStore((state) => state.ttsVoiceURI_EN);
+  const ttsVoiceURI_VI = useVirtualLabStore((state) => state.ttsVoiceURI_VI);
+  const setTtsVoiceURI_EN = useVirtualLabStore((state) => state.setTtsVoiceURI_EN);
+  const setTtsVoiceURI_VI = useVirtualLabStore((state) => state.setTtsVoiceURI_VI);
   const isAutoPlayVoice = useVirtualLabStore((state) => state.isAutoPlayVoice);
   const setIsAutoPlayVoice = useVirtualLabStore((state) => state.setIsAutoPlayVoice);
 
@@ -171,13 +173,13 @@ export const VirtualLab: React.FC = () => {
                   <div className={styles.themeSwitcherModal}>
                     <button
                       className={`${styles.themeBtn} ${language === 'vi' ? styles.active : ''}`}
-                      onClick={() => { playSciFiSound('click'); setLanguage('vi'); setTtsVoiceURI(null); }}
+                      onClick={() => { playSciFiSound('click'); setLanguage('vi'); }}
                     >
                       🇻🇳 Tiếng Việt
                     </button>
                     <button
                       className={`${styles.themeBtn} ${language === 'en' ? styles.active : ''}`}
-                      onClick={() => { playSciFiSound('click'); setLanguage('en'); setTtsVoiceURI(null); }}
+                      onClick={() => { playSciFiSound('click'); setLanguage('en'); }}
                     >
                       🇬🇧 English
                     </button>
@@ -231,15 +233,24 @@ export const VirtualLab: React.FC = () => {
                   </div>
 
                   <div className={styles.settingsGroup} style={{ marginTop: '20px' }}>
-                    <span className={styles.groupLabel}>{t('virtualLab', 'voiceSelect')}</span>
+                    <span className={styles.groupLabel}>
+                      {t('virtualLab', 'voiceSelect')} {language === 'en' ? '(English)' : '(Tiếng Việt)'}
+                    </span>
                     <div className={styles.customSelectWrapper}>
                       <select
                         className={styles.modernSelect}
-                        value={ttsVoiceURI || ''}
-                        onChange={(e) => { setTtsVoiceURI(e.target.value); playSciFiSound('click'); }}
+                        value={(language === 'en' ? ttsVoiceURI_EN : ttsVoiceURI_VI) || ''}
+                        onChange={(e) => { 
+                          if (language === 'en') {
+                            setTtsVoiceURI_EN(e.target.value); 
+                          } else {
+                            setTtsVoiceURI_VI(e.target.value); 
+                          }
+                          playSciFiSound('click'); 
+                        }}
                       >
                         <option value="">{t('virtualLab', 'defaultVoice')}</option>
-                        {voices.map(v => (
+                        {voices.filter(v => v.lang.toLowerCase().includes(language === 'en' ? 'en' : 'vi')).map(v => (
                           <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang})</option>
                         ))}
                       </select>

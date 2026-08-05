@@ -1,6 +1,6 @@
 import React from 'react';
 import { useChemStore } from '../../store/useChemStore';
-import { LESSONS } from '../../data/lessons';
+
 import { useTranslation } from '../../../../i18n/useTranslation';
 import { LanguageSwitcher } from '../../../../components/LanguageSwitcher/LanguageSwitcher';
 import { SearchTriggerButton } from '../../../../components/GlobalSearch';
@@ -11,8 +11,8 @@ import styles from './Sidebar.module.less';
 type ViewType = 'home' | 'periodic-table' | 'lesson' | 'explorer' | 'virtual-lab' | 'academy' | 'settings';
 
 export const Sidebar: React.FC = () => {
-  const { activeView, setActiveView, activeLessonId, setActiveLessonId } = useChemStore();
-  const { t, language } = useTranslation();
+  const { activeView, setActiveView } = useChemStore();
+  const { t } = useTranslation();
   const { iconStyle } = useSettingsStore();
 
   const allNavItems: Array<{
@@ -71,38 +71,7 @@ export const Sidebar: React.FC = () => {
           );
         })}
 
-        {/* Lessons flyout stays in main nav */}
-        <div
-          className={`${styles.navItem} ${styles.hasFlyout} ${activeView === 'lesson' ? styles.active : ''}`}
-          style={{ '--item-color': '#8f00ff' } as React.CSSProperties}
-          onClick={() => {
-            setActiveView('lesson');
-            if (activeView !== 'lesson') setActiveLessonId(null);
-          }}
-        >
-          <div className={styles.activeBar} />
-          <span className={styles.navIcon}>{getNavIcon('lesson', iconStyle)}</span>
-          <div className={styles.tooltip}>{t('nav', 'lessons')}</div>
 
-          <div className={styles.submenuFlyout}>
-            <h4>{t('nav', 'lessonsFlyoutTitle')}</h4>
-            <nav className={styles.lessonsSubmenu}>
-              {LESSONS.map((lesson) => (
-                <button
-                  key={lesson.id}
-                  className={`${styles.lessonLink} ${activeLessonId === lesson.id ? styles.activeLesson : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveLessonId(lesson.id);
-                    setActiveView('lesson');
-                  }}
-                >
-                  {language === 'en' ? (lesson.titleEn || lesson.title) : lesson.title}
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
       </nav>
 
       {/* Bottom Group: Settings & Language Switcher */}

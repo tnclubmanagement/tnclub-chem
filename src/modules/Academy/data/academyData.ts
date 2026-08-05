@@ -11,7 +11,7 @@ export interface AcademyQuizItem {
 export interface AcademyTopic {
   id: string;
   unitId: string;
-  category?: 'foundation' | 'lifehack' | 'patent';
+  category?: 'foundation' | 'lesson' | 'lifehack' | 'patent';
   title: string;
   titleEn: string;
   subtitle: string;
@@ -22,7 +22,7 @@ export interface AcademyTopic {
   author?: string;
   authorEn?: string;
   releaseDate?: string;
-  interactiveWidget?: 'orbital-3d' | 'ph-meter';
+  interactiveWidget?: 'orbital-3d' | 'ph-meter' | 'molecule-3d';
   summary: string;
   summaryEn: string;
   contentSections: {
@@ -980,6 +980,402 @@ export const ACADEMY_UNITS: AcademyUnit[] = [
           },
         ],
       },
+    ],
+  },
+  {
+    id: 'unit-molecule-lessons',
+    title: 'Unit 9: Cấu Trúc Phân Tử & Tinh Thể',
+    titleEn: 'Unit 9: Molecular & Crystal Structures',
+    description: 'Chuyên đề 13 bài học lý thuyết & trắc nghiệm kiểm tra cấu trúc phân tử tiêu biểu trong Hóa Học',
+    descriptionEn: 'Specialized 13-lesson module covering fundamental molecular and crystal structures with interactive quizzes',
+    badgeColor: '#00ff80',
+    topics: [
+      {
+        id: 'h2o',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-10',
+        title: 'Phân Tử Nước (H₂O) & Tính Phân Cực',
+        titleEn: 'Water Molecule (H₂O) & Polarity',
+        subtitle: 'Góc liên kết 104.5° và dung môi vạn năng cho sự sống',
+        subtitleEn: 'H-O-H bond angle ~104.5° and universal solvent of life',
+        level: 'Basic',
+        readTime: '5 phút',
+        icon: '💧',
+        summary: 'Nước (H₂O) có cấu trúc dạng chữ V gấp khúc với góc liên kết 104.5°. Tính phân cực cao giúp nước trở thành dung môi vạn năng hòa tan hầu hết các hợp chất ion và phân cực.',
+        summaryEn: 'Water (H₂O) features a bent V-shape geometry with a 104.5° bond angle. Its high polarity makes it a universal solvent for ionic and polar substances.',
+        contentSections: [
+          {
+            heading: '1. Cấu trúc không gian phân tử Nước',
+            headingEn: '1. Spatial Geometry of Water',
+            body: 'Nguyên tử Oxy ở trung tâm lai hóa sp³ tạo liên kết cộng hóa trị phân cực với 2 nguyên tử Hydro. Do lực đẩy của 2 cặp electron tự do trên Oxy, góc liên kết bị nén còn 104.5°.',
+            bodyEn: 'The central Oxygen atom undergoes sp³ hybridization forming polar covalent bonds with 2 Hydrogen atoms. Repulsion from 2 lone pairs compresses the bond angle to 104.5°.',
+            keyTakeaway: 'Nước có cấu trúc gấp khúc (chữ V), góc liên kết H-O-H ~ 104.5°.',
+            keyTakeawayEn: 'Water has a bent (V-shaped) geometry with H-O-H bond angle ~ 104.5°.',
+          },
+          {
+            heading: '2. Vụ nổ liên kết Hydrogen & Dung môi vạn năng',
+            headingEn: '2. Hydrogen Bonding & Universal Solvent',
+            body: 'Độ âm điện lớn của Oxy thu hút electron về phía nó, làm xuất hiện điện tích âm bán phần ở Oxy và dương bán phần ở Hydro, tạo khả năng hình thành mạng lưới liên kết Hydrogen liên phân tử bền bỉ.',
+            bodyEn: 'Oxygen high electronegativity pulls electron density, creating partial negative charges on O and partial positive charges on H, building strong intermolecular hydrogen bonding networks.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Góc liên kết H-O-H trong phân tử nước xấp xỉ bao nhiêu độ?',
+            questionEn: 'What is the approximate H-O-H bond angle in a water molecule?',
+            options: ['90°', '104.5°', '109.5°', '180°'],
+            optionsEn: ['90°', '104.5°', '109.5°', '180°'],
+            correctIndex: 1,
+            explanation: 'Do lực đẩy của hai cặp electron tự do trên nguyên tử Oxy, góc liên kết bị ép lại còn khoảng 104.5 độ.',
+            explanationEn: 'Due to lone pair repulsion on Oxygen, the bond angle compresses to 104.5°.',
+          },
+        ],
+      },
+      {
+        id: 'ch4',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-12',
+        title: 'Khí Metan (CH₄) & Cấu Trúc Tứ Diện Đều',
+        titleEn: 'Methane Gas (CH₄) & Tetrahedral Geometry',
+        subtitle: 'Hydrocarbon đơn giản nhất với góc liên kết chuẩn 109.5°',
+        subtitleEn: 'Simplest hydrocarbon with standard 109.5° bond angle',
+        level: 'Basic',
+        readTime: '5 phút',
+        icon: '🔥',
+        summary: 'Metan (CH₄) là ankan đơn giản nhất, nguyên tử Carbon lai hóa sp³ liên kết với 4 Hydro tạo thành cấu trúc tứ diện đều hoàn hảo không phân cực.',
+        summaryEn: 'Methane (CH₄) is the simplest alkane where sp³ hybridized Carbon bonds with 4 Hydrogen atoms forming a perfect non-polar tetrahedral geometry.',
+        contentSections: [
+          {
+            heading: '1. Cấu trúc tứ diện đều của CH₄',
+            headingEn: '1. Tetrahedral Structure of CH₄',
+            body: 'Carbon nằm ở tâm hình tứ diện, 4 nguyên tử Hydro hướng về 4 đỉnh với góc liên kết H-C-H bằng 109.5°. Do tính đối xứng cao, CH₄ là phân tử không phân cực.',
+            bodyEn: 'Carbon sits at the tetrahedron center with 4 Hydrogen atoms pointing to the vertices at 109.5° angles. High symmetry makes CH₄ non-polar.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Cấu trúc không gian của phân tử Metan (CH₄) được gọi là gì?',
+            questionEn: 'What is the molecular geometry of Methane (CH₄)?',
+            options: ['Đường thẳng', 'Gấp khúc', 'Tứ diện đều', 'Chóp tam giác'],
+            optionsEn: ['Linear', 'Bent', 'Tetrahedral', 'Trigonal pyramidal'],
+            correctIndex: 2,
+            explanation: 'Carbon ở trung tâm liên kết với 4 Hydro hướng về 4 đỉnh của hình tứ diện đều (109.5°).',
+            explanationEn: 'Central Carbon forms 4 bonds towards 4 vertices of a regular tetrahedron (109.5°).',
+          },
+        ],
+      },
+      {
+        id: 'nacl',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-15',
+        title: 'Tinh Thể Muối Ăn (NaCl) & Liên Kết Ion',
+        titleEn: 'Table Salt Crystal (NaCl) & Ionic Bonding',
+        subtitle: 'Mạng tinh thể lập phương tâm diện giữa ion Na⁺ và Cl⁻',
+        subtitleEn: 'Face-centered cubic lattice between Na⁺ and Cl⁻ ions',
+        level: 'Basic',
+        readTime: '6 phút',
+        icon: '🧂',
+        summary: 'NaCl được tạo thành từ lực hút tĩnh điện giữa ion Na⁺ và Cl⁻, hình thành mạng tinh thể lập phương vô cùng bền vững với nhiệt độ nóng chảy 801°C.',
+        summaryEn: 'NaCl forms via electrostatic attraction between Na⁺ and Cl⁻ ions, assembling a durable face-centered cubic lattice with an 801°C melting point.',
+        contentSections: [
+          {
+            heading: '1. Mạng tinh thể lập phương ion',
+            headingEn: '1. Ionic Cubic Crystal Lattice',
+            body: 'Mỗi ion Na⁺ được bao quanh bởi 6 ion Cl⁻ và ngược lại. Tinh thể NaCl không tồn tại phân tử riêng rẽ mà là một đại phân tử ion liên tục.',
+            bodyEn: 'Each Na⁺ ion is surrounded by 6 Cl⁻ ions and vice versa. NaCl crystal exists as a continuous ionic lattice rather than isolated molecules.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Mạng tinh thể muối ăn (NaCl) được hình thành nhờ loại liên kết nào?',
+            questionEn: 'Which type of chemical bond forms the NaCl crystal lattice?',
+            options: ['Liên kết cộng hóa trị', 'Liên kết kim loại', 'Liên kết ion', 'Liên kết hydro'],
+            optionsEn: ['Covalent bond', 'Metallic bond', 'Ionic bond', 'Hydrogen bond'],
+            correctIndex: 2,
+            explanation: 'Lực hút tĩnh điện giữa các ion mang điện tích trái dấu Na⁺ và Cl⁻ tạo nên liên kết ion.',
+            explanationEn: 'Electrostatic attraction between Na⁺ and Cl⁻ ions forms the ionic bond.',
+          },
+        ],
+      },
+      {
+        id: 'nh3',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-18',
+        title: 'Amoniac (NH₃) & Cấu Trúc Chóp Tam Giác',
+        titleEn: 'Ammonia (NH₃) & Trigonal Pyramidal Geometry',
+        subtitle: 'Cặp electron tự do đẩy các liên kết N-H xuống góc 107.8°',
+        subtitleEn: 'Lone pair depresses N-H bonds to a 107.8° angle',
+        level: 'Intermediate',
+        readTime: '5 phút',
+        icon: '🧪',
+        summary: 'Amoniac (NH₃) có cấu trúc hình học chóp tam giác với góc liên kết 107.8°. Cặp electron tự do trên nguyên tử Nitơ làm cho NH₃ có tính bazơ yếu đặc trưng.',
+        summaryEn: 'Ammonia (NH₃) has a trigonal pyramidal geometry with a 107.8° bond angle. Nitrogen lone pair imparts characteristic weak basicity.',
+        contentSections: [
+          {
+            heading: '1. Hình học chóp tam giác',
+            headingEn: '1. Trigonal Pyramidal Shape',
+            body: 'Nguyên tử N lai hóa sp³ còn 1 cặp electron chưa liên kết đẩy 3 liên kết N-H về một phía, tạo hình chóp với N ở đỉnh và 3 H ở đáy tam giác.',
+            bodyEn: 'Nitrogen sp³ hybrid has 1 lone pair pushing 3 N-H bonds downward, creating a pyramid with N at the apex and 3 H at the base.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Cấu trúc hình học không gian của phân tử Amoniac (NH₃) là gì?',
+            questionEn: 'What is the spatial molecular geometry of Ammonia (NH₃)?',
+            options: ['Tứ diện đều', 'Đường thẳng', 'Chóp tam giác', 'Mặt phẳng'],
+            optionsEn: ['Tetrahedral', 'Linear', 'Trigonal pyramidal', 'Planar'],
+            correctIndex: 2,
+            explanation: 'Cặp electron tự do trên Nitơ đẩy các liên kết N-H xuống thành hình chóp tam giác.',
+            explanationEn: 'Lone pair on Nitrogen depresses N-H bonds into a trigonal pyramid.',
+          },
+        ],
+      },
+      {
+        id: 'co2',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-20',
+        title: 'Carbon Dioxide (CO₂) & Cấu Trúc Đường Thẳng 180°',
+        titleEn: 'Carbon Dioxide (CO₂) & Linear 180° Geometry',
+        subtitle: 'Hai liên kết đôi C=O triệt tiêu momen lưỡng cực',
+        subtitleEn: 'Two C=O double bonds canceling out dipole moments',
+        level: 'Basic',
+        readTime: '5 phút',
+        icon: '☁️',
+        summary: 'CO₂ có cấu trúc đường thẳng với góc liên kết 180°. Mặc dù liên kết C=O phân cực nhưng phân tử CO₂ lại hoàn toàn không phân cực do tính đối xứng tuyệt đối.',
+        summaryEn: 'CO₂ possesses a linear geometry at 180°. Despite polar C=O bonds, zero net dipole makes the molecule strictly non-polar.',
+        contentSections: [
+          {
+            heading: '1. Cấu trúc đường thẳng đối xứng',
+            headingEn: '1. Symmetrical Linear Geometry',
+            body: 'Carbon lai hóa sp tạo 2 liên kết đôi với 2 Oxy ở 2 phía thẳng hàng (180°). Momen lưỡng cực của 2 liên kết C=O ngược chiều triệt tiêu lẫn nhau.',
+            bodyEn: 'sp hybridized Carbon forms 2 double bonds with 2 Oxygens aligned at 180°. Dipole vectors cancel out perfectly.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Trong phân tử CO₂, nguyên tử Carbon liên kết với Oxy qua loại liên kết nào?',
+            questionEn: 'What type of bond connects Carbon and Oxygen in CO₂?',
+            options: ['2 liên kết đơn', '1 liên kết đơn, 1 liên kết ba', '2 liên kết đôi', '4 liên kết đơn'],
+            optionsEn: ['2 single bonds', '1 single, 1 triple bond', '2 double bonds', '4 single bonds'],
+            correctIndex: 2,
+            explanation: 'Carbon ở trung tâm tạo 2 liên kết đôi (C=O) với 2 nguyên tử Oxy nằm về 2 phía.',
+            explanationEn: 'Central Carbon forms 2 double bonds (C=O) on opposite sides.',
+          },
+        ],
+      },
+      {
+        id: 'diamond',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-25',
+        title: 'Tinh Thể Kim Cương (Diamond) & Độ Cứng Tuyệt Đối',
+        titleEn: 'Diamond Crystal & Ultimate Hardness',
+        subtitle: 'Mạng tinh thể đại phân tử Carbon lai hóa sp³ siêu bền',
+        subtitleEn: 'Ultra-durable giant atomic Carbon sp³ crystal lattice',
+        level: 'Advanced',
+        readTime: '6 phút',
+        icon: '💎',
+        summary: 'Kim cương là thù hình tự nhiên cứng nhất của Carbon. Mỗi nguyên tử Carbon liên kết cộng hóa trị với 4 Carbon lân cận tạo mạng tứ diện 3D khổng lồ.',
+        summaryEn: 'Diamond is the hardest natural carbon allotrope. Each sp³ Carbon covalently bonds with 4 neighbors forming a giant 3D lattice.',
+        contentSections: [
+          {
+            heading: '1. Mạng tinh thể nguyên tử kim cương',
+            headingEn: '1. Atomic Crystal Lattice',
+            body: 'Năng lượng liên kết C-C vô cùng lớn và mật độ liên kết dày đặc giúp kim cương có độ cứng 10 trên thang Mohs, không dẫn điện và dẫn nhiệt cực tốt.',
+            bodyEn: 'Immense C-C bond energy and dense 3D packing give diamond Mohs hardness 10, non-conductivity, and superior thermal transport.',
+          },
+        ],
+        quiz: [
+          {
+            question: 'Mỗi nguyên tử Carbon trong tinh thể Kim cương liên kết với bao nhiêu nguyên tử Carbon lân cận?',
+            questionEn: 'How many Carbon neighbors bond to each Carbon in a Diamond crystal?',
+            options: ['2', '3', '4', '6'],
+            optionsEn: ['2', '3', '4', '6'],
+            correctIndex: 2,
+            explanation: 'Mỗi nguyên tử Carbon lai hóa sp³ liên kết với 4 nguyên tử Carbon ở 4 đỉnh của tứ diện đều.',
+            explanationEn: 'Each sp³ Carbon bonds with 4 neighbors at the vertices of a regular tetrahedron.',
+          },
+        ],
+      },
+      {
+        id: 'o2',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-05-30',
+        title: 'Khí Oxy (O₂) & Sự Sống',
+        titleEn: 'Oxygen (O₂) & Life',
+        subtitle: 'Chất khí duy trì sự sống và quá trình hô hấp',
+        subtitleEn: 'The gas that sustains life and respiration',
+        level: 'Basic',
+        readTime: '4 phút',
+        icon: '💨',
+        summary: 'Oxy chiếm 21% bầu khí quyển, đóng vai trò quan trọng trong hô hấp và quá trình đốt cháy.',
+        summaryEn: 'Oxygen makes up 21% of the atmosphere, playing a vital role in respiration and combustion.',
+        contentSections: [
+          {
+            heading: '1. Cấu tạo phân tử Oxy',
+            headingEn: '1. Structure of Oxygen Molecule',
+            body: 'Phân tử O2 gồm hai nguyên tử Oxy liên kết đôi với nhau tạo thành cấu trúc thẳng hàng.',
+            bodyEn: 'The O2 molecule consists of two Oxygen atoms double-bonded together in a linear structure.',
+            keyTakeaway: 'Oxy có cấu trúc phân tử thẳng hàng với liên kết đôi (O=O).',
+            keyTakeawayEn: 'Oxygen has a linear molecular structure with a double bond (O=O).'
+          }
+        ],
+        quiz: [
+          {
+            question: 'Liên kết giữa 2 nguyên tử Oxy trong phân tử O2 là gì?',
+            questionEn: 'What is the bond between the 2 Oxygen atoms in an O2 molecule?',
+            options: ['Liên kết đơn', 'Liên kết đôi', 'Liên kết ba', 'Liên kết ion'],
+            optionsEn: ['Single bond', 'Double bond', 'Triple bond', 'Ionic bond'],
+            correctIndex: 1,
+            explanation: 'Phân tử Oxy có một liên kết đôi (O=O) rất bền vững.',
+            explanationEn: 'The Oxygen molecule has a strong double bond (O=O).'
+          }
+        ]
+      },
+      {
+        id: 'n2',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-06-02',
+        title: 'Khí Nitơ (N₂) & Bầu Khí Quyển',
+        titleEn: 'Nitrogen (N₂) & The Atmosphere',
+        subtitle: 'Khí trơ chiếm 78% bầu khí quyển Trái Đất',
+        subtitleEn: 'Inert gas making up 78% of Earth\'s atmosphere',
+        level: 'Basic',
+        readTime: '4 phút',
+        icon: '🌬️',
+        summary: 'Nitơ là thành phần chính của không khí. Phân tử N2 cực kỳ trơ do có liên kết ba vững chắc.',
+        summaryEn: 'Nitrogen is the main component of air. The N2 molecule is extremely inert due to a strong triple bond.',
+        contentSections: [
+          {
+            heading: '1. Sự trơ hóa học của Nitơ',
+            headingEn: '1. Chemical Inertness of Nitrogen',
+            body: 'Nhờ liên kết ba, N2 rất khó bị bẻ gãy ở nhiệt độ thường, do đó nó đóng vai trò là một khí bảo quản trơ tuyệt vời.',
+            bodyEn: 'Thanks to its triple bond, N2 is very hard to break at room temperature, making it an excellent inert storage gas.',
+            keyTakeaway: 'Liên kết ba (N≡N) là nguyên nhân gây ra tính trơ của khí Nitơ.',
+            keyTakeawayEn: 'The triple bond (N≡N) is the cause of Nitrogen gas\'s inertness.'
+          }
+        ],
+        quiz: [
+          {
+            question: 'Nitơ chiếm khoảng bao nhiêu phần trăm trong không khí?',
+            questionEn: 'Approximately what percentage of the air is Nitrogen?',
+            options: ['21%', '50%', '78%', '90%'],
+            optionsEn: ['21%', '50%', '78%', '90%'],
+            correctIndex: 2,
+            explanation: 'Khí Nitơ chiếm khoảng 78% thể tích không khí.',
+            explanationEn: 'Nitrogen gas makes up about 78% of the air volume.'
+          }
+        ]
+      },
+      {
+        id: 'hcl',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-06-05',
+        title: 'Khí Hydro Clorua (HCl)',
+        titleEn: 'Hydrogen Chloride (HCl)',
+        subtitle: 'Khí độc tan tạo ra axit mạnh',
+        subtitleEn: 'Toxic gas that dissolves to create strong acid',
+        level: 'Intermediate',
+        readTime: '5 phút',
+        icon: '🧪',
+        summary: 'Hydro Clorua là một chất khí độc. Khi tan vào nước, nó tạo thành Axit Clohidric (HCl), một axit vô cơ mạnh.',
+        summaryEn: 'Hydrogen Chloride is a toxic gas. When dissolved in water, it forms Hydrochloric Acid (HCl), a strong inorganic acid.',
+        contentSections: [
+          {
+            heading: '1. Đặc tính của HCl',
+            headingEn: '1. Properties of HCl',
+            body: 'Phân tử HCl gồm Hydro liên kết cộng hóa trị phân cực với Clo. Clo có độ âm điện lớn hơn nên hút electron về phía nó.',
+            bodyEn: 'The HCl molecule consists of Hydrogen in a polar covalent bond with Chlorine. Chlorine has a higher electronegativity and pulls the electron towards itself.',
+            keyTakeaway: 'Liên kết trong HCl là liên kết cộng hóa trị phân cực mạnh.',
+            keyTakeawayEn: 'The bond in HCl is a strongly polar covalent bond.'
+          }
+        ],
+        quiz: [
+          {
+            question: 'Khi tan trong nước, khí HCl tạo thành dung dịch gì?',
+            questionEn: 'When dissolved in water, what solution does HCl gas form?',
+            options: ['Axit Sunfuric', 'Nước Gia-ven', 'Axit Clohidric', 'Axit Nitric'],
+            optionsEn: ['Sulfuric Acid', 'Javel Water', 'Hydrochloric Acid', 'Nitric Acid'],
+            correctIndex: 2,
+            explanation: 'Khí HCl tan vào nước tạo thành dung dịch Axit Clohidric (HCl).',
+            explanationEn: 'HCl gas dissolves in water to form Hydrochloric Acid (HCl).'
+          }
+        ]
+      },
+      {
+        id: 'c2h5oh',
+        unitId: 'unit-molecule-lessons',
+        category: 'lesson',
+        interactiveWidget: 'molecule-3d',
+        author: 'Bộ Giáo Dục & Đào Tạo',
+        authorEn: 'Ministry of Education & Training',
+        releaseDate: '2026-06-10',
+        title: 'Cồn Sinh Học Ethanol (C₂H₅OH)',
+        titleEn: 'Bio-Ethanol (C₂H₅OH)',
+        subtitle: 'Nhiên liệu tái tạo và thức uống có cồn',
+        subtitleEn: 'Renewable fuel and alcoholic beverage',
+        level: 'Advanced',
+        readTime: '6 phút',
+        icon: '🍷',
+        summary: 'Ethanol là một hợp chất hữu cơ quan trọng, có thể sử dụng làm nhiên liệu sinh học, dung môi y tế, và thành phần chính trong đồ uống có cồn.',
+        summaryEn: 'Ethanol is an important organic compound, used as biofuel, medical solvent, and the main ingredient in alcoholic drinks.',
+        contentSections: [
+          {
+            heading: '1. Cấu tạo phân tử Ethanol',
+            headingEn: '1. Structure of Ethanol',
+            body: 'Phân tử Ethanol gồm gốc ethyl (C2H5) liên kết với nhóm hydroxyl (-OH). Nhóm -OH tạo ra tính phân cực và khả năng tạo liên kết hydro với nước.',
+            bodyEn: 'The Ethanol molecule consists of an ethyl group (C2H5) bonded to a hydroxyl group (-OH). The -OH group provides polarity and hydrogen bonding with water.',
+            keyTakeaway: 'Nhóm -OH là nhóm chức đặc trưng của ancol, quyết định tính chất hóa học của Ethanol.',
+            keyTakeawayEn: 'The -OH group is the functional group of alcohols, determining Ethanol\'s chemical properties.'
+          }
+        ],
+        quiz: [
+          {
+            question: 'Công thức hóa học của Ethanol là gì?',
+            questionEn: 'What is the chemical formula of Ethanol?',
+            options: ['CH3OH', 'C2H5OH', 'C6H6', 'CH3COOH'],
+            optionsEn: ['CH3OH', 'C2H5OH', 'C6H6', 'CH3COOH'],
+            correctIndex: 1,
+            explanation: 'Ethanol có công thức là C2H5OH, gồm 2 nguyên tử Cacbon.',
+            explanationEn: 'Ethanol\'s formula is C2H5OH, consisting of 2 Carbon atoms.'
+          }
+        ]
+      }
     ],
   },
 ];

@@ -22,7 +22,8 @@ export const SettingsScreen: React.FC = () => {
     soundVolume,
     autoRotate3D,
     graphicsQuality,
-    ttsVoiceURI,
+    ttsVoiceURI_EN,
+    ttsVoiceURI_VI,
     ttsSpeed,
     setFontSize,
     setFontFamily,
@@ -32,7 +33,8 @@ export const SettingsScreen: React.FC = () => {
     setSoundVolume,
     setAutoRotate3D,
     setGraphicsQuality,
-    setTtsVoiceURI,
+    setTtsVoiceURI_EN,
+    setTtsVoiceURI_VI,
     setTtsSpeed,
     resetDefaults,
   } = useSettingsStore();
@@ -63,52 +65,68 @@ export const SettingsScreen: React.FC = () => {
     );
   }, [voices]);
 
-  const allVoiceOptions = React.useMemo(() => {
+  const viVoiceOptions = React.useMemo(() => {
     const list: Array<{ voiceURI: string; name: string }> = [
-      { voiceURI: '', name: isEn ? '🌐 System Default Voice' : '🌐 Mặc định theo hệ thống' },
+      { voiceURI: '', name: isEn ? '🌐 System Default (VI)' : '🌐 Mặc định hệ thống (VI)' },
     ];
     viVoices.forEach((v) => list.push({ voiceURI: v.voiceURI, name: `🇻🇳 ${v.name}` }));
+    return list;
+  }, [viVoices, isEn]);
+
+  const enVoiceOptions = React.useMemo(() => {
+    const list: Array<{ voiceURI: string; name: string }> = [
+      { voiceURI: '', name: isEn ? '🌐 System Default (EN)' : '🌐 Mặc định hệ thống (EN)' },
+    ];
     enVoices.forEach((v) => list.push({ voiceURI: v.voiceURI, name: `🇺🇸 ${v.name}` }));
     return list;
-  }, [viVoices, enVoices, isEn]);
+  }, [enVoices, isEn]);
 
-  const currentIndex = React.useMemo(() => {
-    if (!ttsVoiceURI) return 0;
-    const idx = allVoiceOptions.findIndex((v) => v.voiceURI === ttsVoiceURI);
-    return idx >= 0 ? idx : 0;
-  }, [allVoiceOptions, ttsVoiceURI]);
-
-  const triggerVoiceSample = async () => {
+  const triggerVoiceSample = async (lang: 'en' | 'vi') => {
     stopSpeaking();
     setIsTestingVoice(true);
-    const sampleMsg = isEn ? 'Testing voice sample.' : 'Thử giọng đọc phát âm.';
-    await speakText(sampleMsg);
+    if (lang === 'en') {
+      await speakText('Testing English voice sample.', { forceLang: 'en' });
+    } else {
+      await speakText('Thử giọng đọc phát âm tiếng Việt.', { forceLang: 'vi' });
+    }
     setIsTestingVoice(false);
   };
 
-  const handlePrevVoice = () => {
+  const handlePrevVoice = (lang: 'en' | 'vi') => {
     playSciFiSound('click', soundEnabled);
-    const nextIdx = (currentIndex - 1 + allVoiceOptions.length) % allVoiceOptions.length;
-    const target = allVoiceOptions[nextIdx];
-    setTtsVoiceURI(target.voiceURI || null);
-    triggerVoiceSample();
+    if (lang === 'en') {
+      const idx = enVoiceOptions.findIndex(v => v.voiceURI === (ttsVoiceURI_EN || ''));
+      const nextIdx = (idx - 1 + enVoiceOptions.length) % enVoiceOptions.length;
+      setTtsVoiceURI_EN(enVoiceOptions[nextIdx].voiceURI || null);
+    } else {
+      const idx = viVoiceOptions.findIndex(v => v.voiceURI === (ttsVoiceURI_VI || ''));
+      const nextIdx = (idx - 1 + viVoiceOptions.length) % viVoiceOptions.length;
+      setTtsVoiceURI_VI(viVoiceOptions[nextIdx].voiceURI || null);
+    }
+    triggerVoiceSample(lang);
   };
 
-  const handleNextVoice = () => {
+  const handleNextVoice = (lang: 'en' | 'vi') => {
     playSciFiSound('click', soundEnabled);
-    const nextIdx = (currentIndex + 1) % allVoiceOptions.length;
-    const target = allVoiceOptions[nextIdx];
-    setTtsVoiceURI(target.voiceURI || null);
-    triggerVoiceSample();
+    if (lang === 'en') {
+      const idx = Math.max(0, enVoiceOptions.findIndex(v => v.voiceURI === (ttsVoiceURI_EN || '')));
+      const nextIdx = (idx + 1) % enVoiceOptions.length;
+      setTtsVoiceURI_EN(enVoiceOptions[nextIdx].voiceURI || null);
+    } else {
+      const idx = Math.max(0, viVoiceOptions.findIndex(v => v.voiceURI === (ttsVoiceURI_VI || '')));
+      const nextIdx = (idx + 1) % viVoiceOptions.length;
+      setTtsVoiceURI_VI(viVoiceOptions[nextIdx].voiceURI || null);
+    }
+    triggerVoiceSample(lang);
   };
 
-  const handleTestVoice = async () => {
+  const handleTestVoice = async (lang: 'en' | 'vi') => {
     playSciFiSound('click', soundEnabled);
     if (isTestingVoice) {
       stopSpeaking();
       setIsTestingVoice(false);
     } else {
-      triggerVoiceSample();
+      triggerVoiceSample(lang);
     }
   };
 
@@ -371,69 +389,87 @@ export const SettingsScreen: React.FC = () => {
               {/* TTS Voice Selection & Reading Speed */}
               <div className={styles.settingRow} style={{ flexDirection: 'column', alignItems: 'stretch', marginTop: 12, borderTop: '1px dashed rgba(255, 255, 255, 0.1)', paddingTop: 12 }}>
                 <div className={styles.settingLabel} style={{ marginBottom: 6 }}>
-                  <span className={styles.labelTitle}>🗣️ {isEn ? 'Speech Synthesis Voice (TTS)' : 'Giọng đọc phát âm (Text-To-Speech)'}</span>
+                  <span className={styles.labelTitle}>🗣️ {isEn ? 'Speech Synthesis Voices (TTS)' : 'Giọng đọc phát âm (Text-To-Speech)'}</span>
                   <span className={styles.labelSub}>
-                    {isEn ? 'Smart filtered voices with quick-cycle arrow buttons' : 'Đã lọc giọng đọc Việt/Anh chuẩn & nút mũi tên ◀ ▶ chuyển giọng đọc thử nhanh'}
+                    {isEn ? 'Configure English and Vietnamese voices separately' : 'Thiết lập riêng biệt giọng đọc cho Tiếng Anh và Tiếng Việt'}
                   </span>
                 </div>
 
+                {/* English Voice Control */}
+                <div className={styles.settingLabel} style={{ marginTop: 8, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  {isEn ? '🇺🇸 English Voice:' : '🇺🇸 Giọng đọc Tiếng Anh:'}
+                </div>
                 <div className={styles.voiceControlRow}>
-                  {/* Previous Voice Arrow */}
                   <button
                     className={styles.navArrowBtn}
-                    onClick={handlePrevVoice}
-                    title={isEn ? 'Previous Voice & Test' : 'Giọng đọc trước & Thử giọng'}
+                    onClick={() => handlePrevVoice('en')}
+                    title={isEn ? 'Previous Voice' : 'Giọng trước'}
                   >
                     ◀
                   </button>
-
-                  {/* Smart Dropdown */}
                   <select
                     className={styles.voiceSelect}
-                    value={ttsVoiceURI || ''}
+                    value={ttsVoiceURI_EN || ''}
                     onChange={(e) => {
-                      setTtsVoiceURI(e.target.value || null);
-                      triggerVoiceSample();
+                      setTtsVoiceURI_EN(e.target.value || null);
+                      triggerVoiceSample('en');
                     }}
                   >
-                    <option value="">{isEn ? '🌐 System Default Voice' : '🌐 Mặc định theo hệ thống'}</option>
-
-                    {viVoices.length > 0 && (
-                      <optgroup label={isEn ? '🇻🇳 Vietnamese Voices' : '🇻🇳 Giọng Tiếng Việt'}>
-                        {viVoices.map((v) => (
-                          <option key={v.voiceURI} value={v.voiceURI}>
-                            🇻🇳 {v.name} ({v.lang})
-                          </option>
-                        ))}
-                      </optgroup>
-                    )}
-
-                    {enVoices.length > 0 && (
-                      <optgroup label={isEn ? '🇺🇸 English Voices' : '🇺🇸 Giọng Tiếng Anh'}>
-                        {enVoices.map((v) => (
-                          <option key={v.voiceURI} value={v.voiceURI}>
-                            🇺🇸 {v.name} ({v.lang})
-                          </option>
-                        ))}
-                      </optgroup>
-                    )}
+                    {enVoiceOptions.map((v) => (
+                      <option key={v.voiceURI} value={v.voiceURI}>{v.name}</option>
+                    ))}
                   </select>
-
-                  {/* Next Voice Arrow */}
                   <button
                     className={styles.navArrowBtn}
-                    onClick={handleNextVoice}
-                    title={isEn ? 'Next Voice & Test' : 'Giọng đọc kế tiếp & Thử giọng'}
+                    onClick={() => handleNextVoice('en')}
+                    title={isEn ? 'Next Voice' : 'Giọng tiếp'}
                   >
                     ▶
                   </button>
-
-                  {/* Test Voice Button */}
                   <button
                     className={`${styles.testVoiceBtn} ${isTestingVoice ? styles.testing : ''}`}
-                    onClick={handleTestVoice}
+                    onClick={() => handleTestVoice('en')}
                   >
-                    {isTestingVoice ? '⏹️ Dừng' : '▶️ Thử'}
+                    {isTestingVoice ? '⏹️' : '▶️'}
+                  </button>
+                </div>
+
+                {/* Vietnamese Voice Control */}
+                <div className={styles.settingLabel} style={{ marginTop: 12, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  {isEn ? '🇻🇳 Vietnamese Voice:' : '🇻🇳 Giọng đọc Tiếng Việt:'}
+                </div>
+                <div className={styles.voiceControlRow}>
+                  <button
+                    className={styles.navArrowBtn}
+                    onClick={() => handlePrevVoice('vi')}
+                    title={isEn ? 'Previous Voice' : 'Giọng trước'}
+                  >
+                    ◀
+                  </button>
+                  <select
+                    className={styles.voiceSelect}
+                    value={ttsVoiceURI_VI || ''}
+                    onChange={(e) => {
+                      setTtsVoiceURI_VI(e.target.value || null);
+                      triggerVoiceSample('vi');
+                    }}
+                  >
+                    {viVoiceOptions.map((v) => (
+                      <option key={v.voiceURI} value={v.voiceURI}>{v.name}</option>
+                    ))}
+                  </select>
+                  <button
+                    className={styles.navArrowBtn}
+                    onClick={() => handleNextVoice('vi')}
+                    title={isEn ? 'Next Voice' : 'Giọng tiếp'}
+                  >
+                    ▶
+                  </button>
+                  <button
+                    className={`${styles.testVoiceBtn} ${isTestingVoice ? styles.testing : ''}`}
+                    onClick={() => handleTestVoice('vi')}
+                  >
+                    {isTestingVoice ? '⏹️' : '▶️'}
                   </button>
                 </div>
               </div>

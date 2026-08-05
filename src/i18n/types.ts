@@ -19,8 +19,7 @@ export interface TranslationDictionary {
     explorer: string;
     virtualLab: string;
     academy: string;
-    lessons: string;
-    lessonsFlyoutTitle: string;
+
     settings: string;
   };
   settings: {
@@ -144,15 +143,7 @@ export interface TranslationDictionary {
     atomsUnit: string;
     bondsUnit: string;
   };
-  lessons: {
-    title: string;
-    subtitle: string;
-    badge: string;
-    theoryHeader: string;
-    quizHeader: string;
-    backBtn: string;
-    explanationHeader: string;
-  };
+
   periodicTable: {
     title: string;
     subtitle: string;

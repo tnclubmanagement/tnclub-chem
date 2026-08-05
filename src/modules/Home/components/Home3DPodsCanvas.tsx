@@ -12,8 +12,8 @@ const ResponsivePodsGroup: React.FC = () => {
   const { viewport } = useThree();
 
   const podsData = useMemo(() => {
-    // Dynamic X step based on viewport width, scaling up to 3.35 for full screen width
-    const stepX = Math.min(3.35, Math.max(1.5, viewport.width / 4.65));
+    // Dynamic X step to evenly distribute 5 pods across the screen regardless of camera Z
+    const stepX = viewport.width / 5.2;
 
     const pods = [
       {
@@ -103,7 +103,7 @@ export const Home3DPodsCanvas: React.FC = () => {
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'visible' }}>
-      <Canvas camera={{ position: [0, 0.25, 11.4], fov: 48 }} {...canvasProps}>
+      <Canvas camera={{ position: [0, 0.25, 6.0], fov: 48 }} {...canvasProps}>
         <ResponsivePodsGroup />
       </Canvas>
     </div>

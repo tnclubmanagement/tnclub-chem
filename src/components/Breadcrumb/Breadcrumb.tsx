@@ -1,14 +1,12 @@
 import React from 'react';
 import { useChemStore } from '../../modules/PeriodicTable';
-import { LESSONS } from '../../modules/PeriodicTable/data/lessons';
+
 import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Breadcrumb.module.less';
 
 export const Breadcrumb: React.FC = () => {
-  const { activeView, activeLessonId, selectedElement, setActiveLessonId, closePanel } = useChemStore();
-  const { t, language } = useTranslation();
-
-  const activeLesson = LESSONS.find(l => l.id === activeLessonId);
+  const { activeView, selectedElement, closePanel } = useChemStore();
+  const { t } = useTranslation();
 
   return (
     <div className={styles.breadcrumbContainer}>
@@ -28,21 +26,7 @@ export const Breadcrumb: React.FC = () => {
         </>
       )}
 
-      {activeView === 'lesson' && (
-        <>
-          <span className={!activeLesson ? styles.itemActive : styles.item} onClick={() => setActiveLessonId(null)}>
-            📚 {t('nav', 'lessons')}
-          </span>
-          {activeLesson && (
-            <>
-              <span className={styles.separator}>/</span>
-              <span className={styles.itemActive}>
-                {language === 'en' ? (activeLesson.titleEn || activeLesson.title) : activeLesson.title}
-              </span>
-            </>
-          )}
-        </>
-      )}
+
 
       {activeView === 'explorer' && (
         <span className={styles.itemActive}>

@@ -8,7 +8,7 @@ interface DipoleVectorProps {
 }
 
 export const DipoleVector: React.FC<DipoleVectorProps> = ({ dipole }) => {
-  if (!dipole.isPolar || dipole.magnitude === 0) return null;
+  const isVisible = dipole.isPolar && dipole.magnitude !== 0;
 
   const origin = useMemo(() => new THREE.Vector3(...dipole.origin), [dipole.origin]);
   const vector = useMemo(() => new THREE.Vector3(...dipole.vector), [dipole.vector]);
@@ -21,6 +21,8 @@ export const DipoleVector: React.FC<DipoleVectorProps> = ({ dipole }) => {
 
   const posPos = useMemo(() => new THREE.Vector3(...dipole.positivePole), [dipole.positivePole]);
   const negPos = useMemo(() => new THREE.Vector3(...dipole.negativePole), [dipole.negativePole]);
+
+  if (!isVisible) return null;
 
   return (
     <group>
